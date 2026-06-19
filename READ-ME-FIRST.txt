@@ -1,0 +1,46 @@
+BELONGO — INTERACTIVE PROTOTYPE (Guest Experience)
+===================================================
+
+Thanks for taking a look! This is a clickable, high-fidelity design
+prototype of the Belongo booking platform — the real screens, real
+layout, real interactions, just not connected to a live backend yet.
+
+HOW TO OPEN
+-----------
+1. Unzip this folder, keeping everything together.
+2. Double-click  index.html  — it opens a simple start page.
+3. Click "Enter the prototype" to begin, or jump to any screen from
+   the list on the start page.
+
+Tip: it looks best in Google Chrome, and you'll want an internet
+connection (the photographs load from the web). On a phone it's
+fully responsive — try it there too.
+
+WHAT'S INSIDE
+-------------
+The full guest journey, end to end:
+
+  Home  →  Search  →  Property  →  Checkout  →  Booking confirmed
+
+Plus the account area and supporting pages:
+  • Sign in / create account  • My bookings  • Booking detail
+  • Cancel & refund (with a live refund timeline)
+  • Account settings  • Payment methods  • Write a review
+  • About  • Contact & support  • For hosts
+  • Privacy, Terms, Payment & Refund policy
+  • An Arabic / right-to-left demo screen
+
+HOW TO EXPLORE
+--------------
+Most things are clickable — search, property cards, "Reserve",
+"Pay", the menus. Follow the main journey first, then poke around.
+A few secondary links are placeholders for now.
+
+GOOD TO KNOW
+------------
+• These are design screens for review, not a transacting product —
+  no real payments, accounts or data.
+• A couple of host/admin screens are still in progress; the "For
+  hosts" page is included so you can see the direction.
+
+Questions or feedback? Just reply — happy to walk you through it.

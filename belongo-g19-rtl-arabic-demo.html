@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — RTL / Arabic demo (g19)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Noto+Kufi+Arabic:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g19 · RTL / ARABIC DEMO  (.rtl-*)
+   Proves the design system mirrors for Arabic (SRS gap). A
+   representative property-detail slice in dir="rtl" + a dev
+   rules panel. Numbers/prices stay LTR via <bdi>. Self-contained.
+   ============================================================ */
+.rtl-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+
+/* LTR demo banner (for stakeholders/devs) */
+.rtl-banner { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.rtl-banner-inner { padding: var(--space-5) 0; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.rtl-banner-inner .lbl { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-soft-gold); }
+.rtl-banner-inner h1 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; letter-spacing: -0.02em; margin-top: var(--space-1); }
+.rtl-banner-inner p { font-size: var(--text-sm); color: rgba(247,246,242,0.75); max-width: 560px; margin-top: 2px; }
+.rtl-toggle { display: inline-flex; border: 1px solid rgba(247,246,242,0.25); border-radius: var(--radius-full); overflow: hidden; font-family: var(--font-mono); font-size: var(--text-xs); }
+.rtl-toggle span { padding: 6px var(--space-4); }
+.rtl-toggle .off { color: rgba(247,246,242,0.6); }
+.rtl-toggle .on { background: var(--color-soft-gold); color: var(--color-midnight-navy); font-weight: 500; }
+
+/* ===== RTL demo region ===== */
+.rtl-demo { direction: rtl; font-family: 'Noto Kufi Arabic', var(--font-display); background: var(--color-warm-ivory); padding: var(--space-10) 0 var(--space-12); }
+.rtl-demo bdi, .rtl-demo .ltr { direction: ltr; unicode-bidi: isolate; font-family: var(--font-mono); }
+
+/* mirrored mini header */
+.rtl-head { display: flex; align-items: center; gap: var(--space-5); padding-bottom: var(--space-6); border-bottom: 1px solid rgba(107,114,128,0.15); margin-bottom: var(--space-6); }
+.rtl-logo { width: 30px; height: 30px; border-radius: var(--radius-full); background: var(--color-midnight-navy); color: var(--color-soft-gold); display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.rtl-nav { display: flex; gap: var(--space-5); font-size: var(--text-sm); font-weight: 500; color: var(--color-deep-slate); }
+.rtl-nav a.on { color: var(--color-midnight-navy); border-bottom: 2px solid var(--color-soft-gold); padding-bottom: 2px; }
+.rtl-head-actions { margin-inline-start: auto; display: flex; align-items: center; gap: var(--space-3); }
+.rtl-chip { font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 6px var(--space-4); }
+
+/* title */
+.rtl-titlerow { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.rtl-h2 { font-family: 'Noto Kufi Arabic', var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: 0; line-height: 1.3; }
+.rtl-subrow { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2); font-size: var(--text-sm); color: var(--color-warm-gray); }
+.rtl-near { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-xs); font-weight: 600; color: var(--color-info); }
+.rtl-near svg { width: 13px; height: 13px; }
+
+/* layout: content + widget (mirrors automatically under dir:rtl) */
+.rtl-layout { display: grid; grid-template-columns: minmax(0,1fr) 360px; gap: var(--space-8); align-items: start; margin-top: var(--space-6); }
+.rtl-gallery { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 150px 150px; gap: var(--space-2); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
+.rtl-gallery .g { background: var(--color-soft-beige); overflow: hidden; }
+.rtl-gallery .g:first-child { grid-row: 1 / 3; }
+.rtl-gallery img { width: 100%; height: 100%; object-fit: cover; }
+.rtl-card { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-4); box-shadow: var(--shadow-xs); }
+.rtl-card h3 { font-family: 'Noto Kufi Arabic', var(--font-display); font-weight: 700; font-size: var(--text-md); margin-bottom: var(--space-4); }
+.rtl-amen { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2) var(--space-6); }
+.rtl-amen-item { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); padding: var(--space-1) 0; }
+.rtl-amen-item .dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-soft-gold); flex-shrink: 0; }
+.rtl-poi { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3) 0; border-bottom: 1px dashed rgba(107,114,128,0.18); }
+.rtl-poi:last-child { border-bottom: none; }
+.rtl-poi-ic { width: 34px; height: 34px; border-radius: var(--radius-full); background: #fff; border: 1.5px solid var(--color-soft-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rtl-poi-ic svg { width: 15px; height: 15px; }
+.rtl-poi b { font-size: var(--text-sm); font-weight: 700; display: block; }
+.rtl-poi span { font-size: var(--text-xs); color: var(--color-warm-gray); }
+
+/* booking widget (total-first) */
+.rtl-widget { position: sticky; top: var(--space-4); background: #fff; border: 1px solid rgba(107,114,128,0.18); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); padding: var(--space-6); }
+.rtl-price-head { display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
+.rtl-total { font-family: 'Noto Kufi Arabic', var(--font-display); font-size: var(--text-xl); font-weight: 800; }
+.rtl-total-unit { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.rtl-break { display: grid; gap: var(--space-2); padding: var(--space-4) 0; border-top: 1px solid rgba(107,114,128,0.14); margin-top: var(--space-4); }
+.rtl-row { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--text-sm); }
+.rtl-row span:first-child { color: var(--color-warm-gray); }
+.rtl-row.total { border-top: 1px solid rgba(107,114,128,0.2); padding-top: var(--space-3); margin-top: var(--space-1); font-weight: 700; }
+.rtl-row.total span:last-child { font-family: 'Noto Kufi Arabic', var(--font-display); font-size: var(--text-md); font-weight: 800; }
+.rtl-charged { background: var(--color-soft-gold-pale); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); font-size: var(--text-xs); margin-top: var(--space-3); }
+.rtl-widget .btn { width: 100%; justify-content: center; margin-top: var(--space-4); font-family: 'Noto Kufi Arabic', var(--font-display); }
+.rtl-micro { text-align: center; font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-3); }
+
+/* ===== dev rules panel (LTR) ===== */
+.rtl-rules { background: var(--color-soft-beige); padding: var(--space-16) 0; }
+.rtl-rules .ds-section-label { color: var(--color-warm-gray); }
+.rtl-rules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-8); }
+.rtl-rule { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-5); }
+.rtl-rule b { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); display: flex; align-items: center; gap: var(--space-2); }
+.rtl-rule .tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--color-soft-gold-pale); color: var(--color-warning); border-radius: var(--radius-sm); padding: 2px 6px; }
+.rtl-rule p { font-size: var(--text-sm); color: var(--color-warm-gray); line-height: 1.55; margin-top: var(--space-2); }
+.rtl-rule code { font-family: var(--font-mono); font-size: 11px; background: var(--color-soft-beige); padding: 1px 5px; border-radius: var(--radius-sm); color: var(--color-deep-slate); }
+
+@media (max-width: 900px) {
+  .rtl-layout { grid-template-columns: minmax(0,1fr); }
+  .rtl-widget { position: static; }
+  .rtl-rules-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .rtl-amen { grid-template-columns: 1fr; }
+  .rtl-gallery { grid-template-columns: 1fr; grid-template-rows: 180px; }
+  .rtl-gallery .g:not(:first-child) { display: none; }
+  .rtl-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LTR DEMO BANNER ============ -->
+<div class="rtl-banner">
+  <div class="rtl-shell rtl-banner-inner">
+    <div>
+      <div class="lbl">g19 · RTL / Arabic demo</div>
+      <h1>The system mirrors for Arabic markets</h1>
+      <p>A representative slice of the property page (g04) in right-to-left Arabic — proving the design system flips cleanly. Numbers, prices and dates stay LTR. This addresses the multilingual/RTL SRS gap; full translation is a content task, not a redesign.</p>
+    </div>
+    <div class="rtl-toggle"><span class="off">EN</span><span class="on">عربي · RTL</span></div>
+  </div>
+</div>
+
+<!-- ============ RTL DEMO REGION ============ -->
+<section class="rtl-demo" dir="rtl" lang="ar">
+  <div class="rtl-shell">
+    <!-- mirrored header -->
+    <div class="rtl-head">
+      <span class="rtl-logo">ب</span>
+      <nav class="rtl-nav">
+        <a class="on" href="#">إقامات</a>
+        <a href="#">المجموعات</a>
+        <a href="#">المضيفون</a>
+        <a href="#">من نحن</a>
+      </nav>
+      <div class="rtl-head-actions">
+        <span class="rtl-chip">درهم ▾</span>
+        <span class="rtl-chip" style="background:var(--color-midnight-navy);color:var(--color-warm-ivory);border-color:var(--color-midnight-navy);">تسجيل الدخول</span>
+      </div>
+    </div>
+
+    <!-- title -->
+    <div class="rtl-titlerow">
+      <div>
+        <h2 class="rtl-h2">استوديو وسط المدينة الهادئ</h2>
+        <div class="rtl-subrow">
+          <span class="star">★★★★★</span>
+          <span>٤٫٨ · <bdi>167</bdi> تقييم موثّق</span>
+          <span style="color:rgba(107,114,128,0.4)">|</span>
+          <span>وسط مدينة دبي · المترو على بُعد ٤ دقائق</span>
+          <span style="color:rgba(107,114,128,0.4)">|</span>
+          <span class="rtl-near">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M10.5 2a6 6 0 1 0 3.4 10.9A6.8 6.8 0 0 1 10.5 2Z" fill="#D4AF37"/></svg>
+            مسجد الرحيم على بُعد <bdi>400 م</bdi>
+            <span class="badge badge-verified">✓ موثّق من ١٢ نزيلاً</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- layout: content + widget -->
+    <div class="rtl-layout">
+      <main>
+        <div class="rtl-gallery">
+          <div class="g"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=900&auto=format&fit=crop" alt="غرفة المعيشة"></div>
+          <div class="g"><img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=500&auto=format&fit=crop" alt="ركن الجلوس"></div>
+          <div class="g"><img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=500&auto=format&fit=crop" alt="غرفة النوم"></div>
+        </div>
+
+        <div class="rtl-card">
+          <h3>ما يوفّره هذا المكان</h3>
+          <div class="rtl-amen">
+            <div class="rtl-amen-item"><span class="dot"></span>اتجاه القبلة محدّد في الغرفة</div>
+            <div class="rtl-amen-item"><span class="dot"></span>سجّادات صلاة متوفّرة</div>
+            <div class="rtl-amen-item"><span class="dot"></span>مطاعم حلال على بُعد <bdi>200 م</bdi></div>
+            <div class="rtl-amen-item"><span class="dot"></span>واي‑فاي سريع · <bdi>600 Mbps</bdi></div>
+            <div class="rtl-amen-item"><span class="dot"></span>مطبخ كامل وغسّالة</div>
+            <div class="rtl-amen-item"><span class="dot"></span>مسبح وصالة رياضة</div>
+          </div>
+        </div>
+
+        <div class="rtl-card">
+          <h3>الجوار · بقلم النزلاء</h3>
+          <div class="rtl-poi">
+            <span class="rtl-poi-ic"><svg viewBox="0 0 16 16" fill="none"><path d="M10.5 2a6 6 0 1 0 3.4 10.9A6.8 6.8 0 0 1 10.5 2Z" fill="#D4AF37"/></svg></span>
+            <div><b>مسجد الرحيم <span class="badge badge-verified">✓ موثّق من ١٢ نزيلاً</span></b><span><bdi>400 م</bdi> · ٥ دقائق سيرًا · مُضاء ليلًا، يوجد قسم للنساء</span></div>
+          </div>
+          <div class="rtl-poi">
+            <span class="rtl-poi-ic" style="border-color:rgba(107,114,128,0.4)"><span>🛒</span></span>
+            <div><b>سوق كارفور</b><span><bdi>150 م</bdi> · مفتوح حتى <bdi>01:00</bdi> · قسم حلال</span></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- booking widget -->
+      <aside>
+        <div class="rtl-widget">
+          <div class="rtl-price-head">
+            <span class="rtl-total"><bdi>AED 952</bdi></span>
+            <span class="rtl-total-unit">الإجمالي · ٣ ليالٍ، شامل الرسوم</span>
+          </div>
+          <div class="rtl-break">
+            <div class="rtl-row"><span><bdi>AED 268</bdi> × ٣ ليالٍ</span><span><bdi>AED 804</bdi></span></div>
+            <div class="rtl-row"><span>رسوم التنظيف والخدمة</span><span><bdi>AED 108</bdi></span></div>
+            <div class="rtl-row"><span>درهم سياحي وضريبة القيمة المضافة</span><span><bdi>AED 40</bdi></span></div>
+            <div class="rtl-row total"><span>الإجمالي — لا شيء لاحقًا</span><span><bdi>AED 952</bdi></span></div>
+          </div>
+          <div class="rtl-charged">يُخصم بالدرهم — الرقم أعلاه نهائي · <bdi>≈ USD 259</bdi></div>
+          <a class="btn btn-premium btn-lg" href="#">احجز — لن يُخصم شيء الآن</a>
+          <p class="rtl-micro">إلغاء مجاني حتى ١٠ سبتمبر · تؤكّد الإجمالي في الخطوة التالية</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEV RULES PANEL (LTR) ============ -->
+<section class="rtl-rules">
+  <div class="rtl-shell">
+    <div class="ds-section-label">RTL implementation · for development handoff</div>
+    <h2 class="ds-section-title" style="font-size: var(--text-2xl);">How the mirror is built</h2>
+    <div class="rtl-rules-grid">
+      <div class="rtl-rule">
+        <b><span class="tag">Direction</span> One attribute flips the layout</b>
+        <p>Set <code>dir="rtl" lang="ar"</code> on the root (or a region). Flexbox/grid order, text alignment and the sidebar position all mirror automatically — no duplicated layout.</p>
+      </div>
+      <div class="rtl-rule">
+        <b><span class="tag">Logical props</span> No hard left/right</b>
+        <p>Use <code>margin-inline</code>, <code>padding-inline</code>, <code>inset-inline-start</code> instead of left/right so spacing mirrors. Audit the shared CSS for stray <code>left</code>/<code>right</code> before launch.</p>
+      </div>
+      <div class="rtl-rule">
+        <b><span class="tag">Numbers</span> Keep prices &amp; dates LTR</b>
+        <p>Wrap currency, totals, phone numbers and times in <code>&lt;bdi&gt;</code> (or <code>dir="ltr"</code>) so “AED 952” and “600 Mbps” read correctly inside Arabic text.</p>
+      </div>
+      <div class="rtl-rule">
+        <b><span class="tag">Type</span> An Arabic-first font</b>
+        <p>Pair a quality Arabic face (here, Noto Kufi Arabic) with the Latin display font. Line-height runs a touch taller for Arabic; the gold/navy tokens are unchanged.</p>
+      </div>
+      <div class="rtl-rule">
+        <b><span class="tag">Icons</span> Mirror the directional ones</b>
+        <p>Flip chevrons, back arrows and progress steppers; leave symmetric icons (search, heart, the crescent) untouched. Use <code>transform: scaleX(-1)</code> only where direction has meaning.</p>
+      </div>
+      <div class="rtl-rule">
+        <b><span class="tag">Scope</span> Proof, not full translation</b>
+        <p>This demo mirrors one page to prove the system holds. Translating all 36 screens is a content workstream — the layout, components and tokens are already RTL-ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

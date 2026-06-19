@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Payment methods (g12)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g12 · PAYMENT METHODS  (FX-03 .acct-* shell + .pm-*)
+   Saved cards + local methods (mada/Apple Pay/Tabby) — the
+   standing fix for cross-border declines (F-09). Ties a card to
+   the F-12 balance auto-charge. Self-contained until FX-03 promoted.
+   ============================================================ */
+.acct-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+
+/* logged-in header (FX-03) */
+.acct-bell { position: relative; width: 38px; height: 38px; border-radius: var(--radius-full); border: 1px solid rgba(107,114,128,0.25); background: #fff; cursor: pointer; font-size: var(--text-sm); display: inline-flex; align-items: center; justify-content: center; transition: border-color var(--transition-micro); }
+.acct-bell:hover { border-color: var(--color-soft-gold); }
+.acct-bell .dot { position: absolute; top: 7px; right: 8px; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-error); border: 1.5px solid #fff; }
+.acct-userchip { display: inline-flex; align-items: center; gap: var(--space-2); background: #fff; border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 4px var(--space-3) 4px 4px; cursor: pointer; font-size: var(--text-sm); font-weight: 600; transition: border-color var(--transition-micro); }
+.acct-userchip:hover { border-color: var(--color-soft-gold); }
+.acct-userchip .avatar { width: 30px; height: 30px; font-size: 11px; }
+.acct-userchip .caret { color: var(--color-warm-gray); font-size: 9px; }
+
+/* layout (FX-03) */
+.acct-layout { display: grid; grid-template-columns: 244px minmax(0,1fr); gap: var(--space-8); align-items: start; padding: var(--space-8) 0 var(--space-16); }
+.acct-nav { position: sticky; top: 84px; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-xs); }
+.acct-profile { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid rgba(107,114,128,0.12); margin-bottom: var(--space-3); }
+.acct-profile .avatar { width: 44px; height: 44px; font-size: var(--text-sm); }
+.acct-profile-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); }
+.acct-profile-tier { font-size: 10px; color: var(--color-warning); font-family: var(--font-mono); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; }
+.acct-navlist { list-style: none; display: grid; gap: 2px; }
+.acct-navlist a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 500; color: var(--color-deep-slate); transition: background var(--transition-micro), color var(--transition-micro); }
+.acct-navlist a .ic { width: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0; }
+.acct-navlist a:hover { background: var(--color-soft-beige); }
+.acct-navlist a.is-active { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.acct-navlist a .count { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); }
+.acct-navlist a.is-active .count { color: var(--color-soft-gold); }
+.acct-signout { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(107,114,128,0.12); }
+.acct-signout a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--color-warm-gray); border-radius: var(--radius-md); }
+.acct-signout a:hover { background: var(--color-soft-beige); color: var(--color-midnight-navy); }
+
+/* ---- payment methods ---- */
+.pm-h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.025em; }
+.pm-sub { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: 2px; margin-bottom: var(--space-6); }
+.pm-card { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-xs); margin-bottom: var(--space-4); }
+.pm-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap; }
+.pm-card-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; }
+
+/* saved method row */
+.pm-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border: 1px solid rgba(107,114,128,0.18); border-radius: var(--radius-lg); margin-bottom: var(--space-3); flex-wrap: wrap; }
+.pm-row.default { border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
+.pm-row.expiring { border-color: rgba(146,64,14,0.4); background: var(--color-warning-bg); }
+.pm-brand { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; background: var(--color-midnight-navy); color: var(--color-warm-ivory); border-radius: var(--radius-sm); padding: 6px var(--space-3); min-width: 64px; text-align: center; flex-shrink: 0; }
+.pm-brand.mada { background: #84B649; color: #fff; }
+.pm-brand.apple { background: #000; }
+.pm-brand.tabby { background: #3fd6c1; color: #06231f; }
+.pm-info { min-width: 0; }
+.pm-num { font-size: var(--text-sm); font-weight: 600; }
+.pm-exp { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: 1px; }
+.pm-exp.warn { color: var(--color-warning); font-weight: 600; }
+.pm-row-actions { margin-left: auto; display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
+.pm-link { font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 5px var(--space-3); cursor: pointer; background: #fff; white-space: nowrap; transition: border-color var(--transition-micro); }
+.pm-link:hover { border-color: var(--color-soft-gold); }
+.pm-link.danger { color: var(--color-error); }
+.pm-link.danger:hover { border-color: var(--color-error); }
+.pm-add { display: inline-flex; align-items: center; gap: var(--space-2); border: 1px dashed rgba(107,114,128,0.4); border-radius: var(--radius-lg); padding: var(--space-4); width: 100%; justify-content: center; font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); background: var(--color-warm-ivory); cursor: pointer; transition: border-color var(--transition-micro); }
+.pm-add:hover { border-color: var(--color-soft-gold); }
+
+/* local-methods note (F-09) */
+.pm-local { display: flex; gap: var(--space-3); background: var(--color-info-bg); color: var(--color-info); border-radius: var(--radius-lg); padding: var(--space-4); font-size: var(--text-xs); line-height: 1.5; margin-top: var(--space-2); }
+.pm-local b { font-weight: 700; }
+
+/* balance auto-charge note (F-12 tie) */
+.pm-autocharge { display: flex; gap: var(--space-3); align-items: center; background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-4); font-size: var(--text-sm); flex-wrap: wrap; }
+.pm-autocharge .ic { font-size: var(--text-md); flex-shrink: 0; }
+.pm-autocharge-txt { flex: 1; min-width: 200px; }
+.pm-autocharge-txt b { font-weight: 700; }
+.pm-autocharge-txt span { font-size: var(--text-xs); color: var(--color-deep-slate); display: block; }
+
+/* billing */
+.pm-billing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.pm-field { display: flex; flex-direction: column; gap: var(--space-1); }
+.pm-field.full { grid-column: 1 / -1; }
+.pm-label { font-size: var(--text-xs); font-weight: 500; color: var(--color-deep-slate); }
+
+/* add-card overlay */
+.bd-overlay { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: var(--space-6); background: rgba(13,27,42,0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.bd-overlay.is-open { display: flex; }
+.pm-modal { max-width: 440px; width: 100%; background: #fff; border-radius: var(--radius-2xl); box-shadow: var(--shadow-xl); border: 1px solid rgba(107,114,128,0.15); padding: var(--space-6); }
+.pm-modal h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; }
+.pm-modal p { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: var(--space-2); }
+.pm-modal-methods { display: flex; gap: var(--space-2); flex-wrap: wrap; margin: var(--space-4) 0; }
+.pm-modal-method { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(107,114,128,0.3); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-4); font-size: var(--text-sm); font-weight: 600; cursor: pointer; background: #fff; }
+.pm-modal-method.on { border-color: var(--color-soft-gold); background: rgba(212,175,55,0.07); }
+.pm-modal-method:hover { border-color: var(--color-soft-gold); }
+.pm-modal-fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin: var(--space-4) 0; }
+.pm-modal-fields .pm-field.full { grid-column: 1 / -1; }
+.pm-setdefault { display: flex; gap: var(--space-3); align-items: center; font-size: var(--text-sm); }
+.pm-modal-actions { display: flex; gap: var(--space-2); margin-top: var(--space-5); }
+.pm-modal-actions .btn { flex: 1; justify-content: center; }
+.btn-danger { background: var(--color-error); color: var(--color-warm-ivory); border: none; }
+.btn-danger:hover { background: #7f1414; }
+
+/* ---- design states ---- */
+.acct-states { background: var(--color-soft-beige); padding: var(--space-16) 0 var(--space-12); }
+.acct-stateframe { background: #fff; border: 1px dashed rgba(212,175,55,0.6); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
+.acct-statehead { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-warning); background: rgba(212,175,55,0.08); padding: var(--space-2) var(--space-5); border-bottom: 1px dashed rgba(212,175,55,0.6); display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.acct-statehead .why { color: var(--color-warm-gray); text-transform: none; letter-spacing: 0; }
+.acct-statebody { padding: var(--space-8); display: flex; justify-content: center; }
+.pm-statewrap { max-width: 560px; width: 100%; }
+.pm-modal.static { box-shadow: none; border: 1px solid rgba(107,114,128,0.15); margin: 0 auto; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .acct-layout { grid-template-columns: minmax(0,1fr); }
+  .acct-layout > main { min-width: 0; }
+  .acct-nav { position: static; min-width: 0; overflow: hidden; }
+  .acct-profile { display: none; }
+  .acct-navlist { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; gap: var(--space-1); scrollbar-width: none; }
+  .acct-navlist a .count { display: none; }
+  .acct-signout { display: none; }
+}
+@media (max-width: 700px) {
+  .currency-btn, .acct-bell { display: none; }
+  .pm-billing-grid, .pm-modal-fields { grid-template-columns: 1fr; }
+  .pm-row-actions { margin-left: 0; width: 100%; }
+  .acct-statebody { padding: var(--space-5); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02 · logged-in) ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <button class="acct-bell" type="button" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <button class="acct-userchip" type="button"><span class="avatar">MN</span>Mariam <span class="caret">▾</span></button>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g08-my-bookings.html">My bookings</a>
+    <a class="site-nav-link" href="belongo-g11-account-settings.html">Account settings</a>
+    <a class="site-nav-link is-active" href="belongo-g12-payment-methods.html">Payment methods</a>
+  </div>
+</header>
+
+<div class="acct-shell">
+  <div class="acct-layout">
+    <!-- ============ SIDE-NAV (FX-03) ============ -->
+    <aside class="acct-nav">
+      <div class="acct-profile">
+        <span class="avatar">MN</span>
+        <div>
+          <div class="acct-profile-name">Mariam Nasser</div>
+          <div class="acct-profile-tier">◆ Circle member</div>
+        </div>
+      </div>
+      <ul class="acct-navlist">
+        <li><a href="belongo-g08-my-bookings.html"><span class="ic">🧳</span> My bookings <span class="count">3</span></a></li>
+        <li><a href="#"><span class="ic">♡</span> Saved stays <span class="count">7</span></a></li>
+        <li><a href="belongo-g13-review-submission.html"><span class="ic">★</span> Reviews <span class="count">2</span></a></li>
+        <li><a href="belongo-g11-account-settings.html"><span class="ic">⚙</span> Account settings</a></li>
+        <li><a class="is-active" href="belongo-g12-payment-methods.html"><span class="ic">💳</span> Payment methods</a></li>
+        <li><a href="#"><span class="ic">◆</span> Belongo Circle</a></li>
+        <li><a href="#"><span class="ic">?</span> Help center</a></li>
+      </ul>
+      <div class="acct-signout"><a href="belongo-g02-landing-command.html"><span class="ic">⏻</span> Sign out</a></div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+      <h1 class="pm-h1">Payment methods</h1>
+      <p class="pm-sub">Saved for faster, more reliable checkout — add a local method to sail through cross-border payments.</p>
+
+      <!-- saved methods -->
+      <div class="pm-card">
+        <div class="pm-card-head">
+          <span class="pm-card-title">Saved methods</span>
+          <span style="font-size:var(--text-xs); color:var(--color-warm-gray); font-family:var(--font-mono);">🔒 stored by Stripe, never on our servers</span>
+        </div>
+
+        <div class="pm-row default">
+          <span class="pm-brand">VISA</span>
+          <div class="pm-info">
+            <div class="pm-num">Visa ending 4242 <span class="badge badge-premium">Default</span></div>
+            <div class="pm-exp">Expires 08 / 28 · Mariam Nasser</div>
+          </div>
+          <div class="pm-row-actions">
+            <button class="pm-link" type="button">Edit</button>
+            <button class="pm-link danger" type="button" data-toggle-overlay="#pm-remove">Remove</button>
+          </div>
+        </div>
+
+        <div class="pm-row">
+          <span class="pm-brand mada">mada</span>
+          <div class="pm-info">
+            <div class="pm-num">mada ending 1099</div>
+            <div class="pm-exp">Expires 11 / 27 · clears locally in the Gulf</div>
+          </div>
+          <div class="pm-row-actions">
+            <button class="pm-link" type="button">Make default</button>
+            <button class="pm-link danger" type="button">Remove</button>
+          </div>
+        </div>
+
+        <div class="pm-row">
+          <span class="pm-brand apple"> Pay</span>
+          <div class="pm-info">
+            <div class="pm-num">Apple Pay</div>
+            <div class="pm-exp">Linked to this device</div>
+          </div>
+          <div class="pm-row-actions">
+            <button class="pm-link" type="button">Make default</button>
+            <button class="pm-link danger" type="button">Remove</button>
+          </div>
+        </div>
+
+        <button class="pm-add" type="button" data-toggle-overlay="#pm-add">＋ Add a payment method</button>
+
+        <div class="pm-local">
+          <span style="font-size:var(--text-md);">🌍</span>
+          <div>Booking from abroad? <b>Local methods (mada, Apple Pay, Tabby) clear far more reliably than foreign cards.</b> Adding one now means no surprise declines at checkout.</div>
+        </div>
+      </div>
+
+      <!-- auto-charge note (F-12) -->
+      <div class="pm-card">
+        <div class="pm-card-title" style="margin-bottom: var(--space-4);">Scheduled charges</div>
+        <div class="pm-autocharge">
+          <span class="ic">⏳</span>
+          <div class="pm-autocharge-txt"><b>AED 714 balance · Al Seef Heritage Loft</b><span>Auto-charges to Visa ••4242 on 5 Sep. We remind you on 29 Aug &amp; 3 Sep — or pay sooner anytime.</span></div>
+          <a class="btn btn-secondary btn-sm" href="belongo-g09-booking-detail.html">View booking</a>
+        </div>
+      </div>
+
+      <!-- billing -->
+      <div class="pm-card">
+        <div class="pm-card-title" style="margin-bottom: var(--space-4);">Billing details</div>
+        <div class="pm-billing-grid">
+          <div class="pm-field full"><span class="pm-label">Name on invoices</span><input class="input" type="text" value="Mariam Nasser"></div>
+          <div class="pm-field full"><span class="pm-label">Billing address</span><input class="input" type="text" value="Jabal Al Weibdeh, Amman, Jordan"></div>
+          <div class="pm-field"><span class="pm-label">VAT / Tax ID (optional)</span><input class="input" type="text" placeholder="For business invoices"></div>
+          <div class="pm-field"><span class="pm-label">Country</span><input class="input" type="text" value="Jordan"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" type="button" style="margin-top: var(--space-4);">Save billing details</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- add-method overlay -->
+<div class="bd-overlay" id="pm-add" aria-hidden="true">
+  <div class="pm-modal">
+    <h3>Add a payment method</h3>
+    <p>Pick a method — local options clear most reliably for Gulf stays.</p>
+    <div class="pm-modal-methods">
+      <button class="pm-modal-method on" type="button">💳 Card</button>
+      <button class="pm-modal-method" type="button"> Apple Pay</button>
+      <button class="pm-modal-method" type="button">mada</button>
+      <button class="pm-modal-method" type="button">Tabby</button>
+    </div>
+    <div class="pm-modal-fields">
+      <div class="pm-field full"><span class="pm-label">Card number</span><input class="input" type="text" placeholder="1234 1234 1234 1234" inputmode="numeric"></div>
+      <div class="pm-field"><span class="pm-label">Expiry</span><input class="input" type="text" placeholder="MM / YY"></div>
+      <div class="pm-field"><span class="pm-label">CVC</span><input class="input" type="text" placeholder="•••"></div>
+      <div class="pm-field full"><span class="pm-label">Name on card</span><input class="input" type="text" placeholder="Mariam Nasser"></div>
+    </div>
+    <label class="pm-setdefault check-wrap"><input type="checkbox" checked><span class="check-label">Set as default</span></label>
+    <div class="pm-modal-actions">
+      <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#pm-add">Cancel</button>
+      <button class="btn btn-premium btn-md" type="button">Add method</button>
+    </div>
+  </div>
+</div>
+
+<!-- remove overlay -->
+<div class="bd-overlay" id="pm-remove" aria-hidden="true">
+  <div class="pm-modal">
+    <h3>Remove Visa ••4242?</h3>
+    <div class="pm-autocharge" style="margin: var(--space-4) 0;">
+      <span class="ic">⚠</span>
+      <div class="pm-autocharge-txt"><b>This card is scheduled to pay AED 714 on 5 Sep</b><span>Set another default first, or your Al Seef Heritage Loft balance won’t auto-charge.</span></div>
+    </div>
+    <div class="pm-modal-actions">
+      <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#pm-remove">Keep card</button>
+      <button class="btn btn-danger btn-md" type="button">Remove anyway</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="#">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="#" style="text-decoration:underline">Privacy</a> · <a href="#" style="text-decoration:underline">Terms</a> · <a href="#" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">A foreign card getting declined? Add a local method like mada or Apple Pay here — they clear far more reliably for Gulf stays. Want me to walk you through it?</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Add a local method</button>
+      <button class="chat-chip" type="button">Why was my card declined?</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

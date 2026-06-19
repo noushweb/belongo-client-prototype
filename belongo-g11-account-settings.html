@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Account settings (g11)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g11 · ACCOUNT SETTINGS  (FX-03 .acct-* shell + .set-*)
+   Reuses the account shell. Profile, preferences (prayer-aware
+   default + Arabic/RTL), notifications, security. 2FA / delete /
+   email-verify in design-states. Self-contained until FX-03 promoted.
+   ============================================================ */
+.acct-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+
+/* logged-in header (FX-03) */
+.acct-bell { position: relative; width: 38px; height: 38px; border-radius: var(--radius-full); border: 1px solid rgba(107,114,128,0.25); background: #fff; cursor: pointer; font-size: var(--text-sm); display: inline-flex; align-items: center; justify-content: center; transition: border-color var(--transition-micro); }
+.acct-bell:hover { border-color: var(--color-soft-gold); }
+.acct-bell .dot { position: absolute; top: 7px; right: 8px; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-error); border: 1.5px solid #fff; }
+.acct-userchip { display: inline-flex; align-items: center; gap: var(--space-2); background: #fff; border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 4px var(--space-3) 4px 4px; cursor: pointer; font-size: var(--text-sm); font-weight: 600; transition: border-color var(--transition-micro); }
+.acct-userchip:hover { border-color: var(--color-soft-gold); }
+.acct-userchip .avatar { width: 30px; height: 30px; font-size: 11px; }
+.acct-userchip .caret { color: var(--color-warm-gray); font-size: 9px; }
+
+/* layout: side-nav + main (FX-03) */
+.acct-layout { display: grid; grid-template-columns: 244px minmax(0,1fr); gap: var(--space-8); align-items: start; padding: var(--space-8) 0 var(--space-16); }
+.acct-nav { position: sticky; top: 84px; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-xs); }
+.acct-profile { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid rgba(107,114,128,0.12); margin-bottom: var(--space-3); }
+.acct-profile .avatar { width: 44px; height: 44px; font-size: var(--text-sm); }
+.acct-profile-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); }
+.acct-profile-tier { font-size: 10px; color: var(--color-warning); font-family: var(--font-mono); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; }
+.acct-navlist { list-style: none; display: grid; gap: 2px; }
+.acct-navlist a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 500; color: var(--color-deep-slate); transition: background var(--transition-micro), color var(--transition-micro); }
+.acct-navlist a .ic { width: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0; }
+.acct-navlist a:hover { background: var(--color-soft-beige); }
+.acct-navlist a.is-active { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.acct-navlist a .count { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); }
+.acct-navlist a.is-active .count { color: var(--color-soft-gold); }
+.acct-signout { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(107,114,128,0.12); }
+.acct-signout a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--color-warm-gray); border-radius: var(--radius-md); }
+.acct-signout a:hover { background: var(--color-soft-beige); color: var(--color-midnight-navy); }
+
+/* ---- settings ---- */
+.set-h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.025em; }
+.set-sub { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: 2px; margin-bottom: var(--space-6); }
+.set-card { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-xs); margin-bottom: var(--space-4); }
+.set-card-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; margin-bottom: var(--space-2); }
+.set-card-note { font-size: var(--text-xs); color: var(--color-warm-gray); margin-bottom: var(--space-4); line-height: 1.5; }
+.set-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; border-top: 1px solid rgba(107,114,128,0.1); }
+.set-row:first-of-type { border-top: none; }
+.set-row .k { font-size: var(--text-sm); font-weight: 500; min-width: 150px; }
+.set-row .k span { display: block; font-size: var(--text-xs); color: var(--color-warm-gray); font-weight: 400; margin-top: 1px; }
+.set-row .v { font-size: var(--text-sm); color: var(--color-deep-slate); flex: 1; }
+.set-row .v .badge { vertical-align: middle; }
+.set-edit { margin-left: auto; font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 6px var(--space-4); cursor: pointer; background: #fff; white-space: nowrap; transition: border-color var(--transition-micro); }
+.set-edit:hover { border-color: var(--color-soft-gold); }
+.set-profile-top { display: flex; align-items: center; gap: var(--space-4); padding-bottom: var(--space-4); margin-bottom: var(--space-2); border-bottom: 1px solid rgba(107,114,128,0.1); }
+.set-profile-top .avatar { width: 64px; height: 64px; font-size: var(--text-lg); }
+.set-profile-top .who b { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; }
+.set-profile-top .who span { font-size: var(--text-xs); color: var(--color-warm-gray); display: block; }
+.set-select { display: inline-flex; align-items: center; gap: var(--space-2); border: 1px solid rgba(107,114,128,0.3); border-radius: var(--radius-md); padding: 7px var(--space-4); font-size: var(--text-sm); font-weight: 500; cursor: pointer; background: #fff; }
+.set-select:hover { border-color: var(--color-soft-gold); }
+.set-rtl-note { font-size: var(--text-xs); color: var(--color-info); background: var(--color-info-bg); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); margin-top: var(--space-3); line-height: 1.5; }
+
+/* notification grid */
+.set-notif-head { display: grid; grid-template-columns: 1fr 64px 64px; gap: var(--space-3); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-warm-gray); padding-bottom: var(--space-2); border-bottom: 1px solid rgba(107,114,128,0.12); }
+.set-notif-head span:not(:first-child) { text-align: center; }
+.set-notif-row { display: grid; grid-template-columns: 1fr 64px 64px; gap: var(--space-3); align-items: center; padding: var(--space-3) 0; border-top: 1px solid rgba(107,114,128,0.08); }
+.set-notif-row:first-of-type { border-top: none; }
+.set-notif-row .nlabel { font-size: var(--text-sm); font-weight: 500; }
+.set-notif-row .nlabel span { display: block; font-size: var(--text-xs); color: var(--color-warm-gray); }
+.set-notif-row .toggle-wrap { justify-content: center; }
+.set-notif-row .nlocked { text-align: center; font-size: 10px; color: var(--color-warm-gray); font-family: var(--font-mono); }
+
+/* security rows reuse set-row */
+.set-2fa-off { color: var(--color-warning); font-weight: 600; font-size: var(--text-xs); }
+
+/* danger zone */
+.set-danger { border-color: rgba(153,27,27,0.3); }
+.set-danger .set-card-title { color: var(--color-error); }
+.btn-danger-outline { background: #fff; color: var(--color-error); border: 1px solid rgba(153,27,27,0.4); }
+.btn-danger-outline:hover { background: var(--color-error-bg); border-color: var(--color-error); }
+.btn-danger { background: var(--color-error); color: var(--color-warm-ivory); border: none; }
+.btn-danger:hover { background: #7f1414; }
+/* overlay container (uses generic [data-toggle-overlay] handler) */
+.bd-overlay { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: var(--space-6); background: rgba(13,27,42,0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.bd-overlay.is-open { display: flex; }
+
+/* save bar */
+.set-savebar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); background: var(--color-midnight-navy); color: var(--color-warm-ivory); border-radius: var(--radius-xl); padding: var(--space-4) var(--space-5); margin-top: var(--space-4); flex-wrap: wrap; }
+.set-savebar span { font-size: var(--text-sm); }
+.set-savebar .saved { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-soft-gold); }
+
+/* ---- design states ---- */
+.acct-states { background: var(--color-soft-beige); padding: var(--space-16) 0 var(--space-12); }
+.acct-stateframe { background: #fff; border: 1px dashed rgba(212,175,55,0.6); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
+.acct-statehead { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-warning); background: rgba(212,175,55,0.08); padding: var(--space-2) var(--space-5); border-bottom: 1px dashed rgba(212,175,55,0.6); display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.acct-statehead .why { color: var(--color-warm-gray); text-transform: none; letter-spacing: 0; }
+.acct-statebody { padding: var(--space-8); display: flex; justify-content: center; }
+.set-statecard { max-width: 420px; width: 100%; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-2xl); box-shadow: var(--shadow-md); padding: var(--space-6); text-align: center; }
+.set-statecard.left { text-align: left; }
+.set-statecard h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; }
+.set-statecard p { font-size: var(--text-sm); color: var(--color-warm-gray); line-height: 1.55; margin-top: var(--space-2); }
+.set-qr { width: 132px; height: 132px; border-radius: var(--radius-lg); background: repeating-conic-gradient(var(--color-midnight-navy) 0% 25%, #fff 0% 50%) 50% / 16px 16px; border: 6px solid #fff; box-shadow: 0 0 0 1px rgba(107,114,128,0.2); margin: var(--space-4) auto; }
+.set-otp { display: flex; gap: var(--space-2); justify-content: center; margin: var(--space-4) 0; }
+.set-otp input { width: 44px; height: 52px; text-align: center; font-family: var(--font-mono); font-size: var(--text-lg); border: 1px solid rgba(107,114,128,0.3); border-radius: var(--radius-lg); background: var(--color-warm-ivory); }
+.set-otp input.filled { border-color: var(--color-soft-gold); background: #fff; }
+.set-danger-ic { width: 52px; height: 52px; border-radius: var(--radius-full); background: var(--color-error-bg); color: var(--color-error); display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-lg); margin-bottom: var(--space-4); }
+.set-confirm-input { width: 100%; margin: var(--space-4) 0; }
+.set-loss { list-style: none; text-align: left; margin: var(--space-4) 0; display: grid; gap: var(--space-2); }
+.set-loss li { font-size: var(--text-xs); color: var(--color-deep-slate); display: flex; gap: var(--space-2); }
+.set-loss .x { color: var(--color-error); }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .acct-layout { grid-template-columns: minmax(0,1fr); }
+  .acct-layout > main { min-width: 0; }
+  .acct-nav { position: static; min-width: 0; overflow: hidden; }
+  .acct-profile { display: none; }
+  .acct-navlist { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; gap: var(--space-1); scrollbar-width: none; }
+  .acct-navlist a .count { display: none; }
+  .acct-signout { display: none; }
+}
+@media (max-width: 700px) {
+  .currency-btn, .acct-bell { display: none; }
+  .set-row { flex-wrap: wrap; }
+  .set-row .k { min-width: 0; flex: 1; }
+  .set-edit { margin-left: 0; }
+  .acct-statebody { padding: var(--space-5); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02 · logged-in) ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <button class="acct-bell" type="button" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <button class="acct-userchip" type="button"><span class="avatar">MN</span>Mariam <span class="caret">▾</span></button>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g08-my-bookings.html">My bookings</a>
+    <a class="site-nav-link is-active" href="belongo-g11-account-settings.html">Account settings</a>
+    <a class="site-nav-link" href="belongo-g12-payment-methods.html">Payment methods</a>
+  </div>
+</header>
+
+<div class="acct-shell">
+  <div class="acct-layout">
+    <!-- ============ SIDE-NAV (FX-03) ============ -->
+    <aside class="acct-nav">
+      <div class="acct-profile">
+        <span class="avatar">MN</span>
+        <div>
+          <div class="acct-profile-name">Mariam Nasser</div>
+          <div class="acct-profile-tier">◆ Circle member</div>
+        </div>
+      </div>
+      <ul class="acct-navlist">
+        <li><a href="belongo-g08-my-bookings.html"><span class="ic">🧳</span> My bookings <span class="count">3</span></a></li>
+        <li><a href="#"><span class="ic">♡</span> Saved stays <span class="count">7</span></a></li>
+        <li><a href="belongo-g13-review-submission.html"><span class="ic">★</span> Reviews <span class="count">2</span></a></li>
+        <li><a class="is-active" href="belongo-g11-account-settings.html"><span class="ic">⚙</span> Account settings</a></li>
+        <li><a href="belongo-g12-payment-methods.html"><span class="ic">💳</span> Payment methods</a></li>
+        <li><a href="#"><span class="ic">◆</span> Belongo Circle</a></li>
+        <li><a href="#"><span class="ic">?</span> Help center</a></li>
+      </ul>
+      <div class="acct-signout"><a href="belongo-g02-landing-command.html"><span class="ic">⏻</span> Sign out</a></div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+      <h1 class="set-h1">Account settings</h1>
+      <p class="set-sub">Manage your profile, how Belongo works for you, and how we reach you.</p>
+
+      <!-- profile -->
+      <div class="set-card">
+        <div class="set-card-title">Profile</div>
+        <div class="set-profile-top">
+          <span class="avatar">MN</span>
+          <div class="who"><b>Mariam Nasser</b><span>Member since March 2026 · ◆ Circle</span></div>
+          <button class="set-edit" type="button">Change photo</button>
+        </div>
+        <div class="set-row"><div class="k">Full name</div><div class="v">Mariam Nasser</div><button class="set-edit" type="button">Edit</button></div>
+        <div class="set-row"><div class="k">Email</div><div class="v">mariam.n@example.com <span class="badge badge-verified">✓ Verified</span></div><button class="set-edit" type="button">Change</button></div>
+        <div class="set-row"><div class="k">Mobile</div><div class="v">+962 7 9000 0000 <span class="badge badge-verified">✓ Verified</span></div><button class="set-edit" type="button">Change</button></div>
+      </div>
+
+      <!-- preferences -->
+      <div class="set-card">
+        <div class="set-card-title">Preferences</div>
+        <div class="set-card-note">How Belongo shows prices, content and the things that matter to your stay.</div>
+        <div class="set-row"><div class="k">Currency<span>Prices &amp; charges shown in</span></div><div class="v"></div><button class="set-select" type="button">AED — UAE Dirham ▾</button></div>
+        <div class="set-row"><div class="k">Language<span>Interface &amp; emails</span></div><div class="v"></div><button class="set-select" type="button">English ▾</button></div>
+        <div class="set-rtl-note">🌍 العربية is available with full right-to-left layout. Switching to Arabic mirrors the whole interface — try it anytime.</div>
+        <div class="set-row" style="margin-top: var(--space-2);">
+          <div class="k">Prayer-aware browsing<span>Show mosque distance, prayer times &amp; qibla on listings</span></div>
+          <div class="v"></div>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label>
+        </div>
+        <div class="set-row">
+          <div class="k">Distance units</div>
+          <div class="v"></div>
+          <button class="set-select" type="button">Kilometres ▾</button>
+        </div>
+        <div class="set-row">
+          <div class="k">Reduce motion<span>Minimise animations across Belongo</span></div>
+          <div class="v"></div>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox"><span class="toggle-track"></span></label>
+        </div>
+      </div>
+
+      <!-- notifications -->
+      <div class="set-card">
+        <div class="set-card-title">Notifications</div>
+        <div class="set-card-note">Booking-critical alerts (confirmations, payment due, check-in codes) are always on — they keep your stay safe.</div>
+        <div class="set-notif-head"><span>What we send</span><span>Email</span><span>SMS</span></div>
+        <div class="set-notif-row">
+          <div class="nlabel">Booking &amp; payment<span>Confirmations, balance due, check-in</span></div>
+          <span class="nlocked">Always on</span>
+          <span class="nlocked">Always on</span>
+        </div>
+        <div class="set-notif-row">
+          <div class="nlabel">Trip reminders<span>Before check-in &amp; check-out</span></div>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label>
+        </div>
+        <div class="set-notif-row">
+          <div class="nlabel">Deals &amp; Circle offers<span>Member rates, seasonal drops</span></div>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox"><span class="toggle-track"></span></label>
+        </div>
+        <div class="set-notif-row">
+          <div class="nlabel">Reviews &amp; community<span>Review reminders, replies to your questions</span></div>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label>
+          <label class="toggle-wrap"><input class="toggle-input" type="checkbox"><span class="toggle-track"></span></label>
+        </div>
+      </div>
+
+      <!-- security -->
+      <div class="set-card">
+        <div class="set-card-title">Security</div>
+        <div class="set-row"><div class="k">Password<span>Last changed 2 months ago</span></div><div class="v">••••••••</div><button class="set-edit" type="button">Change</button></div>
+        <div class="set-row"><div class="k">Two-factor authentication<span>An extra code at sign-in</span></div><div class="v"><span class="set-2fa-off">● Off</span></div><button class="set-edit" type="button" data-toggle-overlay="#set-2fa" style="border-color: var(--color-soft-gold);">Enable</button></div>
+        <div class="set-row"><div class="k">Active sessions<span>Where you’re signed in</span></div><div class="v">2 devices · Dubai, Amman</div><button class="set-edit" type="button">Manage</button></div>
+      </div>
+
+      <!-- privacy -->
+      <div class="set-card">
+        <div class="set-card-title">Privacy &amp; data</div>
+        <div class="set-row"><div class="k">Personalised recommendations<span>Use my activity to suggest stays</span></div><div class="v"></div><label class="toggle-wrap"><input class="toggle-input" type="checkbox" checked><span class="toggle-track"></span></label></div>
+        <div class="set-row"><div class="k">Download my data<span>A copy of your bookings, reviews &amp; profile</span></div><div class="v"></div><button class="set-edit" type="button">Request</button></div>
+      </div>
+
+      <!-- danger -->
+      <div class="set-card set-danger">
+        <div class="set-card-title">Delete account</div>
+        <div class="set-card-note">Permanently removes your profile, trips, reviews and Circle status. Active bookings must be completed or cancelled first.</div>
+        <button class="btn btn-danger-outline btn-md" type="button" data-toggle-overlay="#set-delete">Delete my account</button>
+      </div>
+
+      <div class="set-savebar">
+        <span>Changes save automatically.</span>
+        <span class="saved">✓ All changes saved · just now</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- 2FA overlay (demo) -->
+<div class="bd-overlay" id="set-2fa" aria-hidden="true">
+  <div class="set-statecard">
+    <h3>Turn on two-factor</h3>
+    <p>Scan this with Google Authenticator or Authy — or get codes by SMS to ••00 0000.</p>
+    <div class="set-qr"></div>
+    <div class="set-otp"><input value="" maxlength="1" inputmode="numeric"><input value="" maxlength="1" inputmode="numeric"><input value="" maxlength="1" inputmode="numeric"><input value="" maxlength="1" inputmode="numeric"><input value="" maxlength="1" inputmode="numeric"><input value="" maxlength="1" inputmode="numeric"></div>
+    <div style="display:flex; gap:var(--space-2);">
+      <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#set-2fa" style="flex:1; justify-content:center;">Cancel</button>
+      <button class="btn btn-premium btn-md" type="button" style="flex:1; justify-content:center;">Turn on 2FA</button>
+    </div>
+  </div>
+</div>
+
+<!-- delete overlay (demo) -->
+<div class="bd-overlay" id="set-delete" aria-hidden="true">
+  <div class="set-statecard left">
+    <div style="text-align:center;"><div class="set-danger-ic">⚠</div></div>
+    <h3 style="text-align:center;">Delete your account?</h3>
+    <p style="text-align:center;">This can’t be undone. You’ll lose:</p>
+    <ul class="set-loss">
+      <li><span class="x">✕</span> 3 bookings &amp; their history</li>
+      <li><span class="x">✕</span> 2 reviews &amp; your Nearby-by-guests contributions</li>
+      <li><span class="x">✕</span> Circle membership &amp; member rates</li>
+    </ul>
+    <input class="input set-confirm-input" type="text" placeholder="Type DELETE to confirm">
+    <div style="display:flex; gap:var(--space-2);">
+      <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#set-delete" style="flex:1; justify-content:center;">Keep my account</button>
+      <button class="btn btn-danger btn-md" type="button" style="flex:1; justify-content:center;">Delete forever</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="#">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="#" style="text-decoration:underline">Privacy</a> · <a href="#" style="text-decoration:underline">Terms</a> · <a href="#" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Settings questions? I can switch you to Arabic, set up two-factor, or explain what data we keep — just ask.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Switch to العربية</button>
+      <button class="chat-chip" type="button">Set up two-factor</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

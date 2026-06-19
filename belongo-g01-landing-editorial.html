@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Stays that keep their promise · Landing Option A “Concierge Editorial”</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g01 · LANDING OPTION A — “CONCIERGE EDITORIAL”  (.le-*)
+   Image-led, magazine-calm. Generous whitespace, gold as a rare
+   editorial accent. All tokens/components from belongo-shared.css.
+   ============================================================ */
+.le-container { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+
+/* ---- Hero ---- */
+.le-hero { position: relative; min-height: 88vh; display: flex; flex-direction: column; }
+.le-hero-media { position: absolute; inset: 0; overflow: hidden; background: var(--color-deep-slate); }
+.le-hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.le-hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,27,42,0.42) 0%, rgba(13,27,42,0.18) 40%, rgba(13,27,42,0.62) 100%);
+}
+.le-hero-content {
+  position: relative; z-index: 2;
+  margin-top: auto;
+  padding-top: var(--space-24);
+  padding-bottom: calc(var(--space-20) + 64px);
+  color: var(--color-warm-ivory);
+}
+.le-eyebrow {
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--color-soft-gold-pale);
+  margin-bottom: var(--space-5);
+}
+.le-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.7rem, 6vw, 4.4rem);
+  font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;
+  max-width: 700px;
+  text-wrap: balance;
+}
+.le-hero h1 em { font-style: italic; font-weight: 500; color: var(--color-soft-gold); }
+.le-hero-sub {
+  margin-top: var(--space-5);
+  font-size: var(--text-md); line-height: 1.6;
+  color: rgba(247,246,242,0.85);
+  max-width: 480px;
+}
+/* floating concierge card */
+.le-search-wrap { position: relative; z-index: 3; margin-top: -58px; }
+.le-search-card {
+  background: #fff;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(107,114,128,0.1);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+.le-search-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4);
+  padding: 0 var(--space-2) var(--space-3);
+}
+.le-search-label {
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--color-warm-gray);
+}
+.le-search-promise { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.le-search-promise b { color: var(--color-midnight-navy); font-weight: 600; }
+.le-search-card .search-pill { box-shadow: none; border: 1px solid rgba(107,114,128,0.2); }
+
+/* ---- Trust strip ---- */
+.le-trust { padding: var(--space-12) 0 var(--space-4); }
+.le-trust-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+.le-trust-item { display: flex; gap: var(--space-3); align-items: flex-start; }
+.le-trust-dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-soft-gold); margin-top: 7px; flex-shrink: 0; }
+.le-trust-item b { display: block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); letter-spacing: -0.01em; }
+.le-trust-item span { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.5; }
+
+/* ---- Section scaffolding ---- */
+.le-section { padding: var(--space-20) 0 var(--space-12); }
+.le-label {
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-warm-gray); margin-bottom: var(--space-3);
+}
+.le-title {
+  font-family: var(--font-display); font-size: clamp(1.7rem, 3.2vw, var(--text-2xl));
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1.15;
+  max-width: 560px; margin-bottom: var(--space-3);
+}
+.le-title em { font-style: italic; font-weight: 500; color: var(--color-soft-gold); }
+.le-intro { color: var(--color-warm-gray); max-width: 520px; margin-bottom: var(--space-10); }
+.le-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; }
+.le-more {
+  font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy);
+  border-bottom: 1px solid var(--color-soft-gold); padding-bottom: 2px;
+  white-space: nowrap; margin-bottom: var(--space-10);
+  transition: color var(--transition-micro);
+}
+.le-more:hover { color: var(--color-soft-gold); }
+
+/* ---- Collections mosaic ---- */
+.le-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: var(--space-4);
+}
+.le-tile { position: relative; border-radius: var(--radius-xl); overflow: hidden; background: var(--color-soft-beige); cursor: pointer; }
+.le-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms ease; }
+.le-tile:hover img { transform: scale(1.05); }
+.le-tile::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,27,42,0) 35%, rgba(13,27,42,0.72) 100%);
+}
+.le-tile-text { position: absolute; left: var(--space-5); right: var(--space-5); bottom: var(--space-5); z-index: 2; color: var(--color-warm-ivory); }
+.le-tile-tag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--color-soft-gold-pale); display: block; margin-bottom: var(--space-1);
+}
+.le-tile-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; line-height: 1.25; }
+.le-tile-count { font-size: var(--text-xs); color: rgba(247,246,242,0.75); margin-top: 2px; display: block; }
+.le-tile--tall { grid-column: 1 / 3; grid-row: 1 / 3; }
+.le-tile--wide { grid-column: 3 / 5; }
+
+/* ---- Featured stays ---- */
+.le-featured { background: var(--color-soft-beige); }
+.le-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+.le-price-note {
+  margin-top: var(--space-8); font-size: var(--text-xs); color: var(--color-warm-gray);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.le-price-note .tp-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-soft-gold); }
+
+/* ---- Editorial feature split ---- */
+.le-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: center; }
+.le-split-media { position: relative; border-radius: var(--radius-2xl); overflow: hidden; aspect-ratio: 4/5; background: var(--color-soft-beige); }
+.le-split-media img { width: 100%; height: 100%; object-fit: cover; }
+.le-split-caption {
+  position: absolute; left: var(--space-4); bottom: var(--space-4);
+  background: rgba(13,27,42,0.78); backdrop-filter: blur(6px);
+  color: var(--color-warm-ivory);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+}
+.le-split-caption span { color: var(--color-soft-gold); }
+.le-feature { display: flex; gap: var(--space-5); padding: var(--space-6) 0; border-bottom: 1px solid rgba(107,114,128,0.15); }
+.le-feature:last-of-type { border-bottom: none; }
+.le-feature-num {
+  font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-soft-gold);
+  padding-top: 3px; flex-shrink: 0;
+}
+.le-feature b { display: block; font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; margin-bottom: var(--space-1); }
+.le-feature p { font-size: var(--text-sm); color: var(--color-warm-gray); line-height: 1.6; max-width: 380px; }
+
+/* ---- Reviews wall ---- */
+.le-reviews { background: var(--color-soft-beige); }
+.le-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+.le-quote {
+  background: #fff; border-radius: var(--radius-xl);
+  border: 1px solid rgba(107,114,128,0.1);
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.le-quote-mark { font-family: var(--font-display); font-size: var(--text-3xl); line-height: 0.5; color: var(--color-soft-gold); padding-top: var(--space-2); }
+.le-quote p { font-size: var(--text-sm); line-height: 1.65; color: var(--color-deep-slate); flex: 1; }
+.le-quote-meta { display: flex; align-items: center; gap: var(--space-3); }
+.le-quote-meta .avatar { width: 36px; height: 36px; font-size: var(--text-xs); }
+.le-quote-who b { display: block; font-size: var(--text-sm); font-weight: 600; }
+.le-quote-who span { font-size: var(--text-xs); color: var(--color-warm-gray); }
+
+/* ---- Host band ---- */
+.le-host { background: var(--color-midnight-navy); color: var(--color-warm-ivory); position: relative; overflow: hidden; }
+.le-host::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 90% 20%, rgba(212,175,55,0.12), transparent 60%);
+}
+.le-host-inner { position: relative; padding-top: var(--space-20); padding-bottom: var(--space-20); display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-12); align-items: center; }
+.le-host h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, var(--text-2xl)); font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; }
+.le-host h2 em { font-style: italic; font-weight: 500; color: var(--color-soft-gold); }
+.le-host p { margin-top: var(--space-4); color: rgba(247,246,242,0.75); font-size: var(--text-sm); line-height: 1.65; max-width: 480px; }
+.le-host-cta { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); justify-self: end; }
+.le-host-terms { font-family: var(--font-mono); font-size: var(--text-xs); color: rgba(247,246,242,0.6); line-height: 1.8; }
+.le-host-terms span { color: var(--color-soft-gold); }
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .le-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 320px 240px 240px; }
+  .le-tile--tall { grid-column: 1 / 3; grid-row: 1; }
+  .le-tile--wide { grid-column: 1 / 3; }
+  .le-cards, .le-quotes { grid-template-columns: 1fr 1fr; }
+  .le-split { grid-template-columns: 1fr; gap: var(--space-10); }
+  .le-split-media { aspect-ratio: 16/10; }
+  .le-trust-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .le-hero { min-height: 78vh; }
+  .le-hero-content { padding-bottom: calc(var(--space-16) + 120px); }
+  .le-search-wrap { margin-top: -120px; }
+  .le-search-card .search-pill { flex-direction: column; height: auto; border-radius: var(--radius-xl); align-items: stretch; }
+  .le-search-card .search-segment { border-right: none; border-bottom: 1px solid rgba(107,114,128,0.15); padding: var(--space-3) var(--space-4); }
+  .le-search-card .search-btn { width: auto; height: 48px; border-radius: var(--radius-lg); margin: var(--space-3); }
+  .le-search-head { flex-direction: column; gap: var(--space-1); }
+  .le-cards, .le-quotes, .le-trust-row { grid-template-columns: 1fr; }
+  .le-mosaic { grid-template-columns: 1fr; grid-template-rows: repeat(4, 240px); }
+  .le-tile--tall, .le-tile--wide { grid-column: 1; grid-row: auto; }
+  .le-host-inner { grid-template-columns: 1fr; }
+  .le-host-cta { justify-self: start; }
+  .le-section { padding: var(--space-16) 0 var(--space-8); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02 · overlay variant) ============ -->
+<header class="site-header site-header--overlay">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link is-active" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <span class="site-actions-divider"></span>
+      <a class="site-host-link" href="belongo-h01-host-landing.html">List your property</a>
+      <a class="btn btn-premium btn-sm" href="belongo-g07-auth.html">Sign in</a>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link is-active" href="belongo-g03-search-results.html">Stays</a>
+    <a class="site-nav-link" href="#">Collections</a>
+    <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+    <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <div class="site-mobile-actions">
+      <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
+      <a class="btn btn-secondary btn-md" href="belongo-h01-host-landing.html">List your property</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="le-hero">
+  <div class="le-hero-media">
+    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2400&auto=format&fit=crop" alt="Dubai skyline at dusk, seen from the water">
+  </div>
+  <div class="le-container le-hero-content">
+    <div class="le-eyebrow">Hospitality across the Gulf &amp; beyond</div>
+    <h1>A place that <em>holds</em> you, wherever you land.</h1>
+    <p class="le-hero-sub">Hand-picked stays in six countries — with the whole price shown
+    from the first glance, and a human on call at every hour.</p>
+  </div>
+</section>
+
+<!-- floating concierge search -->
+<div class="le-container le-search-wrap">
+  <div class="le-search-card">
+    <div class="le-search-head">
+      <span class="le-search-label">Where to next?</span>
+      <span class="le-search-promise"><b>Total price</b> shown from the first result — no surprise fees.</span>
+    </div>
+    <div class="search-pill">
+      <div class="search-segment">
+        <span class="search-seg-label">Destination</span>
+        <span class="search-seg-value">Dubai, Amman, anywhere…</span>
+      </div>
+      <div class="search-segment">
+        <span class="search-seg-label">Check-in</span>
+        <span class="search-seg-value">Add date</span>
+      </div>
+      <div class="search-segment">
+        <span class="search-seg-label">Check-out</span>
+        <span class="search-seg-value">Add date</span>
+      </div>
+      <div class="search-segment">
+        <span class="search-seg-label">Guests</span>
+        <span class="search-seg-value">2 adults</span>
+      </div>
+      <button class="search-btn" type="button" aria-label="Search">⌕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="le-trust">
+  <div class="le-container le-trust-row">
+    <div class="le-trust-item"><span class="le-trust-dot"></span><div><b>Total price, always</b><span>Fees and taxes in every number you see — never at the end.</span></div></div>
+    <div class="le-trust-item"><span class="le-trust-dot"></span><div><b>4.8 from 12,400 stays</b><span>Real reviews, read by our AI so patterns can’t hide.</span></div></div>
+    <div class="le-trust-item"><span class="le-trust-dot"></span><div><b>Free cancellation</b><span>On most stays — and the refund timeline shown before you confirm.</span></div></div>
+    <div class="le-trust-item"><span class="le-trust-dot"></span><div><b>Humans, 24/7</b><span>The assistant is AI. The help, when it matters, is a person.</span></div></div>
+  </div>
+</section>
+
+<!-- ============ COLLECTIONS ============ -->
+<section class="le-section">
+  <div class="le-container">
+    <div class="le-head-row">
+      <div>
+        <div class="le-label">Curated collections</div>
+        <h2 class="le-title">Travel that respects <em>how you live</em></h2>
+        <p class="le-intro">Collections built around the things guests actually ask for —
+        starting with the ones other platforms forget.</p>
+      </div>
+      <a class="le-more" href="#">All collections →</a>
+    </div>
+    <div class="le-mosaic">
+      <div class="le-tile le-tile--tall">
+        <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?q=80&w=1400&auto=format&fit=crop" alt="Sheikh Zayed Grand Mosque at dusk" loading="lazy">
+        <div class="le-tile-text">
+          <span class="le-tile-tag">Prayer-aware collection</span>
+          <div class="le-tile-name">Near the Grand Mosque</div>
+          <span class="le-tile-count">86 stays · walking distance, prayer times &amp; qibla in every listing</span>
+        </div>
+      </div>
+      <div class="le-tile">
+        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop" alt="Warm family living room with soft evening light" loading="lazy">
+        <div class="le-tile-text">
+          <span class="le-tile-tag">Family</span>
+          <div class="le-tile-name">Iftar-friendly homes</div>
+          <span class="le-tile-count">112 stays · full kitchens, space to gather</span>
+        </div>
+      </div>
+      <div class="le-tile">
+        <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1200&auto=format&fit=crop" alt="Dubai marina towers above the water" loading="lazy">
+        <div class="le-tile-text">
+          <span class="le-tile-tag">Skyline</span>
+          <div class="le-tile-name">Marina views</div>
+          <span class="le-tile-count">64 stays · floor-to-ceiling evenings</span>
+        </div>
+      </div>
+      <div class="le-tile le-tile--wide">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop" alt="Lantern-lit heritage courtyard" loading="lazy">
+        <div class="le-tile-text">
+          <span class="le-tile-tag">Heritage</span>
+          <div class="le-tile-name">Old-city courtyards</div>
+          <span class="le-tile-count">41 stays · Amman, Al Seef &amp; beyond</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED STAYS ============ -->
+<section class="le-section le-featured">
+  <div class="le-container">
+    <div class="le-head-row">
+      <div>
+        <div class="le-label">This week’s quiet luxuries</div>
+        <h2 class="le-title">Three stays our guests won’t stop mentioning</h2>
+      </div>
+      <a class="le-more" href="#">Browse all stays →</a>
+    </div>
+    <div class="le-cards">
+      <article class="prop-card">
+        <div class="prop-card-img-wrap">
+          <img class="prop-card-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop" alt="Resort pool at golden hour" loading="lazy">
+          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
+          <span class="prop-premium-badge">★ Premium</span>
+        </div>
+        <div class="prop-card-body">
+          <h3 class="prop-card-name">Jumeirah Garden Villa</h3>
+          <div class="prop-card-location">Umm Suqeim, Dubai · 1.2 km to the beach</div>
+          <div class="prop-card-stars"><span class="star">★★★★★</span><span class="star-count">4.9 (212)</span></div>
+          <div class="prop-card-price"><span class="prop-price-amount">AED 2,940</span><span class="prop-price-unit">total · 3 nights, fees in</span></div>
+        </div>
+      </article>
+      <article class="prop-card">
+        <div class="prop-card-img-wrap">
+          <img class="prop-card-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop" alt="Calm hotel suite in warm neutrals" loading="lazy">
+          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
+        </div>
+        <div class="prop-card-body">
+          <h3 class="prop-card-name">Al Seef Heritage Loft</h3>
+          <div class="prop-card-location">Al Seef, Dubai · 400 m to a mosque</div>
+          <div class="prop-card-stars"><span class="star">★★★★★</span><span class="star-count">4.8 (167)</span></div>
+          <div class="prop-card-price"><span class="prop-price-amount">AED 1,134</span><span class="prop-price-unit">total · 3 nights, fees in</span></div>
+        </div>
+      </article>
+      <article class="prop-card">
+        <div class="prop-card-img-wrap">
+          <img class="prop-card-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop" alt="Moody apartment living room at night" loading="lazy">
+          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
+        </div>
+        <div class="prop-card-body">
+          <h3 class="prop-card-name">Old Amman Courtyard House</h3>
+          <div class="prop-card-location">Jabal Al Weibdeh, Amman · rooftop qibla marker</div>
+          <div class="prop-card-stars"><span class="star">★★★★<span class="star-half">★</span></span><span class="star-count">4.7 (98)</span></div>
+          <div class="prop-card-price"><span class="prop-price-amount">JOD 264</span><span class="prop-price-unit">total · 3 nights, fees in</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="le-price-note"><span class="tp-dot"></span>Every price on Belongo is the total for your dates — taxes, cleaning and service included. Charged in your currency, shown before you pay.</div>
+  </div>
+</section>
+
+<!-- ============ EDITORIAL FEATURE SPLIT ============ -->
+<section class="le-section">
+  <div class="le-container le-split">
+    <div class="le-split-media">
+      <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=1400&auto=format&fit=crop" alt="Evening hotel room with a single warm lamp" loading="lazy">
+      <span class="le-split-caption">MAGHRIB 18:42 · QIBLA 258° SW · <span>MASJID 400 M</span></span>
+    </div>
+    <div>
+      <div class="le-label">Why Belongo</div>
+      <h2 class="le-title">Booking, the way a good host would do it</h2>
+      <div class="le-feature">
+        <span class="le-feature-num">01</span>
+        <div>
+          <b>Prayer-aware stays</b>
+          <p>Mosque distance, prayer times and qibla direction in every listing that earns it —
+          information, never assumption. Opt in once, see it everywhere.</p>
+        </div>
+      </div>
+      <div class="le-feature">
+        <span class="le-feature-num">02</span>
+        <div>
+          <b>An AI that listens first</b>
+          <p>Tell the concierge how you actually travel — late flights, light sleepers, a stroller —
+          and it reads every review so you don’t have to.</p>
+        </div>
+      </div>
+      <div class="le-feature">
+        <span class="le-feature-num">03</span>
+        <div>
+          <b>Pay your way</b>
+          <p>Your currency, shown and charged. Split the payment, keep the booking —
+          reminders arrive long before any deadline does.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS WALL ============ -->
+<section class="le-section le-reviews">
+  <div class="le-container">
+    <div class="le-label">Guest voices</div>
+    <h2 class="le-title">Guests keep their word, <em>too</em></h2>
+    <p class="le-intro">Unedited, from verified stays. Our AI reads all 12,400 — these are the ones
+    it keeps coming back to.</p>
+    <div class="le-quotes">
+      <div class="le-quote">
+        <div class="le-quote-mark">“</div>
+        <p>The price on the search page was the price on my card statement. I have never once had that
+        happen on the other sites. That alone converted me.</p>
+        <div class="le-quote-meta">
+          <span class="avatar">RA</span>
+          <div class="le-quote-who"><b>Rashid A.</b><span>Sharjah → Amman · stayed March 2026</span></div>
+        </div>
+      </div>
+      <div class="le-quote">
+        <div class="le-quote-mark">“</div>
+        <p>We landed at 2am with a sleeping toddler. The check-in instructions were already in WhatsApp,
+        in Arabic, with a video. The apartment matched every photo.</p>
+        <div class="le-quote-meta">
+          <span class="avatar">LH</span>
+          <div class="le-quote-who"><b>Layla H.</b><span>Riyadh → Dubai · stayed January 2026</span></div>
+        </div>
+      </div>
+      <div class="le-quote">
+        <div class="le-quote-mark">“</div>
+        <p>My card was declined twice — their assistant moved me to a human named Sara in under a minute,
+        held the apartment, and we paid with a different method. Booked again the next month.</p>
+        <div class="le-quote-meta">
+          <span class="avatar">DK</span>
+          <div class="le-quote-who"><b>Daniel K.</b><span>London → Dubai · stayed February 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOST CTA ============ -->
+<section class="le-host">
+  <div class="le-container le-host-inner">
+    <div>
+      <div class="le-label" style="color: var(--color-soft-gold);">For property owners</div>
+      <h2>Your property, <em>globally</em> at home</h2>
+      <p>One dashboard for every unit in every country — AI pricing that asks before it acts,
+      and payout terms you can read in one breath.</p>
+    </div>
+    <div class="le-host-cta">
+      <a class="btn btn-premium btn-lg" href="belongo-h01-host-landing.html">List your property</a>
+      <div class="le-host-terms">Commission from <span>12%</span> · weekly payouts · no listing fees</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="#">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="#" style="text-decoration:underline">Privacy</a> · <a href="#" style="text-decoration:underline">Terms</a> · <a href="#" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Salam! 👋 Tell me how you travel — I’ll find stays that fit, with the whole price up front.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Find a stay in Dubai</button>
+      <button class="chat-chip" type="button">Near a mosque</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

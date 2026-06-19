@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Terms & Conditions (g17)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   LEGAL CONTENT TEMPLATE  (.lg-*)  — shared by g16/g17/g18
+   Public FX-02 shell. Sticky section index + readable ~720px
+   measure + last-updated + plain-English summary. Container 1180.
+   ============================================================ */
+.lg-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+
+.lg-hero { border-bottom: 1px solid rgba(107,114,128,0.15); padding-top: var(--space-10); padding-bottom: var(--space-8); }
+.lg-crumbs { font-size: var(--text-xs); color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.lg-crumbs a:hover { color: var(--color-midnight-navy); }
+.lg-h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, var(--text-3xl)); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.lg-updated { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); }
+.lg-updated .dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-success); }
+.lg-intro { margin-top: var(--space-4); font-size: var(--text-md); color: var(--color-deep-slate); line-height: 1.65; max-width: 720px; }
+.lg-summary { background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-xl); padding: var(--space-5) var(--space-6); margin-top: var(--space-6); max-width: 720px; }
+.lg-summary b { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); }
+.lg-summary ul { list-style: none; display: grid; gap: var(--space-2); }
+.lg-summary li { display: flex; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.5; }
+.lg-summary .tick { color: var(--color-success); flex-shrink: 0; }
+
+.lg-layout { display: grid; grid-template-columns: 232px minmax(0,1fr); gap: var(--space-10); align-items: start; padding: var(--space-10) 0 var(--space-16); }
+
+/* sticky section index */
+.lg-toc { position: sticky; top: 84px; }
+.lg-toc-label { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.lg-toc ol { list-style: none; display: grid; gap: 1px; counter-reset: sec; }
+.lg-toc a { display: flex; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-warm-gray); transition: background var(--transition-micro), color var(--transition-micro); border-left: 2px solid transparent; }
+.lg-toc a:hover { background: var(--color-soft-beige); color: var(--color-midnight-navy); }
+.lg-toc a.is-active { color: var(--color-midnight-navy); font-weight: 600; border-left-color: var(--color-soft-gold); background: var(--color-soft-beige); }
+.lg-toc a .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-soft-gold); }
+
+/* content */
+.lg-content { max-width: 720px; }
+.lg-sec { padding-bottom: var(--space-8); margin-bottom: var(--space-8); border-bottom: 1px solid rgba(107,114,128,0.1); scroll-margin-top: 84px; }
+.lg-sec:last-child { border-bottom: none; }
+.lg-sec h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-4); display: flex; gap: var(--space-3); align-items: baseline; }
+.lg-sec h2 .num { font-family: var(--font-mono); font-size: var(--text-md); color: var(--color-soft-gold); }
+.lg-sec h3 { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; letter-spacing: -0.01em; margin: var(--space-5) 0 var(--space-2); }
+.lg-sec p { font-size: var(--text-sm); line-height: 1.75; color: var(--color-deep-slate); margin-bottom: var(--space-3); }
+.lg-sec ul { margin: 0 0 var(--space-3) var(--space-5); display: grid; gap: var(--space-2); }
+.lg-sec li { font-size: var(--text-sm); line-height: 1.65; color: var(--color-deep-slate); }
+.lg-sec li b { font-weight: 600; }
+.lg-sec a.inline { font-weight: 600; border-bottom: 1px solid var(--color-soft-gold); }
+
+/* fees / windows table (g18) */
+.lg-table { width: 100%; border-collapse: collapse; margin: var(--space-4) 0; font-size: var(--text-sm); }
+.lg-table th, .lg-table td { text-align: left; padding: var(--space-3) var(--space-4); border-bottom: 1px solid rgba(107,114,128,0.15); }
+.lg-table th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-warm-gray); }
+.lg-table td:last-child, .lg-table th:last-child { font-family: var(--font-mono); }
+.lg-table tr:last-child td { border-bottom: none; }
+.lg-window { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin: var(--space-4) 0; }
+.lg-win { border: 1px solid rgba(107,114,128,0.18); border-radius: var(--radius-lg); padding: var(--space-4); }
+.lg-win.full { border-color: rgba(45,106,79,0.4); background: var(--color-success-bg); }
+.lg-win.partial { border-color: rgba(146,64,14,0.35); background: var(--color-warning-bg); }
+.lg-win b { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; display: block; }
+.lg-win .pct { font-family: var(--font-mono); font-size: var(--text-lg); font-weight: 500; margin: var(--space-1) 0; }
+.lg-win span { font-size: var(--text-xs); color: var(--color-deep-slate); }
+
+/* contact footer of doc */
+.lg-docfoot { background: var(--color-soft-beige); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-4); }
+.lg-docfoot b { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); }
+.lg-docfoot p { font-size: var(--text-sm); color: var(--color-warm-gray); margin: var(--space-2) 0 var(--space-4); line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .lg-layout { grid-template-columns: minmax(0,1fr); gap: var(--space-6); }
+  .lg-toc { position: static; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-lg); padding: var(--space-4); background: #fff; }
+  .lg-toc ol { grid-auto-flow: row; }
+  .lg-window { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .lg-sec h2 { font-size: var(--text-lg); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02) ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <span class="site-actions-divider"></span>
+      <a class="site-host-link" href="belongo-h01-host-landing.html">List your property</a>
+      <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+    <a class="site-nav-link" href="#">Collections</a>
+    <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <div class="site-mobile-actions"><a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a></div>
+  </div>
+</header>
+
+<div class="lg-shell">
+  <div class="lg-hero">
+    <div class="lg-crumbs"><a href="belongo-g02-landing-command.html">Home</a> / <b style="color:var(--color-midnight-navy)">Terms &amp; Conditions</b></div>
+    <h1 class="lg-h1">Terms &amp; Conditions</h1>
+    <div class="lg-updated"><span class="dot"></span>Last updated 1 June 2026 · effective immediately</div>
+    <p class="lg-intro">The agreement between you and Belongo when you use the platform and book a stay. Plain-English summary first; full terms below.</p>
+    <div class="lg-summary">
+      <b>✦ In plain English</b>
+      <ul>
+        <li><span class="tick">✓</span>Belongo connects you with hosts; your stay contract is with the host, and we stand behind the booking.</li>
+        <li><span class="tick">✓</span>The total price shown is the price you pay — it’s binding once you confirm.</li>
+        <li><span class="tick">✓</span>Free-cancellation windows are stated on every listing; details in the <a class="inline" href="belongo-g18-payment-policy.html">Payment &amp; Refund Policy</a>.</li>
+        <li><span class="tick">✓</span>Be a respectful guest and write honest reviews — that’s the whole deal.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lg-layout">
+    <aside class="lg-toc">
+      <div class="lg-toc-label">On this page</div>
+      <ol>
+        <li><a class="is-active" href="#s1"><span class="num">1</span> Using Belongo</a></li>
+        <li><a href="#s2"><span class="num">2</span> Bookings &amp; the contract</a></li>
+        <li><a href="#s3"><span class="num">3</span> Prices &amp; payment</a></li>
+        <li><a href="#s4"><span class="num">4</span> Changes &amp; cancellations</a></li>
+        <li><a href="#s5"><span class="num">5</span> Guest conduct</a></li>
+        <li><a href="#s6"><span class="num">6</span> Reviews &amp; content</a></li>
+        <li><a href="#s7"><span class="num">7</span> Liability</a></li>
+        <li><a href="#s8"><span class="num">8</span> Changes &amp; governing law</a></li>
+        <li><a href="#s9"><span class="num">9</span> Contact</a></li>
+      </ol>
+    </aside>
+    <article class="lg-content">
+      <section class="lg-sec" id="s1"><h2><span class="num">1</span> Using Belongo</h2><p>Belongo is a booking platform connecting guests with property hosts across the Gulf and beyond. You may use it if you’re 18 or older and can enter a binding contract. You’re responsible for keeping your account secure — turn on two-factor authentication for an extra layer.</p><p>You can browse and book as a guest without an account; creating one simply keeps your trips, payment methods and member rates in one place.</p></section>
+      <section class="lg-sec" id="s2"><h2><span class="num">2</span> Bookings &amp; the contract</h2><p>When you confirm a booking, you enter a contract <b>with the host</b> for that stay; Belongo facilitates it, handles payment, and supports you throughout. Availability is shown in real time and re-checked at checkout — in the rare event a unit is taken between, we’ll find you an equivalent or refund in full.</p><p>Your confirmation email and booking reference are proof of the contract. If a payment page ever times out, your confirmation still arrives by email — you never lose a confirmed stay.</p></section>
+      <section class="lg-sec" id="s3"><h2><span class="num">3</span> Prices &amp; payment</h2><p>Every price shown is the <b>all-in total</b> for your dates — accommodation, cleaning, service and taxes included — in your selected currency. The amount displayed is the amount charged. Once you begin checkout, we hold that price for 10 minutes so demand pricing can’t move it under you.</p><p>Full details of fees, part-payments, currency and refunds are in the <a class="inline" href="belongo-g18-payment-policy.html">Payment &amp; Refund Policy</a>, which forms part of these terms.</p></section>
+      <section class="lg-sec" id="s4"><h2><span class="num">4</span> Changes &amp; cancellations</h2><p>Each listing states its cancellation window. Within the free window you receive a full refund; after it, the terms shown at booking apply. You can also modify your dates yourself, subject to availability and any price difference — shown before you confirm.</p><p>Refund amounts and timelines are always shown <i>before</i> you confirm a cancellation, and tracked step-by-step afterwards.</p></section>
+      <section class="lg-sec" id="s5"><h2><span class="num">5</span> Guest conduct</h2><p>Treat each property and host with respect: follow house rules, don’t exceed guest counts, no parties unless explicitly allowed, and leave the place as you found it. Hosts may decline or report bookings that breach these basics.</p></section>
+      <section class="lg-sec" id="s6"><h2><span class="num">6</span> Reviews &amp; content</h2><p>Reviews must come from real, completed stays and reflect your honest experience. The same goes for “Nearby, by guests” contributions — photos and distances you add must be accurate, since other guests rely on them. We may remove content that’s fake, abusive or unlawful. You keep ownership of what you post but grant Belongo a licence to display it.</p></section>
+      <section class="lg-sec" id="s7"><h2><span class="num">7</span> Liability</h2><p>We work hard to keep listings accurate and stays trouble-free, but Belongo isn’t the property owner. To the extent the law allows, our liability is limited to the value of the affected booking. Nothing here limits rights you have under applicable consumer law.</p></section>
+      <section class="lg-sec" id="s8"><h2><span class="num">8</span> Changes &amp; governing law</h2><p>We may update these terms; we’ll post the date above and, for material changes, notify you. These terms are governed by the laws of the United Arab Emirates, without affecting mandatory protections in your country of residence.</p></section>
+      <section class="lg-sec" id="s9"><h2><span class="num">9</span> Contact</h2><p>Questions about these terms? We’re happy to explain anything in plain language.</p>
+        <div class="lg-docfoot"><b>Legal team</b><p>legal@belongo.com · Belongo Hospitality, Boulevard Plaza Tower 1, Downtown Dubai, UAE</p><a class="btn btn-secondary btn-md" href="belongo-g15-contact.html">Contact us</a></div>
+      </section>
+    </article>
+  </div>
+</div>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Privacy question? I can point you to the exact section, or explain what we collect and how to delete it — in plain language.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">What do you collect?</button>
+      <button class="chat-chip" type="button">How do I delete my data?</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

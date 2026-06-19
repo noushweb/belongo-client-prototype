@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Cancel &amp; refund (g10)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g10 · CANCELLATION & REFUND  (FX-03 .acct-* shell + .cn-*)
+   Flow-critical: the refund-timeline tracker answers the
+   slow-refund P0. Refund amount + schedule shown BEFORE confirm;
+   live tracker after. Self-contained shell until FX-03 promoted.
+   ============================================================ */
+.acct-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+
+/* logged-in header (FX-03) */
+.acct-bell { position: relative; width: 38px; height: 38px; border-radius: var(--radius-full); border: 1px solid rgba(107,114,128,0.25); background: #fff; cursor: pointer; font-size: var(--text-sm); display: inline-flex; align-items: center; justify-content: center; transition: border-color var(--transition-micro); }
+.acct-bell:hover { border-color: var(--color-soft-gold); }
+.acct-bell .dot { position: absolute; top: 7px; right: 8px; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-error); border: 1.5px solid #fff; }
+.acct-userchip { display: inline-flex; align-items: center; gap: var(--space-2); background: #fff; border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 4px var(--space-3) 4px 4px; cursor: pointer; font-size: var(--text-sm); font-weight: 600; transition: border-color var(--transition-micro); }
+.acct-userchip:hover { border-color: var(--color-soft-gold); }
+.acct-userchip .avatar { width: 30px; height: 30px; font-size: 11px; }
+.acct-userchip .caret { color: var(--color-warm-gray); font-size: 9px; }
+
+/* layout: side-nav + main (FX-03) */
+.acct-layout { display: grid; grid-template-columns: 244px minmax(0,1fr); gap: var(--space-8); align-items: start; padding: var(--space-8) 0 var(--space-16); }
+.acct-nav { position: sticky; top: 84px; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-xs); }
+.acct-profile { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid rgba(107,114,128,0.12); margin-bottom: var(--space-3); }
+.acct-profile .avatar { width: 44px; height: 44px; font-size: var(--text-sm); }
+.acct-profile-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); }
+.acct-profile-tier { font-size: 10px; color: var(--color-warning); font-family: var(--font-mono); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; }
+.acct-navlist { list-style: none; display: grid; gap: 2px; }
+.acct-navlist a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 500; color: var(--color-deep-slate); transition: background var(--transition-micro), color var(--transition-micro); }
+.acct-navlist a .ic { width: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0; }
+.acct-navlist a:hover { background: var(--color-soft-beige); }
+.acct-navlist a.is-active { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.acct-navlist a .count { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); }
+.acct-navlist a.is-active .count { color: var(--color-soft-gold); }
+.acct-signout { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(107,114,128,0.12); }
+.acct-signout a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--color-warm-gray); border-radius: var(--radius-md); }
+.acct-signout a:hover { background: var(--color-soft-beige); color: var(--color-midnight-navy); }
+
+/* ---- cancellation content ---- */
+.cn-crumbs { font-size: var(--text-xs); color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.cn-crumbs a:hover { color: var(--color-midnight-navy); }
+.cn-h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.025em; }
+.cn-sub { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: 2px; }
+.cn-grid { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: var(--space-6); align-items: start; margin-top: var(--space-6); }
+.cn-card { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-xs); margin-bottom: var(--space-5); }
+.cn-card-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; margin-bottom: var(--space-4); }
+
+/* booking mini */
+.cn-bk { display: flex; gap: var(--space-3); align-items: center; }
+.cn-bk-img { width: 72px; height: 72px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; background: var(--color-soft-beige); }
+.cn-bk-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); }
+.cn-bk-meta { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: 2px; }
+
+/* eligibility banner */
+.cn-elig { display: flex; gap: var(--space-3); align-items: flex-start; border-radius: var(--radius-lg); padding: var(--space-4); font-size: var(--text-sm); line-height: 1.55; }
+.cn-elig.full { background: var(--color-success-bg); color: var(--color-success); }
+.cn-elig.partial { background: var(--color-warning-bg); color: var(--color-warning); }
+.cn-elig b { font-weight: 700; }
+.cn-elig .ic { font-size: var(--text-md); flex-shrink: 0; }
+
+/* refund timeline (the P0 answer) */
+.cn-track { margin-top: var(--space-2); }
+.cn-step { display: grid; grid-template-columns: 32px 1fr auto; gap: var(--space-3); align-items: start; position: relative; padding-bottom: var(--space-5); }
+.cn-step:last-child { padding-bottom: 0; }
+.cn-step::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: -2px; width: 2px; background: rgba(107,114,128,0.2); }
+.cn-step:last-child::before { display: none; }
+.cn-step.done::before { background: var(--color-success); }
+.cn-dot { width: 32px; height: 32px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: var(--text-sm); z-index: 1; flex-shrink: 0; }
+.cn-dot.done { background: var(--color-success); color: #fff; }
+.cn-dot.current { background: var(--color-soft-gold-pale); border: 2px solid var(--color-soft-gold); color: var(--color-warning); }
+.cn-dot.current::after { content: ""; position: absolute; width: 32px; height: 32px; border-radius: var(--radius-full); border: 2px solid var(--color-soft-gold); animation: cnPulse 1.6s ease-out infinite; }
+@keyframes cnPulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.5); opacity: 0; } }
+.cn-dot.upcoming { background: var(--color-soft-beige); color: var(--color-warm-gray); border: 1px solid rgba(107,114,128,0.25); }
+.cn-step b { font-size: var(--text-sm); font-weight: 600; }
+.cn-step .desc { font-size: var(--text-xs); color: var(--color-warm-gray); display: block; margin-top: 1px; line-height: 1.45; }
+.cn-step .when { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); white-space: nowrap; }
+.cn-step.done .when { color: var(--color-success); }
+.cn-step.current .when { color: var(--color-warning); font-weight: 500; }
+
+/* reason radios */
+.cn-reasons { display: grid; gap: var(--space-2); }
+.cn-reason { display: flex; align-items: center; gap: var(--space-3); border: 1px solid rgba(107,114,128,0.2); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); cursor: pointer; font-size: var(--text-sm); transition: border-color var(--transition-micro); }
+.cn-reason:hover { border-color: var(--color-soft-gold); }
+.cn-reason input { accent-color: var(--color-soft-gold); }
+
+/* off-ramp */
+.cn-offramp { display: flex; gap: var(--space-3); align-items: center; background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-4); flex-wrap: wrap; }
+.cn-offramp-txt { font-size: var(--text-sm); flex: 1; min-width: 200px; }
+.cn-offramp-txt b { font-weight: 700; }
+.cn-offramp-txt span { font-size: var(--text-xs); color: var(--color-deep-slate); display: block; }
+
+/* refund summary (right) */
+.cn-summary { position: sticky; top: 84px; background: #fff; border: 1px solid rgba(107,114,128,0.18); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); padding: var(--space-6); }
+.cn-refund-label { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.cn-refund-amt { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: var(--space-1) 0; }
+.cn-refund-to { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.cn-refund-rows { margin: var(--space-4) 0; padding: var(--space-4) 0; border-top: 1px solid rgba(107,114,128,0.12); border-bottom: 1px solid rgba(107,114,128,0.12); display: grid; gap: var(--space-2); }
+.cn-rrow { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--text-sm); }
+.cn-rrow span:first-child { color: var(--color-warm-gray); }
+.cn-rrow span:last-child { font-family: var(--font-mono); font-size: var(--text-xs); }
+.cn-rrow.minus span:last-child { color: var(--color-error); }
+.cn-eta { display: flex; align-items: center; gap: 6px; font-size: var(--text-xs); color: var(--color-success); font-weight: 600; margin-bottom: var(--space-4); }
+.cn-summary .btn { width: 100%; justify-content: center; }
+.cn-summary .btn + .btn { margin-top: var(--space-2); }
+.cn-keep { display:block; text-align:center; font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-3); }
+.cn-fee0 { font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); text-align: center; margin-top: var(--space-4); }
+
+/* destructive button (no shared variant) */
+.btn-danger { background: var(--color-error); color: var(--color-warm-ivory); border: none; }
+.btn-danger:hover { background: #7f1414; }
+/* confirm overlay (uses generic [data-toggle-overlay] handler) */
+.bd-overlay { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: var(--space-6); background: rgba(13,27,42,0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.bd-overlay.is-open { display: flex; }
+
+/* ---- design states ---- */
+.acct-states { background: var(--color-soft-beige); padding: var(--space-16) 0 var(--space-12); }
+.acct-stateframe { background: #fff; border: 1px dashed rgba(212,175,55,0.6); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
+.acct-statehead { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-warning); background: rgba(212,175,55,0.08); padding: var(--space-2) var(--space-5); border-bottom: 1px dashed rgba(212,175,55,0.6); display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.acct-statehead .why { color: var(--color-warm-gray); text-transform: none; letter-spacing: 0; }
+.acct-statebody { padding: var(--space-8); }
+.cn-statewrap { max-width: 640px; margin: 0 auto; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); }
+.cn-statewrap.center { text-align: center; }
+.cn-bigcheck { width: 56px; height: 56px; border-radius: var(--radius-full); display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-xl); margin-bottom: var(--space-4); }
+.cn-bigcheck.success { background: var(--color-success-bg); color: var(--color-success); }
+.cn-statewrap h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; }
+.cn-statewrap p { font-size: var(--text-sm); color: var(--color-warm-gray); line-height: 1.55; margin-top: var(--space-2); }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .acct-layout { grid-template-columns: minmax(0,1fr); }
+  .acct-layout > main { min-width: 0; }
+  .acct-nav { position: static; min-width: 0; overflow: hidden; }
+  .acct-profile { display: none; }
+  .acct-navlist { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; gap: var(--space-1); scrollbar-width: none; }
+  .acct-navlist a .count { display: none; }
+  .acct-signout { display: none; }
+  .cn-grid { grid-template-columns: minmax(0,1fr); }
+  .cn-summary { position: static; }
+}
+@media (max-width: 700px) {
+  .currency-btn, .acct-bell { display: none; }
+  .cn-step { grid-template-columns: 32px 1fr; }
+  .cn-step .when { grid-column: 2; }
+  .acct-statebody { padding: var(--space-5); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02 · logged-in) ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <button class="acct-bell" type="button" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <button class="acct-userchip" type="button"><span class="avatar">MN</span>Mariam <span class="caret">▾</span></button>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link is-active" href="belongo-g08-my-bookings.html">My bookings</a>
+    <a class="site-nav-link" href="belongo-g11-account-settings.html">Account settings</a>
+    <a class="site-nav-link" href="belongo-g12-payment-methods.html">Payment methods</a>
+  </div>
+</header>
+
+<div class="acct-shell">
+  <div class="acct-layout">
+    <!-- ============ SIDE-NAV (FX-03) ============ -->
+    <aside class="acct-nav">
+      <div class="acct-profile">
+        <span class="avatar">MN</span>
+        <div>
+          <div class="acct-profile-name">Mariam Nasser</div>
+          <div class="acct-profile-tier">◆ Circle member</div>
+        </div>
+      </div>
+      <ul class="acct-navlist">
+        <li><a class="is-active" href="belongo-g08-my-bookings.html"><span class="ic">🧳</span> My bookings <span class="count">3</span></a></li>
+        <li><a href="#"><span class="ic">♡</span> Saved stays <span class="count">7</span></a></li>
+        <li><a href="belongo-g13-review-submission.html"><span class="ic">★</span> Reviews <span class="count">2</span></a></li>
+        <li><a href="belongo-g11-account-settings.html"><span class="ic">⚙</span> Account settings</a></li>
+        <li><a href="belongo-g12-payment-methods.html"><span class="ic">💳</span> Payment methods</a></li>
+        <li><a href="#"><span class="ic">◆</span> Belongo Circle</a></li>
+        <li><a href="#"><span class="ic">?</span> Help center</a></li>
+      </ul>
+      <div class="acct-signout"><a href="belongo-g02-landing-command.html"><span class="ic">⏻</span> Sign out</a></div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+      <div class="cn-crumbs"><a href="belongo-g08-my-bookings.html">My bookings</a> / <a href="belongo-g09-booking-detail.html">Downtown Calm Studio</a> / <b style="color:var(--color-midnight-navy)">Cancel</b></div>
+      <h1 class="cn-h1">Cancel this booking?</h1>
+      <p class="cn-sub">Here’s exactly what you get back and when — before you confirm anything.</p>
+
+      <div class="cn-grid">
+        <!-- LEFT -->
+        <div>
+          <div class="cn-card">
+            <div class="cn-bk">
+              <img class="cn-bk-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=200&auto=format&fit=crop" alt="Downtown Calm Studio">
+              <div>
+                <div class="cn-bk-name">Downtown Calm Studio</div>
+                <div class="cn-bk-meta">12 – 15 Sep 2026 · 3 nights · 2 guests · BLG-7K2P9</div>
+              </div>
+            </div>
+            <div style="margin-top: var(--space-4);">
+              <div class="cn-elig full">
+                <span class="ic">✓</span>
+                <div>You’re within the free-cancellation window (until <b>10 Sep, 18:00 GST</b>). You get a <b>full refund of AED 952</b> — no fee, nothing withheld.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cn-card">
+            <div class="cn-card-title">Your refund timeline</div>
+            <div class="cn-track">
+              <div class="cn-step done">
+                <span class="cn-dot done">✓</span>
+                <div><b>Refund requested</b><span class="desc">The moment you confirm below.</span></div>
+                <span class="when">Today</span>
+              </div>
+              <div class="cn-step">
+                <span class="cn-dot upcoming">2</span>
+                <div><b>Approved by Belongo</b><span class="desc">Automatic — no waiting on an agent.</span></div>
+                <span class="when">within 24 h</span>
+              </div>
+              <div class="cn-step">
+                <span class="cn-dot upcoming">3</span>
+                <div><b>Sent to your bank</b><span class="desc">We release it to Stripe → your card issuer.</span></div>
+                <span class="when">1–2 days</span>
+              </div>
+              <div class="cn-step">
+                <span class="cn-dot upcoming">★</span>
+                <div><b>In your account</b><span class="desc">Most refunds land in 3 days; some banks take up to 5.</span></div>
+                <span class="when">by 19 Jun</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cn-card">
+            <div class="cn-card-title">What changed? <span style="font-weight:400; color:var(--color-warm-gray); font-size:var(--text-xs)">(optional — helps us improve)</span></div>
+            <div class="cn-reasons">
+              <label class="cn-reason"><input type="radio" name="reason"> Plans changed / dates no longer work</label>
+              <label class="cn-reason"><input type="radio" name="reason"> Found somewhere else</label>
+              <label class="cn-reason"><input type="radio" name="reason"> Booked by mistake</label>
+              <label class="cn-reason"><input type="radio" name="reason"> Something about the property</label>
+            </div>
+          </div>
+
+          <div class="cn-offramp">
+            <span style="font-size: var(--text-lg);">💡</span>
+            <div class="cn-offramp-txt"><b>Change of plans, not cancelling?</b><span>You can move your dates for free instead and keep this stay.</span></div>
+            <a class="btn btn-secondary btn-sm" href="belongo-g09-booking-detail.html">Modify dates instead</a>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <aside>
+          <div class="cn-summary">
+            <div class="cn-refund-label">You’ll get back</div>
+            <div class="cn-refund-amt">AED 952</div>
+            <div class="cn-refund-to">to Visa ••4242 · the full amount you paid</div>
+            <div class="cn-refund-rows">
+              <div class="cn-rrow"><span>Paid</span><span>AED 952.00</span></div>
+              <div class="cn-rrow"><span>Cancellation fee</span><span>AED 0.00</span></div>
+              <div class="cn-rrow"><span>Non-refundable</span><span>AED 0.00</span></div>
+            </div>
+            <div class="cn-eta">✓ Most refunds arrive in 3 days · by 19 Jun</div>
+            <button class="btn btn-danger btn-lg" type="button" data-toggle-overlay="#cn-confirm">Confirm cancellation</button>
+            <a class="btn btn-secondary btn-lg" href="belongo-g09-booking-detail.html">Keep my booking</a>
+            <span class="cn-fee0">🔒 NO CANCELLATION FEE · REFUND TRACKED END-TO-END</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- confirm overlay (demo) -->
+<div class="bd-overlay" id="cn-confirm" aria-hidden="true">
+  <div class="cn-statewrap center" style="max-width:420px;">
+    <div class="cn-bigcheck" style="background:var(--color-error-bg); color:var(--color-error);">✕</div>
+    <h3>Cancel and refund AED 952?</h3>
+    <p>This frees up the dates for other guests and can’t be undone. Your refund starts immediately and we’ll track every step to your account.</p>
+    <div style="display:flex; gap:var(--space-2); margin-top:var(--space-5);">
+      <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#cn-confirm" style="flex:1; justify-content:center;">Go back</button>
+      <button class="btn btn-danger btn-md" type="button" style="flex:1; justify-content:center;">Yes, cancel &amp; refund</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="#">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="#" style="text-decoration:underline">Privacy</a> · <a href="#" style="text-decoration:underline">Terms</a> · <a href="#" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Before you cancel — would moving your dates work instead? It’s free. If not, I’ll walk your refund through every step and flag it if your bank is slow.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Move my dates instead</button>
+      <button class="chat-chip" type="button">Where’s my refund?</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

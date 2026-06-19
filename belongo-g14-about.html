@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — About us (g14)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g14 · ABOUT  (.ab-*)
+   Public/trust page (FX-02 shell). Brand story answers F-01
+   (unknown-brand trust deficit). Command Search direction.
+   Container 1180. No rescue states (content page).
+   ============================================================ */
+.ab-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+
+/* hero */
+.ab-hero { background: var(--color-midnight-navy); color: var(--color-warm-ivory); position: relative; overflow: hidden; }
+.ab-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 60% at 88% 0%, rgba(212,175,55,0.14), transparent 60%), radial-gradient(ellipse 45% 55% at 0% 100%, rgba(30,58,95,0.5), transparent 65%); pointer-events: none; }
+.ab-hero-inner { position: relative; padding-top: var(--space-20); padding-bottom: var(--space-16); max-width: 760px; }
+.ab-eyebrow { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-soft-gold); margin-bottom: var(--space-4); }
+.ab-hero h1 { font-family: var(--font-display); font-size: clamp(2.1rem, 5vw, var(--text-4xl)); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
+.ab-hero h1 em { font-style: italic; font-weight: 500; color: var(--color-soft-gold); }
+.ab-hero p { margin-top: var(--space-5); font-size: var(--text-md); line-height: 1.65; color: rgba(247,246,242,0.82); max-width: 600px; }
+
+/* stats band */
+.ab-stats { background: var(--color-deep-slate); }
+.ab-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); }
+.ab-stat { padding: var(--space-8) var(--space-5); border-right: 1px solid rgba(247,246,242,0.1); }
+.ab-stat:last-child { border-right: none; }
+.ab-stat b { font-family: var(--font-mono); font-weight: 500; font-size: var(--text-2xl); color: var(--color-soft-gold); display: block; line-height: 1.1; }
+.ab-stat span { font-size: var(--text-xs); color: rgba(247,246,242,0.6); letter-spacing: 0.06em; text-transform: uppercase; margin-top: var(--space-1); display: block; }
+
+/* sections */
+.ab-section { padding: var(--space-20) 0 var(--space-12); }
+.ab-label { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.ab-title { font-family: var(--font-display); font-size: clamp(1.7rem, 3.2vw, var(--text-2xl)); font-weight: 700; letter-spacing: -0.025em; line-height: 1.18; max-width: 620px; }
+.ab-title em { font-style: italic; font-weight: 500; color: var(--color-soft-gold); }
+.ab-story { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-12); align-items: center; }
+.ab-story p { font-size: var(--text-md); line-height: 1.75; color: var(--color-deep-slate); }
+.ab-story p + p { margin-top: var(--space-4); }
+.ab-story-media { border-radius: var(--radius-2xl); overflow: hidden; aspect-ratio: 4/3; background: var(--color-soft-beige); position: relative; }
+.ab-story-media img { width: 100%; height: 100%; object-fit: cover; }
+.ab-story-cap { position: absolute; left: var(--space-4); bottom: var(--space-4); background: rgba(13,27,42,0.78); backdrop-filter: blur(6px); color: var(--color-warm-ivory); border-radius: var(--radius-md); padding: var(--space-2) var(--space-4); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; }
+.ab-story-cap span { color: var(--color-soft-gold); }
+
+/* values */
+.ab-values { background: var(--color-soft-beige); }
+.ab-val-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-10); }
+.ab-val { background: #fff; border: 1px solid rgba(107,114,128,0.12); border-radius: var(--radius-xl); padding: var(--space-6); }
+.ab-val-ic { width: 40px; height: 40px; border-radius: var(--radius-lg); background: var(--color-soft-gold-pale); display: flex; align-items: center; justify-content: center; font-size: var(--text-lg); margin-bottom: var(--space-4); }
+.ab-val h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; margin-bottom: var(--space-2); }
+.ab-val p { font-size: var(--text-sm); color: var(--color-warm-gray); line-height: 1.6; }
+.ab-val .fmark { font-family: var(--font-mono); font-size: 10px; color: var(--color-soft-gold); display: block; margin-top: var(--space-3); }
+
+/* community (Nearby-by-guests) split */
+.ab-community { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-12); align-items: center; }
+.ab-community-media { border-radius: var(--radius-2xl); overflow: hidden; aspect-ratio: 1/1; background: var(--color-soft-beige); }
+.ab-community-media img { width: 100%; height: 100%; object-fit: cover; }
+.ab-community p { font-size: var(--text-md); line-height: 1.7; color: var(--color-deep-slate); margin-top: var(--space-3); }
+.ab-community .badge { margin-top: var(--space-5); }
+
+/* markets */
+.ab-markets { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.ab-markets .ab-label { color: var(--color-soft-gold); }
+.ab-markets .ab-title { color: var(--color-warm-ivory); }
+.ab-market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-10); }
+.ab-market { position: relative; border-radius: var(--radius-xl); overflow: hidden; aspect-ratio: 3/2; cursor: pointer; }
+.ab-market img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms ease; }
+.ab-market:hover img { transform: scale(1.05); }
+.ab-market::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(13,27,42,0.8)); }
+.ab-market-txt { position: absolute; left: var(--space-4); bottom: var(--space-3); z-index: 2; }
+.ab-market-txt b { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); display: block; }
+.ab-market-txt span { font-size: var(--text-xs); color: rgba(247,246,242,0.75); }
+.ab-market.soon::before { content: "Coming soon"; position: absolute; top: var(--space-3); right: var(--space-3); z-index: 2; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(247,246,242,0.16); color: var(--color-warm-ivory); padding: 3px 8px; border-radius: var(--radius-full); }
+
+/* team */
+.ab-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-top: var(--space-10); }
+.ab-member { text-align: center; }
+.ab-member .avatar { width: 84px; height: 84px; font-size: var(--text-xl); margin: 0 auto var(--space-3); }
+.ab-member b { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); display: block; }
+.ab-member span { font-size: var(--text-xs); color: var(--color-warm-gray); }
+
+/* CTA band */
+.ab-cta { background: var(--color-soft-gold-pale); border-radius: var(--radius-2xl); padding: var(--space-12); display: grid; grid-template-columns: 1fr auto; gap: var(--space-8); align-items: center; margin-bottom: var(--space-20); }
+.ab-cta h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-2xl); letter-spacing: -0.025em; }
+.ab-cta p { font-size: var(--text-sm); color: var(--color-deep-slate); margin-top: var(--space-2); }
+.ab-cta-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .ab-stats-row { grid-template-columns: 1fr 1fr; }
+  .ab-stat:nth-child(2) { border-right: none; }
+  .ab-stat:nth-child(1), .ab-stat:nth-child(2) { border-bottom: 1px solid rgba(247,246,242,0.1); }
+  .ab-story, .ab-community { grid-template-columns: 1fr; gap: var(--space-8); }
+  .ab-val-grid { grid-template-columns: 1fr; }
+  .ab-market-grid { grid-template-columns: 1fr 1fr; }
+  .ab-team-grid { grid-template-columns: 1fr 1fr; }
+  .ab-cta { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .ab-stats-row { grid-template-columns: 1fr 1fr; }
+  .ab-market-grid, .ab-team-grid { grid-template-columns: 1fr 1fr; }
+  .ab-section { padding: var(--space-16) 0 var(--space-8); }
+  .ab-cta { padding: var(--space-8); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER (FX-02) ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link is-active" href="belongo-g14-about.html">About</a>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <span class="site-actions-divider"></span>
+      <a class="site-host-link" href="belongo-h01-host-landing.html">List your property</a>
+      <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+    <a class="site-nav-link" href="#">Collections</a>
+    <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+    <a class="site-nav-link is-active" href="belongo-g14-about.html">About</a>
+    <div class="site-mobile-actions"><a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a></div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="ab-hero">
+  <div class="ab-shell ab-hero-inner">
+    <div class="ab-eyebrow">About Belongo</div>
+    <h1>We built the booking platform we <em>wished existed</em> in the Gulf.</h1>
+    <p>One where the price you see is the price you pay, where the listing tells the truth, and where the mosque down the road is on the map because a guest before you put it there. Hospitality, the way a good host would actually do it.</p>
+  </div>
+</section>
+
+<!-- stats -->
+<section class="ab-stats">
+  <div class="ab-shell ab-stats-row">
+    <div class="ab-stat"><b>6</b><span>countries</span></div>
+    <div class="ab-stat"><b>2,400+</b><span>verified stays</span></div>
+    <div class="ab-stat"><b>4.8 ★</b><span>from 12,400 reviews</span></div>
+    <div class="ab-stat"><b>&lt; 2 min</b><span>to a human</span></div>
+  </div>
+</section>
+
+<!-- story -->
+<section class="ab-section">
+  <div class="ab-shell ab-story">
+    <div>
+      <div class="ab-label">Our story</div>
+      <h2 class="ab-title">Started by travellers who were <em>tired of surprises</em></h2>
+      <p>Belongo began with a familiar frustration: a price that grew at checkout, a “sea view” that wasn’t, and a refund that vanished into a support queue. Booking across the Gulf — Dubai one month, Amman the next — those small betrayals added up.</p>
+      <p>So we set three rules and built everything around them: show the total price always, keep every promise the listing makes, and put a real person one tap away when it matters. The technology — AI that reads reviews, dynamic pricing, a multi-country dashboard for hosts — all serves those three rules, never the other way around.</p>
+    </div>
+    <div class="ab-story-media">
+      <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop" alt="Dubai skyline at dusk over the water" loading="lazy">
+      <span class="ab-story-cap">FOUNDED 2025 · <span>DUBAI &amp; AMMAN</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- values -->
+<section class="ab-section ab-values">
+  <div class="ab-shell">
+    <div class="ab-label">What we stand for</div>
+    <h2 class="ab-title">Three promises, everything else follows</h2>
+    <div class="ab-val-grid">
+      <div class="ab-val">
+        <div class="ab-val-ic">💰</div>
+        <h3>The total price, always</h3>
+        <p>Every figure you see includes taxes, cleaning and service — on the search page, not sprung at checkout. The amount shown is the amount charged, in your currency.</p>
+        <span class="fmark">Answers F-03 · F-04 · F-10</span>
+      </div>
+      <div class="ab-val">
+        <div class="ab-val-ic">🤝</div>
+        <h3>Promises kept</h3>
+        <p>Verified-stay reviews only, honest photos, real-time availability, and a refund timeline you can watch tick by. If something slips, a person fixes it — fast.</p>
+        <span class="fmark">Answers F-05 · F-13 · refunds</span>
+      </div>
+      <div class="ab-val">
+        <div class="ab-val-ic">🕌</div>
+        <h3>Travel that respects how you live</h3>
+        <p>Prayer-aware listings, qibla and mosque distances, halal-friendly filters — offered as opt-in information, never assumption. Built for this region, by people from it.</p>
+        <span class="fmark">Belongo difference</span>
+      </div>
+      <div class="ab-val">
+        <div class="ab-val-ic">✦</div>
+        <h3>AI that serves the guest</h3>
+        <p>Our assistant reads every review so you don’t have to, answers in English and Arabic, and hands you to a human the moment you want one — used for you, not on you.</p>
+        <span class="fmark">Answers support black hole</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- community -->
+<section class="ab-section">
+  <div class="ab-shell ab-community">
+    <div class="ab-community-media">
+      <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?q=80&w=1200&auto=format&fit=crop" alt="Grand mosque at dusk, photographed by a guest" loading="lazy">
+    </div>
+    <div>
+      <div class="ab-label">Nearby, by guests</div>
+      <h2 class="ab-title">The map the maps forgot — <em>filled in by travellers</em></h2>
+      <p>The neighbourhood mosque, the late-night market, the quiet temple two streets over — the places that decide whether a stay works for you often aren’t on any map. So our guests put them there: real photos, real walking distances, confirmed by people who actually stayed.</p>
+      <p>Every contribution earns Belongo Circle credit, and makes the next guest’s decision a little easier. It’s the part of Belongo we’re proudest of.</p>
+      <span class="badge badge-premium">◆ Community-built · guest-verified</span>
+    </div>
+  </div>
+</section>
+
+<!-- markets -->
+<section class="ab-section ab-markets">
+  <div class="ab-shell">
+    <div class="ab-label">Where you’ll find us</div>
+    <h2 class="ab-title">Six countries, one standard</h2>
+    <div class="ab-market-grid">
+      <div class="ab-market"><img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=900&auto=format&fit=crop" alt="Dubai" loading="lazy"><div class="ab-market-txt"><b>United Arab Emirates</b><span>Dubai · Abu Dhabi · Sharjah</span></div></div>
+      <div class="ab-market"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=900&auto=format&fit=crop" alt="Jordan" loading="lazy"><div class="ab-market-txt"><b>Jordan</b><span>Amman · Aqaba</span></div></div>
+      <div class="ab-market"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=900&auto=format&fit=crop" alt="Saudi Arabia" loading="lazy"><div class="ab-market-txt"><b>Saudi Arabia</b><span>Riyadh · Jeddah</span></div></div>
+      <div class="ab-market soon"><img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=900&auto=format&fit=crop" alt="Qatar" loading="lazy"><div class="ab-market-txt"><b>Qatar</b><span>Doha</span></div></div>
+      <div class="ab-market soon"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=900&auto=format&fit=crop" alt="Oman" loading="lazy"><div class="ab-market-txt"><b>Oman</b><span>Muscat</span></div></div>
+      <div class="ab-market soon"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=900&auto=format&fit=crop" alt="Bahrain" loading="lazy"><div class="ab-market-txt"><b>Bahrain</b><span>Manama</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- team -->
+<section class="ab-section">
+  <div class="ab-shell">
+    <div class="ab-label">The people behind it</div>
+    <h2 class="ab-title">A small team that travels a lot</h2>
+    <div class="ab-team-grid">
+      <div class="ab-member"><span class="avatar">SA</span><b>Sara Al-Amri</b><span>Co-founder · Product</span></div>
+      <div class="ab-member"><span class="avatar">YH</span><b>Yousef Haddad</b><span>Co-founder · Engineering</span></div>
+      <div class="ab-member"><span class="avatar">NK</span><b>Nadia Kamal</b><span>Head of Hospitality</span></div>
+      <div class="ab-member"><span class="avatar">RT</span><b>Rami Tarek</b><span>Head of Trust &amp; Support</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ab-section" style="padding-top: 0;">
+  <div class="ab-shell">
+    <div class="ab-cta">
+      <div>
+        <h2>Come find a stay that keeps its promise.</h2>
+        <p>Or list your property and reach guests across six countries — with terms you can read in one breath.</p>
+      </div>
+      <div class="ab-cta-actions">
+        <a class="btn btn-premium btn-lg" href="belongo-g03-search-results.html">Find a stay</a>
+        <a class="btn btn-secondary btn-lg" href="belongo-h01-host-landing.html">List your property</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER (FX-02, verbatim) ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
+        hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT (FX-04, verbatim) ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
+      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Curious about Belongo? Ask me anything — how our pricing works, where we operate, or how “Nearby, by guests” keeps the map honest.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">How does your pricing work?</button>
+      <button class="chat-chip" type="button">Which countries?</button>
+      <button class="chat-chip" type="button">Talk to a human</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>
