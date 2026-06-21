@@ -175,8 +175,10 @@
 }
 @media (max-width: 700px) {
   .co-fieldgrid { grid-template-columns: 1fr; }
-  .co-holdbar-inner { gap: var(--space-2); }
-  .co-hold-timer { margin-left: 0; }
+  .co-holdbar-inner { gap: var(--space-2); flex-wrap: nowrap; }
+  .co-hold-more { display: none; }
+  .co-hold-text { flex: 1; }
+  .co-hold-timer { margin-left: var(--space-2); }
   .co-statebody { padding: var(--space-5); }
   .co-modal-compare { flex-direction: column; }
   .co-compare-arrow { transform: rotate(90deg); justify-content: center; }
@@ -214,7 +216,7 @@
 <div class="co-holdbar">
   <div class="co-shell co-holdbar-inner">
     <span class="co-hold-lock">🔒</span>
-    <span class="co-hold-text"><b>Your total is locked at AED 952.</b> We won’t reprice while you book — finish within the window and it’s guaranteed.</span>
+    <span class="co-hold-text"><b>Your total is locked at AED 952.</b> <span class="co-hold-more">We won’t reprice while you book — finish within the window and it’s guaranteed.</span></span>
     <span class="co-hold-timer">⏱ 9:42 held</span>
   </div>
 </div>
