@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Saved &amp; Recent Searches (g21)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g21 · SAVED STAYS + RECENT SEARCHES  (.sv-*)
+   Wishlist hearts + recent-search history.
+   CSS radio-tab switching — no JS required for tabs.
+   ============================================================ */
+.sv-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+
+/* ---- Page header ---- */
+.sv-page-head { padding: var(--space-10) 0 var(--space-6); border-bottom: 1px solid rgba(107,114,128,0.12); }
+.sv-page-head h1 { font-family: var(--font-display); font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; }
+.sv-page-head-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+
+/* ---- Tab system (radio-backed, CSS switching) ---- */
+#sv-t-saved, #sv-t-recent { position: absolute; opacity: 0; pointer-events: none; }
+.sv-tab-bar { display: flex; gap: 0; border-bottom: 2px solid rgba(107,114,128,0.12); margin-top: var(--space-6); }
+.sv-tab-btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-5) calc(var(--space-3) + 2px); font-family: var(--font-display); font-size: var(--text-sm); font-weight: 600; color: var(--color-warm-gray); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all var(--transition-micro); }
+.sv-tab-btn:hover { color: var(--color-midnight-navy); }
+.sv-count { background: rgba(107,114,128,0.12); color: var(--color-warm-gray); font-size: 11px; font-weight: 700; font-family: var(--font-mono); padding: 1px 7px; border-radius: var(--radius-full); }
+
+/* Active tab state via :has() */
+.sv-wrap:has(#sv-t-saved:checked) label[for="sv-t-saved"] { color: var(--color-midnight-navy); border-bottom-color: var(--color-midnight-navy); }
+.sv-wrap:has(#sv-t-saved:checked) label[for="sv-t-saved"] .sv-count { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.sv-wrap:has(#sv-t-recent:checked) label[for="sv-t-recent"] { color: var(--color-midnight-navy); border-bottom-color: var(--color-midnight-navy); }
+.sv-wrap:has(#sv-t-recent:checked) label[for="sv-t-recent"] .sv-count { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+
+/* Section visibility */
+.sv-saved-body, .sv-recent-body { padding: var(--space-8) 0 var(--space-16); }
+.sv-wrap:has(#sv-t-saved:checked) .sv-recent-body { display: none; }
+.sv-wrap:has(#sv-t-recent:checked) .sv-saved-body { display: none; }
+
+/* ---- Toolbar ---- */
+.sv-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6); }
+.sv-toolbar-left { display: flex; align-items: center; gap: var(--space-3); }
+.sv-sort-btn { border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-4); font-size: var(--text-sm); font-weight: 600; background: #fff; color: var(--color-midnight-navy); cursor: pointer; display: flex; align-items: center; gap: var(--space-2); }
+.sv-sort-btn:hover { border-color: var(--color-soft-gold); }
+.sv-share-btn { border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-4); font-size: var(--text-sm); font-weight: 600; background: #fff; color: var(--color-midnight-navy); cursor: pointer; display: flex; align-items: center; gap: var(--space-2); }
+.sv-share-btn:hover { border-color: var(--color-soft-gold); }
+
+/* ---- Saved property cards ---- */
+.sv-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-5); }
+.sv-card { background: #fff; border: 1px solid rgba(107,114,128,0.12); border-radius: var(--radius-xl); overflow: hidden; transition: box-shadow var(--transition-micro); cursor: pointer; }
+.sv-card:hover { box-shadow: var(--shadow-lg); }
+.sv-card-img-wrap { position: relative; }
+.sv-card-img { width: 100%; height: 200px; object-fit: cover; display: block; background: var(--color-soft-beige); }
+.sv-heart { position: absolute; top: var(--space-3); right: var(--space-3); width: 34px; height: 34px; border-radius: var(--radius-full); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-sm); border: none; transition: transform var(--transition-micro); }
+.sv-heart:hover { transform: scale(1.12); }
+.sv-heart svg { display: block; }
+.sv-card-badge { position: absolute; bottom: var(--space-3); left: var(--space-3); background: rgba(13,27,42,0.75); color: var(--color-warm-ivory); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: var(--radius-full); backdrop-filter: blur(4px); }
+.sv-card-body { padding: var(--space-4); }
+.sv-card-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); letter-spacing: -0.01em; margin-bottom: 3px; }
+.sv-card-loc { font-size: var(--text-xs); color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.sv-card-meta { display: flex; align-items: center; justify-content: space-between; }
+.sv-card-stars { font-size: var(--text-xs); color: var(--color-midnight-navy); font-weight: 600; display: flex; align-items: center; gap: 3px; }
+.sv-card-stars span { color: var(--color-warm-gray); font-weight: 400; }
+.sv-card-price { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; }
+.sv-card-price em { font-style: normal; font-size: var(--text-xs); font-weight: 400; color: var(--color-warm-gray); }
+.sv-card-cta { display: block; width: 100%; margin-top: var(--space-3); }
+
+/* ---- Recent searches ---- */
+.sv-recent-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
+.sv-recent-toolbar p { font-size: var(--text-sm); color: var(--color-warm-gray); }
+.sv-clear-all { font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; padding: 0; }
+.sv-searches { display: grid; gap: var(--space-3); }
+.sv-search-row { display: flex; align-items: center; gap: var(--space-4); background: #fff; border: 1px solid rgba(107,114,128,0.14); border-radius: var(--radius-xl); padding: var(--space-4) var(--space-5); transition: box-shadow var(--transition-micro); }
+.sv-search-row:hover { box-shadow: var(--shadow-sm); border-color: rgba(212,175,55,0.4); }
+.sv-search-ic { width: 40px; height: 40px; border-radius: var(--radius-lg); background: var(--color-soft-gold-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: var(--text-md); }
+.sv-search-info { flex: 1; min-width: 0; }
+.sv-search-dest { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); letter-spacing: -0.01em; }
+.sv-search-detail { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: 2px; }
+.sv-search-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-top: var(--space-2); }
+.sv-search-tag { background: var(--color-soft-beige); color: var(--color-deep-slate); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-full); font-family: var(--font-mono); }
+.sv-search-ago { font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); white-space: nowrap; flex-shrink: 0; }
+.sv-search-actions { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
+.sv-re-search { display: inline-flex; align-items: center; gap: 5px; padding: var(--space-2) var(--space-4); border: 1.5px solid var(--color-midnight-navy); border-radius: var(--radius-lg); font-size: var(--text-xs); font-weight: 700; color: var(--color-midnight-navy); background: none; cursor: pointer; transition: all var(--transition-micro); white-space: nowrap; }
+.sv-re-search:hover { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.sv-del { width: 28px; height: 28px; border-radius: var(--radius-full); border: 1px solid rgba(107,114,128,0.2); background: none; color: var(--color-warm-gray); font-size: var(--text-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--transition-micro); flex-shrink: 0; }
+.sv-del:hover { background: var(--color-soft-beige); color: var(--color-midnight-navy); }
+
+/* ---- Empty state ---- */
+.sv-empty { text-align: center; padding: var(--space-16) var(--space-6); }
+.sv-empty-ic { font-size: 48px; margin-bottom: var(--space-4); opacity: 0.4; }
+.sv-empty h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; margin-bottom: var(--space-2); }
+.sv-empty p { font-size: var(--text-sm); color: var(--color-warm-gray); max-width: 360px; margin: 0 auto var(--space-5); line-height: 1.6; }
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) { .sv-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 600px) {
+  .sv-grid { grid-template-columns: minmax(0,1fr); }
+  .sv-search-tags { display: none; }
+  .sv-search-ago { display: none; }
+  .sv-search-row { gap: var(--space-3); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+      <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <span class="site-actions-divider"></span>
+      <!-- heart icon entry point to g21 -->
+      <a class="site-host-link" href="belongo-g21-saved.html" aria-label="Saved stays" style="font-size:var(--text-md); line-height:1;">♥</a>
+      <a class="site-host-link" href="belongo-g08-my-bookings.html">My bookings</a>
+      <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+    <a class="site-nav-link" href="#">Collections</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <a class="site-nav-link is-active" href="belongo-g21-saved.html">♥ Saved stays</a>
+    <a class="site-nav-link" href="belongo-g08-my-bookings.html">My bookings</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+    <div class="site-mobile-actions">
+      <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PAGE HEADER ============ -->
+<div class="sv-shell">
+  <div class="sv-page-head">
+    <div class="sv-page-head-row">
+      <h1>Your wishlist</h1>
+      <p style="font-size:var(--text-sm); color:var(--color-warm-gray);">Signed in as <b style="color:var(--color-midnight-navy)">Mariam Nasser</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TAB BODY ============ -->
+<div class="sv-shell">
+  <div class="sv-wrap">
+    <!-- Radio inputs — must precede sections for CSS ~ selector -->
+    <input type="radio" name="sv-tab" id="sv-t-saved" checked>
+    <input type="radio" name="sv-tab" id="sv-t-recent">
+
+    <!-- Tab bar -->
+    <div class="sv-tab-bar">
+      <label for="sv-t-saved" class="sv-tab-btn">Saved stays <span class="sv-count">12</span></label>
+      <label for="sv-t-recent" class="sv-tab-btn">Recent searches <span class="sv-count">5</span></label>
+    </div>
+
+    <!-- ============ SAVED STAYS BODY ============ -->
+    <div class="sv-saved-body">
+      <div class="sv-toolbar">
+        <div class="sv-toolbar-left">
+          <button class="sv-sort-btn" type="button">Sort: Date saved <span style="font-size:9px">▾</span></button>
+        </div>
+        <button class="sv-share-btn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="2"/></svg>
+          Share wishlist
+        </button>
+      </div>
+
+      <div class="sv-grid">
+
+        <!-- Card 1 -->
+        <div class="sv-card" data-href="belongo-g04-property-detail.html">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format&fit=crop" alt="Jumeirah Pool Villa">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Entire villa</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Jumeirah Pool Villa</div>
+            <div class="sv-card-loc">Jumeirah, Dubai · AE</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.97 <span>(128)</span></span>
+              <span class="sv-card-price">AED 520 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="belongo-g04-property-detail.html">View stay</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="sv-card">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=600&auto=format&fit=crop" alt="Old Medina Riad">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Entire riad</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Old Medina Riad</div>
+            <div class="sv-card-loc">Marrakech Medina, MA</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.88 <span>(74)</span></span>
+              <span class="sv-card-price">AED 340 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="#">View stay</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="sv-card">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=600&auto=format&fit=crop" alt="Muscat Heritage Townhouse">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Entire home</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Muscat Heritage Townhouse</div>
+            <div class="sv-card-loc">Mutrah, Muscat · OM</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.91 <span>(55)</span></span>
+              <span class="sv-card-price">AED 285 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="#">View stay</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="sv-card">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop" alt="Amman Heights Apartment">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Apartment</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Amman Heights Apartment</div>
+            <div class="sv-card-loc">Abdoun, Amman · JO</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.85 <span>(43)</span></span>
+              <span class="sv-card-price">AED 210 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="#">View stay</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="sv-card">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=600&auto=format&fit=crop" alt="Abu Dhabi Corniche Suite">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Suite</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Abu Dhabi Corniche Suite</div>
+            <div class="sv-card-loc">Corniche Road, Abu Dhabi · AE</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.93 <span>(87)</span></span>
+              <span class="sv-card-price">AED 410 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="#">View stay</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="sv-card">
+          <div class="sv-card-img-wrap">
+            <img class="sv-card-img" src="https://images.unsplash.com/photo-1506974210756-8e1b8985d348?q=80&w=600&auto=format&fit=crop" alt="Ain Sokhna Chalet">
+            <button class="sv-heart" type="button" aria-label="Remove from saved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#D4AF37" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="sv-card-badge">Beachfront chalet</span>
+          </div>
+          <div class="sv-card-body">
+            <div class="sv-card-name">Ain Sokhna Beachfront Chalet</div>
+            <div class="sv-card-loc">Ain Sokhna, Red Sea · EG</div>
+            <div class="sv-card-meta">
+              <span class="sv-card-stars">★ 4.79 <span>(31)</span></span>
+              <span class="sv-card-price">AED 195 <em>/ night</em></span>
+            </div>
+            <a class="btn btn-secondary btn-sm sv-card-cta" href="#">View stay</a>
+          </div>
+        </div>
+
+      </div><!-- /sv-grid -->
+
+      <!-- Load more -->
+      <div style="text-align:center; margin-top:var(--space-8);">
+        <button class="btn btn-secondary btn-md" type="button">Show 6 more saved stays</button>
+      </div>
+
+    </div><!-- /sv-saved-body -->
+
+    <!-- ============ RECENT SEARCHES BODY ============ -->
+    <div class="sv-recent-body">
+      <div class="sv-recent-toolbar">
+        <p>Your 5 most recent searches</p>
+        <button class="sv-clear-all" type="button">Clear all</button>
+      </div>
+
+      <div class="sv-searches">
+
+        <!-- Search 1 -->
+        <div class="sv-search-row">
+          <span class="sv-search-ic">🇯🇴</span>
+          <div class="sv-search-info">
+            <div class="sv-search-dest">Amman, Jordan</div>
+            <div class="sv-search-detail">10–14 Sep 2026 · 4 guests · Any type</div>
+            <div class="sv-search-tags">
+              <span class="sv-search-tag">4 nights</span>
+              <span class="sv-search-tag">Entire place</span>
+              <span class="sv-search-tag">2 beds+</span>
+            </div>
+          </div>
+          <span class="sv-search-ago">2 days ago</span>
+          <div class="sv-search-actions">
+            <a class="sv-re-search" href="belongo-g03-search-results.html">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/></svg>
+              Search again
+            </a>
+            <button class="sv-del" type="button" aria-label="Delete search">✕</button>
+          </div>
+        </div>
+
+        <!-- Search 2 -->
+        <div class="sv-search-row">
+          <span class="sv-search-ic">🇦🇪</span>
+          <div class="sv-search-info">
+            <div class="sv-search-dest">Dubai, UAE</div>
+            <div class="sv-search-detail">15–22 Aug 2026 · 2 guests · Studio</div>
+            <div class="sv-search-tags">
+              <span class="sv-search-tag">7 nights</span>
+              <span class="sv-search-tag">Studio</span>
+              <span class="sv-search-tag">Pool access</span>
+            </div>
+          </div>
+          <span class="sv-search-ago">3 weeks ago</span>
+          <div class="sv-search-actions">
+            <a class="sv-re-search" href="belongo-g03-search-results.html">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/></svg>
+              Search again
+            </a>
+            <button class="sv-del" type="button" aria-label="Delete search">✕</button>
+          </div>
+        </div>
+
+        <!-- Search 3 -->
+        <div class="sv-search-row">
+          <span class="sv-search-ic">🇲🇦</span>
+          <div class="sv-search-info">
+            <div class="sv-search-dest">Marrakech, Morocco</div>
+            <div class="sv-search-detail">Flexible dates · 2 guests · Riad or villa</div>
+            <div class="sv-search-tags">
+              <span class="sv-search-tag">Flexible</span>
+              <span class="sv-search-tag">Riad</span>
+            </div>
+          </div>
+          <span class="sv-search-ago">5 days ago</span>
+          <div class="sv-search-actions">
+            <a class="sv-re-search" href="#">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/></svg>
+              Search again
+            </a>
+            <button class="sv-del" type="button" aria-label="Delete search">✕</button>
+          </div>
+        </div>
+
+        <!-- Search 4 -->
+        <div class="sv-search-row">
+          <span class="sv-search-ic">🇪🇬</span>
+          <div class="sv-search-info">
+            <div class="sv-search-dest">Cairo, Egypt</div>
+            <div class="sv-search-detail">1–5 Oct 2026 · 2 guests · Any type</div>
+            <div class="sv-search-tags">
+              <span class="sv-search-tag">4 nights</span>
+              <span class="sv-search-tag">City view</span>
+            </div>
+          </div>
+          <span class="sv-search-ago">1 week ago</span>
+          <div class="sv-search-actions">
+            <a class="sv-re-search" href="#">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/></svg>
+              Search again
+            </a>
+            <button class="sv-del" type="button" aria-label="Delete search">✕</button>
+          </div>
+        </div>
+
+        <!-- Search 5 -->
+        <div class="sv-search-row">
+          <span class="sv-search-ic">🇴🇲</span>
+          <div class="sv-search-info">
+            <div class="sv-search-dest">Muscat, Oman</div>
+            <div class="sv-search-detail">Dec 2026 · 2 guests · Heritage home</div>
+            <div class="sv-search-tags">
+              <span class="sv-search-tag">Dec 2026</span>
+              <span class="sv-search-tag">Heritage</span>
+              <span class="sv-search-tag">Courtyard</span>
+            </div>
+          </div>
+          <span class="sv-search-ago">2 weeks ago</span>
+          <div class="sv-search-actions">
+            <a class="sv-re-search" href="#">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/></svg>
+              Search again
+            </a>
+            <button class="sv-del" type="button" aria-label="Delete search">✕</button>
+          </div>
+        </div>
+
+      </div><!-- /sv-searches -->
+
+    </div><!-- /sv-recent-body -->
+  </div><!-- /sv-wrap -->
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">I can see you've been eyeing Marrakech — want me to find the best riads for your dates, or compare them with what's available in Muscat?</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Best riads in Marrakech</button>
+      <button class="chat-chip" type="button">Compare Marrakech vs Muscat</button>
+      <button class="chat-chip" type="button">Find me something similar</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

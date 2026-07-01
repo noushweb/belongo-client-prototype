@@ -33,7 +33,7 @@
 .au-panel-sub { margin-top: var(--space-3); font-size: var(--text-sm); color: rgba(247,246,242,0.78); line-height: 1.6; }
 .au-perks { list-style: none; margin-top: var(--space-8); display: grid; gap: var(--space-4); }
 .au-perks li { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--text-sm); }
-.au-perks .ic { width: 26px; height: 26px; border-radius: var(--radius-md); background: rgba(212,175,55,0.18); color: var(--color-soft-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: var(--text-xs); }
+.au-perks .ic { width: 26px; height: 26px; border-radius: var(--radius-md); background: rgba(212,175,55,0.18); color: var(--color-gold-deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: var(--text-xs); }
 .au-perks b { font-weight: 600; display: block; }
 .au-perks span { color: rgba(247,246,242,0.7); font-size: var(--text-xs); }
 .au-panel-foot { margin-top: auto; padding-top: var(--space-8); display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -84,6 +84,31 @@
 .au-resend b { color: var(--color-midnight-navy); }
 .au-sent-ic { width: 56px; height: 56px; border-radius: var(--radius-full); background: var(--color-success-bg); color: var(--color-success); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); margin: 0 auto var(--space-4); }
 
+/* ---- Preferences step (post-signup, optional) ---- */
+.au-prefs-card { max-width: 500px; margin: 0 auto; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-2xl); box-shadow: var(--shadow-md); padding: var(--space-8); }
+.au-prefs-step-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-gold-deep); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+.au-prefs-card h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); letter-spacing: -0.025em; }
+.au-prefs-card > p { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: var(--space-2); line-height: 1.55; }
+.au-prefs-group { margin-top: var(--space-6); }
+.au-prefs-group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-midnight-navy); margin-bottom: var(--space-3); }
+.au-pref-toggles { display: grid; gap: var(--space-2); }
+.au-pref-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-lg); background: var(--color-warm-ivory); cursor: pointer; }
+.au-pref-row:has(input:checked) { border-color: rgba(212,175,55,0.4); background: var(--color-soft-gold-pale); }
+.au-pref-row label { display: flex; gap: var(--space-3); align-items: center; cursor: pointer; flex: 1; }
+.au-pref-ic { width: 26px; height: 26px; border-radius: var(--radius-md); background: var(--color-soft-gold-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+.au-pref-row b { font-size: var(--text-sm); font-weight: 600; }
+.au-pref-row span { font-size: var(--text-xs); color: var(--color-warm-gray); display: block; }
+.au-pref-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-midnight-navy); flex-shrink: 0; cursor: pointer; }
+.au-prefs-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.au-prefs-chip { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid rgba(107,114,128,0.22); border-radius: var(--radius-full); padding: var(--space-2) var(--space-4); font-size: var(--text-xs); font-weight: 600; cursor: pointer; transition: all var(--transition-micro); background: none; color: var(--color-midnight-navy); }
+.au-prefs-chip.active { background: var(--color-midnight-navy); color: var(--color-warm-ivory); border-color: var(--color-midnight-navy); }
+.au-prefs-chip:hover:not(.active) { border-color: var(--color-soft-gold); }
+.au-prefs-intel { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); margin-top: var(--space-5); display: flex; gap: var(--space-3); align-items: flex-start; }
+.au-prefs-intel p { font-size: var(--text-xs); color: var(--color-deep-slate); line-height: 1.55; }
+.au-prefs-actions { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+.au-prefs-skip { text-align: center; font-size: var(--text-sm); color: var(--color-warm-gray); background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; font-family: var(--font-body); }
+.au-prefs-skip:hover { color: var(--color-midnight-navy); }
+
 /* ---- Design states ---- */
 .au-states { background: var(--color-soft-beige); padding: var(--space-16) 0 var(--space-12); }
 .au-stateframe { background: #fff; border: 1px dashed rgba(212,175,55,0.6); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
@@ -116,6 +141,9 @@
       <a class="site-nav-link" href="#">Collections</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
       <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     </nav>
     <div class="site-actions">
       <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
@@ -217,6 +245,82 @@
   </div>
 </div>
 
+<!-- ============ PREFERENCES STEP (design state — post-signup, optional) ============ -->
+<section class="au-states">
+  <div class="au-shell">
+    <div class="au-stateframe">
+      <div class="au-statehead">
+        <span>Step 2 · Preferences (optional) — shown after "Create free account" succeeds</span>
+        <span class="why">Islamic intelligence + travel style. Filters search results; stored per-account. User can skip entirely or update anytime in settings.</span>
+      </div>
+      <div class="au-statebody">
+        <div class="au-prefs-card">
+          <div class="au-prefs-step-label">✦ Step 2 of 2 · Optional — skip anytime</div>
+          <h3>Tell us what matters to you</h3>
+          <p>We'll use your preferences to surface stays that fit — quietly, in the background. Nothing is shared with hosts unless you choose.</p>
+
+          <!-- Religious / cultural filters -->
+          <div class="au-prefs-group">
+            <div class="au-prefs-group-label">Prayer &amp; religious preferences</div>
+            <div class="au-pref-toggles">
+              <div class="au-pref-row">
+                <label><span class="au-pref-ic">🕌</span><div><b>Qibla direction</b><span>Show stays where guests have verified qibla marking in-room</span></div></label>
+                <input type="checkbox" checked>
+              </div>
+              <div class="au-pref-row">
+                <label><span class="au-pref-ic">📿</span><div><b>Prayer times nearby</b><span>Surface mosque distance and first prayer time on every listing</span></div></label>
+                <input type="checkbox" checked>
+              </div>
+              <div class="au-pref-row">
+                <label><span class="au-pref-ic">🚫</span><div><b>Alcohol-free property</b><span>Prioritise hosts who have marked the property as alcohol-free</span></div></label>
+                <input type="checkbox">
+              </div>
+            </div>
+          </div>
+
+          <!-- Dietary -->
+          <div class="au-prefs-group">
+            <div class="au-prefs-group-label">Dietary preferences</div>
+            <div class="au-pref-toggles">
+              <div class="au-pref-row">
+                <label><span class="au-pref-ic">🍖</span><div><b>Halal food nearby</b><span>Show guest-verified halal restaurants and shops within walking distance</span></div></label>
+                <input type="checkbox" checked>
+              </div>
+              <div class="au-pref-row">
+                <label><span class="au-pref-ic">🥗</span><div><b>Vegetarian / vegan options</b><span>Highlight nearby vegetarian-friendly dining (per past-guest notes)</span></div></label>
+                <input type="checkbox">
+              </div>
+            </div>
+          </div>
+
+          <!-- Travel style -->
+          <div class="au-prefs-group">
+            <div class="au-prefs-group-label">How do you usually travel?</div>
+            <div class="au-prefs-chips">
+              <button class="au-prefs-chip active" type="button">👨‍👩‍👧 Family</button>
+              <button class="au-prefs-chip" type="button">💼 Business</button>
+              <button class="au-prefs-chip active" type="button">💑 Couple</button>
+              <button class="au-prefs-chip" type="button">🧳 Solo</button>
+              <button class="au-prefs-chip" type="button">👥 Group</button>
+            </div>
+          </div>
+
+          <!-- Intelligence note -->
+          <div class="au-prefs-intel">
+            <span style="font-size:var(--text-md); flex-shrink:0;">✦</span>
+            <p>Belongo's Islamic intelligence layer reads your preferences and quietly highlights the signals that matter — mosque distance, qibla markers, halal options — directly on every property card. You're in control: update or turn off any filter in Account settings.</p>
+          </div>
+
+          <div class="au-prefs-actions">
+            <a class="btn btn-premium btn-lg" href="belongo-g08-my-bookings.html" style="justify-content:center;">Save my preferences &amp; go to bookings</a>
+            <button class="au-prefs-skip" type="button">Skip for now — I'll set these up later →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOOTER (FX-02, verbatim) ============ -->
 <footer class="site-footer">
   <div class="site-container">
@@ -279,16 +383,17 @@
 </footer>
 
 <!-- ============ CHATBOT (FX-04, verbatim) ============ -->
-<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
   <span class="chatbot-online"></span>
 </button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-head">
     <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
     <div class="chatbot-id">
-      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
-      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
     </div>
     <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
   </div>

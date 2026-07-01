@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — Gift a Stay (g20)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* ============================================================
+   g20 · GIFT A STAY  (.gs-*)
+   Gift voucher purchase: recipient / amount / message / delivery.
+   Two-col: form left, live gift-card preview right.
+   ============================================================ */
+.gs-shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+
+/* ---- Hero ---- */
+.gs-hero { background: linear-gradient(160deg, #fbfaf7 0%, var(--color-warm-ivory) 100%); padding: var(--space-14) 0 var(--space-10); border-bottom: 1px solid rgba(212,175,55,0.25); position: relative; overflow: hidden; }
+.gs-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 65% at 90% 50%, rgba(212,175,55,0.12), transparent 65%); pointer-events: none; }
+.gs-hero-inner { position: relative; display: flex; align-items: center; gap: var(--space-10); }
+.gs-hero-text { flex: 1; min-width: 0; }
+.gs-eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-gold-deep); margin-bottom: var(--space-4); }
+.gs-hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
+.gs-hero h1 em { font-style: normal; color: var(--color-soft-gold); }
+.gs-hero-sub { margin-top: var(--space-4); font-size: var(--text-md); color: var(--color-warm-gray); line-height: 1.6; max-width: 460px; }
+.gs-hero-motif { flex-shrink: 0; width: 200px; display: flex; align-items: center; justify-content: center; }
+
+/* ---- Layout ---- */
+.gs-body { padding: var(--space-10) 0 var(--space-16); }
+.gs-layout { display: grid; grid-template-columns: minmax(0,1fr) 380px; gap: var(--space-8); align-items: start; }
+.gs-col-form { display: grid; gap: var(--space-4); }
+
+/* ---- Form cards ---- */
+.gs-card { background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-xs); }
+.gs-card-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-3); }
+.gs-step-num { width: 24px; height: 24px; border-radius: var(--radius-full); background: var(--color-midnight-navy); color: var(--color-warm-ivory); font-size: var(--text-xs); font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gs-field { margin-bottom: var(--space-4); }
+.gs-field:last-child { margin-bottom: 0; }
+.gs-label { display: block; font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-2); }
+.gs-input { width: 100%; border: 1.5px solid rgba(107,114,128,0.25); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-midnight-navy); background: #fff; transition: border-color var(--transition-micro); box-sizing: border-box; }
+.gs-input:focus { outline: none; border-color: var(--color-soft-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+.gs-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4); }
+
+/* ---- Amount chips (radio-backed, CSS-only selected state) ---- */
+.gs-amounts { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.gs-amount-label { cursor: pointer; }
+.gs-amount-label input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+.gs-amount-chip { display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid rgba(107,114,128,0.25); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-5); font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; color: var(--color-midnight-navy); transition: all var(--transition-micro); white-space: nowrap; user-select: none; }
+.gs-amount-label input:checked + .gs-amount-chip { background: var(--color-midnight-navy); color: var(--color-warm-ivory); border-color: var(--color-midnight-navy); }
+.gs-amount-label:hover .gs-amount-chip { border-color: var(--color-soft-gold); }
+.gs-custom-wrap { position: relative; margin-top: var(--space-3); display: none; }
+.gs-custom-wrap.visible { display: block; }
+.gs-custom-prefix { position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%); font-size: var(--text-sm); font-weight: 600; color: var(--color-warm-gray); pointer-events: none; }
+.gs-custom-wrap .gs-input { padding-left: calc(var(--space-4) + 40px); }
+.gs-amount-hint { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-3); line-height: 1.5; }
+
+/* ---- Message ---- */
+.gs-textarea { width: 100%; border: 1.5px solid rgba(107,114,128,0.25); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-midnight-navy); background: #fff; resize: vertical; min-height: 88px; transition: border-color var(--transition-micro); box-sizing: border-box; line-height: 1.6; }
+.gs-textarea:focus { outline: none; border-color: var(--color-soft-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+.gs-char-row { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-2); }
+.gs-char-hint { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.gs-char-count { font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); }
+
+/* ---- Delivery radios ---- */
+.gs-delivery-opts { display: grid; gap: var(--space-2); }
+.gs-delivery-opt { display: flex; align-items: flex-start; gap: var(--space-3); border: 1.5px solid rgba(107,114,128,0.2); border-radius: var(--radius-lg); padding: var(--space-4); cursor: pointer; transition: all var(--transition-micro); }
+.gs-delivery-opt:has(input:checked) { border-color: var(--color-soft-gold); background: var(--color-soft-gold-pale); }
+.gs-delivery-opt input[type="radio"] { width: 16px; height: 16px; accent-color: var(--color-midnight-navy); flex-shrink: 0; margin-top: 3px; }
+.gs-delivery-opt b { font-size: var(--text-sm); font-weight: 600; display: block; }
+.gs-delivery-opt p { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: 2px; line-height: 1.5; }
+.gs-schedule-field { margin-top: var(--space-3); display: none; }
+.gs-schedule-field.visible { display: block; }
+
+/* ---- Payment ---- */
+.gs-saved-card { display: flex; align-items: center; gap: var(--space-3); background: var(--color-warm-ivory); border: 1.5px solid rgba(107,114,128,0.2); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-5); }
+.gs-card-badge { background: var(--color-midnight-navy); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; flex-shrink: 0; }
+.gs-card-info { flex: 1; min-width: 0; }
+.gs-card-info b { font-size: var(--text-sm); font-weight: 600; display: block; }
+.gs-card-info span { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.gs-card-change { font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); white-space: nowrap; cursor: pointer; flex-shrink: 0; }
+.gs-submit-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: var(--space-3); padding-top: var(--space-4); padding-bottom: var(--space-4); font-size: var(--text-md); }
+.gs-trust-row { display: flex; align-items: center; justify-content: center; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-4); }
+.gs-trust-item { font-size: 11px; color: var(--color-warm-gray); display: flex; align-items: center; gap: 5px; }
+
+/* ---- Gift card preview ---- */
+.gs-preview-sticky { position: sticky; top: calc(var(--space-6) + 72px); }
+.gs-gift-card { background: var(--color-midnight-navy); border-radius: 20px; padding: var(--space-7); position: relative; overflow: hidden; box-shadow: 0 28px 64px rgba(13,27,42,0.30), 0 6px 18px rgba(13,27,42,0.18); }
+.gs-gift-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 75% 80% at 100% 0%, rgba(212,175,55,0.20), transparent 60%), radial-gradient(ellipse 45% 55% at 0% 100%, rgba(212,175,55,0.07), transparent 65%); pointer-events: none; }
+.gs-gift-shimmer { position: absolute; top: -50%; right: -25%; width: 75%; height: 150%; background: linear-gradient(135deg, transparent 30%, rgba(212,175,55,0.06) 50%, transparent 70%); transform: rotate(20deg); animation: gsShimmer 4s ease-in-out infinite; pointer-events: none; }
+@keyframes gsShimmer { 0%, 100% { opacity: 0.5; transform: rotate(20deg) translateX(0); } 50% { opacity: 1; transform: rotate(20deg) translateX(10px); } }
+.gs-card-top { display: flex; align-items: flex-start; justify-content: space-between; position: relative; margin-bottom: var(--space-8); }
+.gs-card-wordmark { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800; color: var(--color-warm-ivory); letter-spacing: -0.04em; line-height: 1; }
+.gs-card-wordmark em { font-style: normal; color: var(--color-soft-gold); }
+.gs-card-type { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(212,175,55,0.65); margin-top: 5px; }
+.gs-card-body { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-7); min-height: 80px; }
+.gs-card-recipient-area { flex: 1; min-width: 0; }
+.gs-card-to-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(212,175,55,0.65); margin-bottom: 4px; }
+.gs-card-recipient { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-warm-ivory); letter-spacing: -0.015em; margin-bottom: var(--space-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gs-card-msg { font-size: var(--text-xs); color: rgba(247,246,242,0.55); line-height: 1.55; font-style: italic; }
+.gs-card-amount-area { text-align: right; flex-shrink: 0; }
+.gs-card-amount { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--color-soft-gold); letter-spacing: -0.05em; line-height: 1; white-space: nowrap; }
+.gs-card-credit { font-family: var(--font-mono); font-size: 9px; color: rgba(212,175,55,0.60); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+.gs-card-foot { border-top: 1px solid rgba(212,175,55,0.18); padding-top: var(--space-4); display: flex; align-items: center; justify-content: space-between; position: relative; }
+.gs-card-url { font-family: var(--font-mono); font-size: 10px; color: rgba(212,175,55,0.55); letter-spacing: 0.06em; }
+.gs-card-code { font-family: var(--font-mono); font-size: 10px; color: rgba(247,246,242,0.35); letter-spacing: 0.14em; }
+
+/* ---- Preview tips ---- */
+.gs-preview-caption { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-4); line-height: 1.5; }
+.gs-tips { margin-top: var(--space-5); display: grid; gap: var(--space-4); }
+.gs-tip { display: flex; gap: var(--space-3); align-items: flex-start; }
+.gs-tip-ic { width: 28px; height: 28px; border-radius: var(--radius-md); background: var(--color-soft-gold-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+.gs-tip b { font-size: var(--text-xs); font-weight: 600; display: block; margin-bottom: 2px; }
+.gs-tip span { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.45; }
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .gs-layout { grid-template-columns: minmax(0,1fr); }
+  .gs-preview-sticky { position: static; order: -1; }
+}
+@media (max-width: 640px) {
+  .gs-hero-motif { display: none; }
+  .gs-input-row { grid-template-columns: 1fr; gap: var(--space-3); }
+  .gs-amounts { gap: var(--space-1); }
+  .gs-amount-chip { padding: var(--space-2) var(--space-4); font-size: var(--text-xs); }
+  .gs-trust-row { gap: var(--space-3); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="site-container site-header-inner">
+    <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
+    <nav class="site-nav">
+      <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+      <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link is-active" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+      <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+      <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+    </nav>
+    <div class="site-actions">
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
+      <span class="site-actions-divider"></span>
+      <a class="site-host-link" href="belongo-g21-saved.html" aria-label="Saved stays" style="font-size:var(--text-md); line-height:1;">♥</a>
+      <a class="site-host-link" href="belongo-g08-my-bookings.html">My bookings</a>
+      <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
+      <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="site-mobile-menu" id="site-mobile-menu">
+    <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
+    <a class="site-nav-link" href="#">Collections</a>
+    <a class="site-nav-link is-active" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved stays</a>
+    <a class="site-nav-link" href="belongo-g08-my-bookings.html">My bookings</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+    <div class="site-mobile-actions">
+      <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="gs-hero">
+  <div class="gs-shell gs-hero-inner">
+    <div class="gs-hero-text">
+      <div class="gs-eyebrow">♥ Gift a Stay</div>
+      <h1>Give the gift<br>of <em>going</em></h1>
+      <p class="gs-hero-sub">Send a Belongo stay to someone you love — they choose the property, the dates, the destination. You give them the moment.</p>
+    </div>
+    <div class="gs-hero-motif" aria-hidden="true">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M90 154C90 154 15 108 15 57.5C15 34.5 33.5 18 55 18C69 18 81 24.5 90 35C99 24.5 111 18 125 18C146.5 18 165 34.5 165 57.5C165 108 90 154 90 154Z" fill="rgba(212,175,55,0.10)" stroke="rgba(212,175,55,0.55)" stroke-width="2"/>
+        <path d="M90 132C90 132 34 95 34 59C34 42 46.5 29 62 29C72 29 80.5 34 90 44C99.5 34 108 29 118 29C133.5 29 146 42 146 59C146 95 90 132 90 132Z" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.25)" stroke-width="1.5"/>
+        <circle cx="90" cy="72" r="6" fill="rgba(212,175,55,0.35)"/>
+        <circle cx="148" cy="38" r="3" fill="rgba(212,175,55,0.4)"/>
+        <circle cx="32" cy="44" r="2" fill="rgba(212,175,55,0.3)"/>
+        <circle cx="160" cy="80" r="2" fill="rgba(212,175,55,0.25)"/>
+        <circle cx="24" cy="88" r="3" fill="rgba(212,175,55,0.2)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODY ============ -->
+<div class="gs-shell">
+  <div class="gs-body">
+    <div class="gs-layout">
+
+      <!-- ============ FORM ============ -->
+      <div class="gs-col-form">
+
+        <!-- Step 1 · Recipient -->
+        <div class="gs-card">
+          <div class="gs-card-title"><span class="gs-step-num">1</span>Who is this for?</div>
+          <div class="gs-input-row">
+            <div class="gs-field">
+              <label class="gs-label" for="gs-rec-name">Recipient's name</label>
+              <input class="gs-input" type="text" id="gs-rec-name" placeholder="Sarah Al-Rashidi" autocomplete="off">
+            </div>
+            <div class="gs-field">
+              <label class="gs-label" for="gs-rec-email">Recipient's email</label>
+              <input class="gs-input" type="email" id="gs-rec-email" placeholder="sarah@example.com" autocomplete="off">
+            </div>
+          </div>
+          <div class="gs-field">
+            <label class="gs-label" for="gs-sender">Your name (shown on the gift)</label>
+            <input class="gs-input" type="text" id="gs-sender" placeholder="e.g. Mariam" autocomplete="given-name">
+          </div>
+        </div>
+
+        <!-- Step 2 · Amount -->
+        <div class="gs-card">
+          <div class="gs-card-title"><span class="gs-step-num">2</span>Choose an amount</div>
+          <div class="gs-amounts">
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="500">
+              <span class="gs-amount-chip">AED 500</span>
+            </label>
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="1000" checked>
+              <span class="gs-amount-chip">AED 1,000</span>
+            </label>
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="1500">
+              <span class="gs-amount-chip">AED 1,500</span>
+            </label>
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="2000">
+              <span class="gs-amount-chip">AED 2,000</span>
+            </label>
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="3000">
+              <span class="gs-amount-chip">AED 3,000</span>
+            </label>
+            <label class="gs-amount-label">
+              <input type="radio" name="gs-amount" value="custom" id="gs-custom-radio">
+              <span class="gs-amount-chip">Custom</span>
+            </label>
+          </div>
+          <div class="gs-custom-wrap" id="gs-custom-wrap">
+            <span class="gs-custom-prefix">AED</span>
+            <input class="gs-input" type="number" id="gs-custom-amount" placeholder="Enter amount" min="100" max="50000">
+          </div>
+          <p class="gs-amount-hint">Redeemable across any Belongo stay — one booking or split across trips. Minimum AED 100.</p>
+        </div>
+
+        <!-- Step 3 · Message -->
+        <div class="gs-card">
+          <div class="gs-card-title"><span class="gs-step-num">3</span>Add a personal message <span style="font-weight:400; color:var(--color-warm-gray); font-size:var(--text-sm);">(optional)</span></div>
+          <div class="gs-field">
+            <textarea class="gs-textarea" id="gs-message" maxlength="120" placeholder="Wishing you a stay that takes your breath away — enjoy every moment."></textarea>
+            <div class="gs-char-row">
+              <span class="gs-char-hint">Shown on the gift card</span>
+              <span class="gs-char-count" id="gs-char-count">0 / 120</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 · Delivery -->
+        <div class="gs-card">
+          <div class="gs-card-title"><span class="gs-step-num">4</span>When to deliver</div>
+          <div class="gs-delivery-opts">
+            <label class="gs-delivery-opt">
+              <input type="radio" name="gs-delivery" value="now" checked>
+              <div>
+                <b>Send now</b>
+                <p>The gift lands in the recipient's inbox within minutes of payment.</p>
+              </div>
+            </label>
+            <label class="gs-delivery-opt">
+              <input type="radio" name="gs-delivery" value="schedule" id="gs-schedule-radio">
+              <div>
+                <b>Schedule a delivery date</b>
+                <p>Perfect for birthdays, Eid, or anniversaries — arrives exactly when you choose.</p>
+              </div>
+            </label>
+          </div>
+          <div class="gs-schedule-field" id="gs-schedule-field">
+            <label class="gs-label" for="gs-delivery-date" style="margin-top:var(--space-3);">Delivery date</label>
+            <input class="gs-input" type="date" id="gs-delivery-date">
+          </div>
+        </div>
+
+        <!-- Step 5 · Payment -->
+        <div class="gs-card">
+          <div class="gs-card-title"><span class="gs-step-num">5</span>Payment</div>
+          <div class="gs-saved-card">
+            <span class="gs-card-badge">VISA</span>
+            <div class="gs-card-info">
+              <b>Visa ending ••4242</b>
+              <span>Expires 09/28</span>
+            </div>
+            <span class="gs-card-change">Change</span>
+          </div>
+          <button class="btn btn-premium btn-lg gs-submit-btn" type="button">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="rgba(212,175,55,0.9)" stroke-width="2" stroke-linejoin="round" fill="rgba(212,175,55,0.25)"/></svg>
+            Send gift · <span id="gs-submit-amount">AED 1,000</span>
+          </button>
+          <div class="gs-trust-row">
+            <span class="gs-trust-item">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/></svg>
+              Secure · Stripe
+            </span>
+            <span class="gs-trust-item">Non-refundable once sent</span>
+            <span class="gs-trust-item">Valid for 24 months</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============ PREVIEW ============ -->
+      <div class="gs-preview-sticky">
+
+        <div class="gs-gift-card" role="img" aria-label="Gift card preview">
+          <div class="gs-gift-shimmer" aria-hidden="true"></div>
+
+          <div class="gs-card-top">
+            <div>
+              <div class="gs-card-wordmark">belon<em>go</em></div>
+              <div class="gs-card-type">Gift Experience</div>
+            </div>
+            <div aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M20 34C20 34 3.5 23 3.5 12.5C3.5 7.5 7.5 4 12.5 4C15.8 4 18.6 5.8 20 8.8C21.4 5.8 24.2 4 27.5 4C32.5 4 36.5 7.5 36.5 12.5C36.5 23 20 34 20 34Z" fill="rgba(212,175,55,0.55)" stroke="rgba(212,175,55,0.85)" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="gs-card-body">
+            <div class="gs-card-recipient-area">
+              <div class="gs-card-to-label">For</div>
+              <div class="gs-card-recipient" id="gs-prev-recipient">—</div>
+              <div class="gs-card-msg" id="gs-prev-msg">Your message will appear here.</div>
+            </div>
+            <div class="gs-card-amount-area">
+              <div class="gs-card-amount" id="gs-prev-amount">AED 1,000</div>
+              <div class="gs-card-credit">Belongo Credit</div>
+            </div>
+          </div>
+
+          <div class="gs-card-foot">
+            <span class="gs-card-url">belongo.com/redeem</span>
+            <span class="gs-card-code">BLG-GIFT-••••</span>
+          </div>
+        </div>
+
+        <p class="gs-preview-caption">Preview only — the final card is emailed with a unique secure redemption code.</p>
+
+        <div class="gs-tips">
+          <div class="gs-tip">
+            <span class="gs-tip-ic">♾</span>
+            <div><b>Any stay, any destination</b><span>Gulf, Levant, North Africa — every property on Belongo.</span></div>
+          </div>
+          <div class="gs-tip">
+            <span class="gs-tip-ic">📅</span>
+            <div><b>Valid 24 months</b><span>Plenty of time to find the perfect moment.</span></div>
+          </div>
+          <div class="gs-tip">
+            <span class="gs-tip-ic">✦</span>
+            <div><b>Stackable with member rates</b><span>Combines with Belongo Circle discounts — more value, always.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Looking to send the perfect gift? I can help you pick the right amount for the destination in mind — just tell me where they're dreaming of.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">What amount works for Dubai?</button>
+      <button class="chat-chip" type="button">Can they split it across trips?</button>
+      <button class="chat-chip" type="button">When does the gift expire?</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+<script>
+(function () {
+  var recName    = document.getElementById('gs-rec-name');
+  var msgField   = document.getElementById('gs-message');
+  var charCount  = document.getElementById('gs-char-count');
+  var prevRec    = document.getElementById('gs-prev-recipient');
+  var prevMsg    = document.getElementById('gs-prev-msg');
+  var prevAmt    = document.getElementById('gs-prev-amount');
+  var submitAmt  = document.getElementById('gs-submit-amount');
+  var customWrap = document.getElementById('gs-custom-wrap');
+  var customAmt  = document.getElementById('gs-custom-amount');
+  var schedField = document.getElementById('gs-schedule-field');
+
+  function fmt(n) { return 'AED ' + parseInt(n, 10).toLocaleString('en-US'); }
+
+  recName.addEventListener('input', function () {
+    prevRec.textContent = this.value.trim() || '—';
+  });
+
+  msgField.addEventListener('input', function () {
+    charCount.textContent = this.value.length + ' / 120';
+    prevMsg.textContent = this.value.trim() || 'Your message will appear here.';
+  });
+
+  document.querySelectorAll('input[name="gs-amount"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      if (this.value === 'custom') {
+        customWrap.classList.add('visible');
+        prevAmt.textContent = 'AED —';
+        submitAmt.textContent = 'AED —';
+      } else {
+        customWrap.classList.remove('visible');
+        prevAmt.textContent = fmt(this.value);
+        submitAmt.textContent = fmt(this.value);
+      }
+    });
+  });
+
+  customAmt.addEventListener('input', function () {
+    var v = parseInt(this.value, 10);
+    if (!isNaN(v) && v > 0) {
+      prevAmt.textContent = fmt(v);
+      submitAmt.textContent = fmt(v);
+    }
+  });
+
+  document.querySelectorAll('input[name="gs-delivery"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      schedField.classList.toggle('visible', this.value === 'schedule');
+    });
+  });
+})();
+</script>
+</body>
+</html>

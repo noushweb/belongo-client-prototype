@@ -165,6 +165,12 @@
 @keyframes co-spin { to { transform: rotate(360deg); } }
 .co-dontretry { background: var(--color-warning-bg); border: 1px solid rgba(146,64,14,0.25); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-warning); margin-top: var(--space-4); font-weight: 600; }
 
+/* host-controlled deposit indicator */
+.co-deposit-badge { display: flex; align-items: flex-start; gap: var(--space-2); background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-gold-deep); font-weight: 600; line-height: 1.55; margin-bottom: var(--space-4); }
+.co-deposit-badge svg { flex-shrink: 0; margin-top: 1px; color: var(--color-gold-deep); }
+.co-fullpay-note { background: var(--color-warm-ivory); border: 1px solid rgba(107,114,128,0.2); border-radius: var(--radius-lg); padding: var(--space-4); font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.55; }
+.co-fullpay-note b { font-weight: 600; }
+
 /* ---- Responsive ---- */
 @media (max-width: 980px) {
   .co-layout { grid-template-columns: minmax(0,1fr); gap: var(--space-6); }
@@ -196,6 +202,9 @@
       <a class="site-nav-link" href="#">Collections</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
       <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     </nav>
     <div class="site-actions">
       <span class="site-host-link">🔒&nbsp;Secure checkout</span>
@@ -209,6 +218,9 @@
     <a class="site-nav-link" href="#">Collections</a>
     <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
     <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
   </div>
 </header>
 
@@ -271,11 +283,16 @@
         </div>
       </section>
 
-      <!-- 3 · How much to pay now (F-12) -->
+      <!-- 3 · How much to pay now (F-12 — host-controlled deposit) -->
       <section class="co-sec">
         <div class="co-sec-head">
           <span class="co-sec-num">3</span>
           <span class="co-sec-title">How much to pay now</span>
+        </div>
+        <!-- Shown only when listing.partPaymentEnabled = true (host toggle in h07 pricing) -->
+        <div class="co-deposit-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          This host accepts deposit payments — reserve with a part-payment and settle the balance closer to your stay.
         </div>
         <label class="co-payopt on">
           <input type="radio" name="pay" checked>
@@ -283,7 +300,7 @@
         </label>
         <label class="co-payopt">
           <input type="radio" name="pay">
-          <span><b>Pay AED 238 now, AED 714 by 5 Sep</b><span>Reserve with a part-payment. We remind you twice before the balance is due — no auto-cancel surprises.</span></span>
+          <span><b>Pay AED 238 now, AED 714 by 5 Sep</b><span>Reserve with a 25% deposit. We remind you twice before the balance date — no auto-cancel surprises.</span></span>
         </label>
       </section>
 
@@ -344,6 +361,61 @@
     </aside>
   </div>
 </div>
+
+<!-- ============ CHECKOUT DESIGN STATE: full-payment-only listing ============ -->
+<section class="co-states">
+  <div class="co-shell">
+    <div class="co-stateframe">
+      <div class="co-statehead">
+        <span>Step 3 · Full payment only — listing.partPaymentEnabled = false</span>
+        <span class="why">When the host has not enabled deposits, step 3 shows a single option with a clear disclosure line instead of radio choices. Guest is never surprised by a missing option.</span>
+      </div>
+      <div class="co-statebody">
+        <div class="co-modal">
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-warm-gray);margin-bottom:var(--space-4);">Step 3 replacement when deposits are off</p>
+
+          <!-- Single-option variant of step 3 -->
+          <div style="border:1px solid rgba(107,114,128,0.15);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-xs);">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);">
+              <span style="width:26px;height:26px;border-radius:50%;background:var(--color-midnight-navy);color:var(--color-soft-gold);font-family:var(--font-mono);font-size:var(--text-xs);display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+              <span style="font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:-0.015em;">How much to pay now</span>
+            </div>
+            <div class="co-fullpay-note">
+              <b>Full payment required · AED 952.00</b><br>
+              This host requires payment in full at booking. Your card is charged once you confirm — nothing held until approval, nothing owed later.
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--color-warm-gray);margin-top:var(--space-3);line-height:1.55;">Interested in properties that accept deposits? <a href="belongo-g03-search-results.html" style="border-bottom:1px solid var(--color-soft-gold);color:var(--color-midnight-navy);font-weight:600;">Filter by "Deposit accepted" in search.</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-stateframe">
+      <div class="co-statehead">
+        <span>Step 3 variant · Deposit-only listing (host requires deposit, full payment not accepted upfront)</span>
+        <span class="why">Edge case: some hosts prefer to lock in a deposit and bill the balance manually. Step 3 in this case shows a single option — the deposit — with the balance date and a note.</span>
+      </div>
+      <div class="co-statebody">
+        <div class="co-modal">
+          <div style="border:1px solid rgba(107,114,128,0.15);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-xs);">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);">
+              <span style="width:26px;height:26px;border-radius:50%;background:var(--color-midnight-navy);color:var(--color-soft-gold);font-family:var(--font-mono);font-size:var(--text-xs);display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+              <span style="font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:-0.015em;">How much to pay now</span>
+            </div>
+            <div class="co-deposit-badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+              This host requires a deposit to reserve — pay the balance by the date below.
+            </div>
+            <div class="co-payopt on" style="margin-bottom:0;cursor:default;">
+              <input type="radio" name="pay-ds" checked style="accent-color:var(--color-soft-gold);">
+              <span><b>Pay AED 238 deposit now · balance AED 714 by 5 Sep</b><span>The only option for this listing — balance reminders sent 7 days and 1 day before the due date.</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ FOOTER (FX-02, verbatim) ============ -->
 <footer class="site-footer">
@@ -407,16 +479,17 @@
 </footer>
 
 <!-- ============ CHATBOT (FX-04, verbatim) ============ -->
-<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
   <span class="chatbot-online"></span>
 </button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-head">
     <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
     <div class="chatbot-id">
-      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
-      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
     </div>
     <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
   </div>

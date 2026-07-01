@@ -86,6 +86,20 @@
 .bk-actions .btn { width: 100%; justify-content: center; }
 .bk-duebadge { font-family: var(--font-mono); font-size: 10px; color: var(--color-warning); }
 
+/* ---- Past trips + Rebook ---- */
+.bk-past-header { margin: var(--space-8) 0 var(--space-4); padding-top: var(--space-6); border-top: 2px solid rgba(107,114,128,0.10); display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.bk-past-header h2 { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; letter-spacing: -0.015em; }
+.bk-past-header p { font-size: var(--text-xs); color: var(--color-warm-gray); }
+.bk.is-past .bk-media img { filter: saturate(0.75) brightness(0.95); }
+.bk-completed-row { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-2); flex-wrap: wrap; }
+.bk-star-done { font-size: var(--text-xs); font-weight: 600; color: var(--color-gold-deep); display: flex; align-items: center; gap: 4px; }
+.bk-review-cta { font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; padding: 0; }
+.bk-rebook-row { display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap; }
+.bk-rebook { display: inline-flex; align-items: center; gap: 6px; background: var(--color-midnight-navy); color: var(--color-warm-ivory); border: 1.5px solid var(--color-midnight-navy); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-4); font-size: var(--text-xs); font-weight: 700; cursor: pointer; transition: all var(--transition-micro); white-space: nowrap; text-decoration: none; }
+.bk-rebook:hover { background: #1c2f46; border-color: #1c2f46; }
+.bk-rebook.alt { background: none; border-color: rgba(107,114,128,0.25); color: var(--color-midnight-navy); }
+.bk-rebook.alt:hover { border-color: var(--color-soft-gold); background: var(--color-soft-gold-pale); }
+
 /* ---- Design states ---- */
 .acct-states { background: var(--color-soft-beige); padding: var(--space-16) 0 var(--space-12); }
 .acct-stateframe { background: #fff; border: 1px dashed rgba(212,175,55,0.6); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-6); }
@@ -125,6 +139,9 @@
       <a class="site-nav-link" href="#">Collections</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
       <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     </nav>
     <div class="site-actions">
       <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
@@ -173,7 +190,7 @@
 
       <div class="acct-tabs">
         <button class="acct-tab is-active" type="button">Upcoming <span class="n">2</span></button>
-        <button class="acct-tab" type="button">Past <span class="n">1</span></button>
+        <button class="acct-tab" type="button">Past <span class="n">3</span></button>
         <button class="acct-tab" type="button">Cancelled</button>
       </div>
 
@@ -221,6 +238,82 @@
           </div>
         </div>
       </article>
+      <!-- ======== PAST TRIPS (design state for "Past" tab) ======== -->
+      <div class="bk-past-header">
+        <h2>Past trips</h2>
+        <p>3 completed stays · design state — shown when "Past" tab is active</p>
+      </div>
+
+      <!-- past 1: reviewed, primary Rebook CTA -->
+      <article class="bk is-past">
+        <div class="bk-media"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=500&auto=format&fit=crop" alt="Amman Garden Suite"></div>
+        <div class="bk-body">
+          <div class="bk-status-row"><span class="badge" style="background:var(--color-soft-beige);color:var(--color-deep-slate);">✓ Completed</span><span class="bk-ref">BLG-3R8X7</span></div>
+          <div class="bk-name">Amman Garden Suite</div>
+          <div class="bk-meta">14 – 18 Mar 2026 · <span class="dim">4 nights · 2 guests</span></div>
+          <div class="bk-completed-row">
+            <span class="bk-star-done">★★★★★ You reviewed this stay</span>
+          </div>
+          <div class="bk-rebook-row">
+            <a class="bk-rebook" href="belongo-g04-property-detail.html">↻ Rebook same stay</a>
+            <a class="bk-rebook alt" href="belongo-g03-search-results.html">Find something similar</a>
+          </div>
+        </div>
+        <div class="bk-side">
+          <div class="bk-total">AED 840<span>paid · Mar 2026</span></div>
+          <div class="bk-actions">
+            <a class="btn btn-secondary btn-sm" href="belongo-g09-booking-detail.html">View receipt</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- past 2: not yet reviewed -->
+      <article class="bk is-past">
+        <div class="bk-media"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=500&auto=format&fit=crop" alt="Muscat Heritage Townhouse"></div>
+        <div class="bk-body">
+          <div class="bk-status-row"><span class="badge" style="background:var(--color-soft-beige);color:var(--color-deep-slate);">✓ Completed</span><span class="bk-ref">BLG-2P5N9</span></div>
+          <div class="bk-name">Muscat Heritage Townhouse</div>
+          <div class="bk-meta">20 – 24 Jan 2026 · <span class="dim">4 nights · 2 guests</span></div>
+          <div class="bk-completed-row">
+            <button class="bk-review-cta" type="button">★ Leave a review — takes 2 min</button>
+          </div>
+          <div class="bk-rebook-row">
+            <a class="bk-rebook" href="belongo-g04-property-detail.html">↻ Rebook same stay</a>
+            <a class="bk-rebook alt" href="belongo-g03-search-results.html">Find something similar</a>
+          </div>
+        </div>
+        <div class="bk-side">
+          <div class="bk-total">AED 1,140<span>paid · Jan 2026</span></div>
+          <div class="bk-actions">
+            <a class="btn btn-secondary btn-sm" href="belongo-g09-booking-detail.html">View receipt</a>
+            <a class="btn btn-secondary btn-sm" href="belongo-g13-review-submission.html">Write review</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- past 3: older stay -->
+      <article class="bk is-past">
+        <div class="bk-media"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=500&auto=format&fit=crop" alt="Downtown Calm Studio"></div>
+        <div class="bk-body">
+          <div class="bk-status-row"><span class="badge" style="background:var(--color-soft-beige);color:var(--color-deep-slate);">✓ Completed</span><span class="bk-ref">BLG-1K0W2</span></div>
+          <div class="bk-name">Downtown Calm Studio</div>
+          <div class="bk-meta">3 – 6 Nov 2025 · <span class="dim">3 nights · 2 guests</span></div>
+          <div class="bk-completed-row">
+            <span class="bk-star-done">★★★★★ You reviewed this stay</span>
+          </div>
+          <div class="bk-rebook-row">
+            <a class="bk-rebook" href="belongo-g04-property-detail.html">↻ Rebook same stay</a>
+            <a class="bk-rebook alt" href="belongo-g03-search-results.html">Find something similar</a>
+          </div>
+        </div>
+        <div class="bk-side">
+          <div class="bk-total">AED 714<span>paid · Nov 2025</span></div>
+          <div class="bk-actions">
+            <a class="btn btn-secondary btn-sm" href="belongo-g09-booking-detail.html">View receipt</a>
+          </div>
+        </div>
+      </article>
+
     </main>
   </div>
 </div>
@@ -287,16 +380,17 @@
 </footer>
 
 <!-- ============ CHATBOT (FX-04, verbatim) ============ -->
-<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
   <span class="chatbot-online"></span>
 </button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-head">
     <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
     <div class="chatbot-id">
-      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
-      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
     </div>
     <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
   </div>

@@ -139,6 +139,16 @@
 .sr-urgent { font-size: var(--text-xs); font-weight: 600; color: var(--color-error); margin-bottom: var(--space-2); }
 .sr-loadrow { display: flex; justify-content: center; padding: var(--space-6) 0; }
 
+/* ---- Sponsored card (paid placement, clearly labelled — not ranked by relevance) ---- */
+.sr-card.is-sponsored { border-color: rgba(107,114,128,0.22); }
+.sr-sponsored-tag {
+  position: absolute; top: var(--space-3); left: var(--space-3); z-index: 2;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: rgba(13,27,42,0.78); color: var(--color-warm-ivory);
+  padding: 3px 9px; border-radius: var(--radius-md);
+}
+.sr-sponsored-note { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: auto; padding-top: var(--space-3); }
+
 /* Map panel */
 /* Map: full-screen overlay opened via the Map button (list-first layout) */
 .sr-map { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--color-soft-beige); }
@@ -301,6 +311,9 @@
       <a class="site-nav-link" href="#">Collections</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
       <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     </nav>
     <div class="site-actions">
       <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
@@ -315,6 +328,9 @@
     <a class="site-nav-link" href="#">Collections</a>
     <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
     <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     <div class="site-mobile-actions">
       <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
       <a class="btn btn-secondary btn-md" href="belongo-h01-host-landing.html">List your property</a>
@@ -476,6 +492,29 @@
         </div>
       </article>
 
+      <!-- card sponsored — paid placement, clearly labelled, no verified/AI badges -->
+      <article class="sr-card is-sponsored" data-href="belongo-g04-property-detail.html">
+        <div class="sr-media">
+          <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1200&auto=format&fit=crop" alt="Palm Jumeirah apartment balcony at golden hour">
+          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
+          <span class="sr-sponsored-tag">Sponsored</span>
+        </div>
+        <div class="sr-body">
+          <h2 class="sr-name">Palm Jumeirah Beach Residence</h2>
+          <div class="sr-loc">Palm Jumeirah · private beach access · monorail 3 min</div>
+          <div class="sr-tags">
+            <span class="tag">Sea view</span><span class="tag">Pool</span><span class="tag">Free cancellation</span>
+          </div>
+          <div class="sr-sponsored-note">Promoted by the host — not ranked by relevance or price.</div>
+        </div>
+        <div class="sr-pricecol">
+          <div class="sr-stars"><span class="star">★★★★★</span><span class="star-count">4.6 (54)</span></div>
+          <div class="sr-total" style="margin-top:auto">AED 1,780</div>
+          <div class="sr-total-note">total · 3 nights, fees in</div>
+          <a class="btn btn-secondary btn-sm" href="belongo-g04-property-detail.html">View stay</a>
+        </div>
+      </article>
+
       <!-- card 3 — premium -->
       <article class="sr-card" data-href="belongo-g04-property-detail.html">
         <div class="sr-media">
@@ -591,6 +630,23 @@
     </main>
   </div>
 </div>
+
+<!-- ============ HANDOFF NOTE — sponsored placements (not a live feature) ============ -->
+<section class="sr-states">
+  <div class="sr-shell">
+    <div class="sr-stateframe">
+      <div class="sr-statehead">
+        <span>Spec note · Sponsored listings</span>
+        <span class="why">why: monetization is a future toggle, not built yet — shown here as a placement + labelling reference for dev</span>
+      </div>
+      <div class="sr-statebody">
+        <p style="font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.7; max-width: 640px;">
+          The <b>Sponsored</b> card above (Palm Jumeirah Beach Residence) is a one-off design reference, not a live ad system. When this ships: sponsored cards are paid host placements, capped to <b>1 per page of results</b>, always labelled "Sponsored" on the image (never disguised as a guest-verified or AI-ranked result), and excluded from sort/filter logic — they don't get an unfair rank boost over organic matches. Toggle + inventory rules (max per search, disclosure copy, reporting) are a backend/PM decision for a later phase.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ MAP OVERLAY (full-screen; opened via Map button) ============ -->
 <div class="sr-mapoverlay" id="sr-mapoverlay" aria-hidden="true">
@@ -770,16 +826,17 @@
 </footer>
 
 <!-- ============ CHATBOT (FX-04, verbatim) ============ -->
-<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
   <span class="chatbot-online"></span>
 </button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-head">
     <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
     <div class="chatbot-id">
-      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
-      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
     </div>
     <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
   </div>

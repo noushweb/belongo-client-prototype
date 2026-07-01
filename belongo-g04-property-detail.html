@@ -288,6 +288,16 @@ section[id] { scroll-margin-top: 72px; }
   .pd-subrow { gap: var(--space-1) var(--space-2); }
   .pd-subrow .sep { display: none; }
 }
+/* Ask about this stay */
+.pd-ai-card { background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.35); border-radius: var(--radius-xl); padding: var(--space-5); }
+.pd-ai-head { display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4); }
+.pd-ai-avatar { width: 40px; height: 40px; border-radius: var(--radius-full); background: var(--color-midnight-navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pd-ai-avatar img { width: 22px; height: 22px; }
+.pd-ai-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); letter-spacing: -0.015em; }
+.pd-ai-sub { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: 2px; line-height: 1.5; max-width: 480px; }
+.pd-ai-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+.pd-ai-cta { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); background: none; border: none; cursor: pointer; padding: 0; }
+.pd-ai-cta:hover { color: var(--color-gold-deep); }
 </style>
 </head>
 <body>
@@ -301,6 +311,9 @@ section[id] { scroll-margin-top: 72px; }
       <a class="site-nav-link" href="#">Collections</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
       <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     </nav>
     <div class="site-actions">
       <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
@@ -315,6 +328,9 @@ section[id] { scroll-margin-top: 72px; }
     <a class="site-nav-link" href="#">Collections</a>
     <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
     <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     <div class="site-mobile-actions">
       <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
       <a class="btn btn-secondary btn-md" href="belongo-h01-host-landing.html">List your property</a>
@@ -592,6 +608,26 @@ section[id] { scroll-margin-top: 72px; }
         <button class="btn btn-secondary btn-sm" type="button" style="margin-top: var(--space-4);">Show all 167 reviews</button>
       </section>
 
+      <!-- ASK AI -->
+      <section class="pd-section" id="ask-ai">
+        <div class="pd-ai-card">
+          <div class="pd-ai-head">
+            <span class="pd-ai-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+            <div>
+              <div class="pd-ai-title">Ask about this stay</div>
+              <div class="pd-ai-sub">Belongo Concierge can answer questions about this property — policies, location, and room setup — instantly.</div>
+            </div>
+          </div>
+          <div class="pd-ai-chips">
+            <button class="chat-chip" type="button" data-toggle="chatbot">Is late check-out available?</button>
+            <button class="chat-chip" type="button" data-toggle="chatbot">Is there parking nearby?</button>
+            <button class="chat-chip" type="button" data-toggle="chatbot">Is it suitable for families?</button>
+            <button class="chat-chip" type="button" data-toggle="chatbot">How far is the metro?</button>
+          </div>
+          <button class="pd-ai-cta" type="button" data-toggle="chatbot">Ask a question →</button>
+        </div>
+      </section>
+
       <!-- LOCATION -->
       <section class="pd-section" id="location" style="border-bottom: none;">
         <h2 class="pd-sec-title">Where you&rsquo;ll be</h2>
@@ -736,16 +772,17 @@ section[id] { scroll-margin-top: 72px; }
 </footer>
 
 <!-- ============ CHATBOT (FX-04, verbatim) ============ -->
-<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Chat with Belongo Assistant">
-  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6-.1 1-.5 2.1-1.4 3 1.6-.1 3-.6 4-1.3 1.1.4 2.4.7 3.7.7 5 0 9-3.6 9-8s-4-8-9-8Z" fill="#D4AF37"/><circle cx="8.5" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="12" cy="11" r="1.1" fill="#0D1B2A"/><circle cx="15.5" cy="11" r="1.1" fill="#0D1B2A"/></svg>
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
   <span class="chatbot-online"></span>
 </button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-head">
     <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
     <div class="chatbot-id">
-      <div class="chatbot-name">Belongo Assistant <span class="badge badge-premium">AI</span></div>
-      <div class="chatbot-status"><span class="st-dot"></span>Online · replies instantly</div>
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
     </div>
     <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
   </div>
