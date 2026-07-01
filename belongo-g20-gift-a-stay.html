@@ -121,13 +121,6 @@
   .gs-layout { grid-template-columns: minmax(0,1fr); }
   .gs-preview-sticky { position: static; order: -1; }
 }
-/* ---- Specific-stay gift context (shown when arriving from a property page) ---- */
-.gs-stay-context { display: none; align-items: flex-start; gap: var(--space-3); background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.45); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-5); }
-.gs-stay-context.is-on { display: flex; }
-.gs-stay-context .h { color: var(--color-gold-deep); font-size: var(--text-lg); line-height: 1; flex-shrink: 0; }
-.gs-stay-context b { display: block; font-size: var(--text-sm); font-weight: 700; color: var(--color-midnight-navy); margin-bottom: 2px; }
-.gs-stay-context span { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.5; }
-
 @media (max-width: 640px) {
   .gs-hero-motif { display: none; }
   .gs-input-row { grid-template-columns: 1fr; gap: var(--space-3); }
@@ -202,15 +195,6 @@
 
       <!-- ============ FORM ============ -->
       <div class="gs-col-form">
-
-        <!-- Specific-stay context (populated from ?stay= when gifting a property) -->
-        <div class="gs-stay-context" id="gs-stay-context">
-          <span class="h" aria-hidden="true">♥</span>
-          <div>
-            <b id="gs-stay-name">Gifting a specific stay</b>
-            <span>The value covers this stay for your recipient's chosen dates — or they can apply it to any other Belongo property. <a href="belongo-g04-property-detail.html" style="color:var(--color-gold-deep);font-weight:600;">View the stay →</a></span>
-          </div>
-        </div>
 
         <!-- Step 1 · Recipient -->
         <div class="gs-card">
@@ -494,16 +478,6 @@
   var schedField = document.getElementById('gs-schedule-field');
 
   function fmt(n) { return 'AED ' + parseInt(n, 10).toLocaleString('en-US'); }
-
-  // Specific-stay gift: if arrived from a property page (?stay=slug), show its context.
-  var STAY_NAMES = { 'downtown-calm-studio': 'Downtown Calm Studio' };
-  var staySlug = new URLSearchParams(window.location.search).get('stay');
-  if (staySlug && STAY_NAMES[staySlug]) {
-    var ctx = document.getElementById('gs-stay-context');
-    document.getElementById('gs-stay-name').textContent = 'Gifting: ' + STAY_NAMES[staySlug];
-    ctx.classList.add('is-on');
-    document.querySelector('.gs-card-type').textContent = STAY_NAMES[staySlug];
-  }
 
   recName.addEventListener('input', function () {
     prevRec.textContent = this.value.trim() || '—';

@@ -232,11 +232,10 @@ section[id] { scroll-margin-top: 72px; }
 .pd-w-micro { text-align: center; font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-3); line-height: 1.6; }
 .pd-w-urgent { text-align: center; font-size: var(--text-xs); font-weight: 600; color: var(--color-error); margin-top: var(--space-2); }
 .pd-w-lock { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); margin-top: var(--space-4); }
-.pd-gift-row { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid rgba(107,114,128,0.15); text-align: center; }
-.pd-gift-link { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-sm); font-weight: 700; color: var(--color-midnight-navy); text-decoration: none; transition: color var(--transition-micro); }
-.pd-gift-link .h { color: var(--color-gold-deep); font-size: var(--text-md); }
-.pd-gift-link:hover { color: var(--color-gold-deep); }
-.pd-gift-sub { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: 3px; line-height: 1.5; }
+.pd-gift-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: var(--space-3); padding: var(--space-3) var(--space-4); border: 1.5px solid var(--color-soft-gold); border-radius: var(--radius-lg); background: var(--color-soft-gold-pale); font-size: var(--text-sm); font-weight: 700; color: var(--color-midnight-navy); text-decoration: none; transition: all var(--transition-micro); box-sizing: border-box; }
+.pd-gift-btn .h { color: var(--color-gold-deep); font-size: var(--text-md); line-height: 1; }
+.pd-gift-btn:hover { background: var(--color-soft-gold); border-color: var(--color-gold-deep); }
+.pd-gift-sub { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-2); line-height: 1.5; text-align: center; }
 .pd-reassure { display: flex; justify-content: space-between; gap: var(--space-2); margin-top: var(--space-4); }
 .pd-reassure span { font-size: 10px; color: var(--color-warm-gray); text-align: center; flex: 1; }
 
@@ -702,14 +701,10 @@ section[id] { scroll-margin-top: 72px; }
         </div>
 
         <a class="btn btn-premium btn-lg" href="belongo-g05-checkout.html">Reserve — nothing charged yet</a>
+        <a class="pd-gift-btn" href="belongo-g22-gift-property.html"><span class="h">♥</span> Gift this stay to someone</a>
+        <div class="pd-gift-sub">Prepay it as a gift — they pick their dates.</div>
         <div class="pd-w-urgent">2 left for these dates</div>
         <p class="pd-w-micro">Free cancellation until Sep 10, 18:00 · You confirm the final total on the next screen.</p>
-        <div class="pd-gift-row">
-          <a class="pd-gift-link" href="belongo-g20-gift-a-stay.html?stay=downtown-calm-studio">
-            <span class="h">♥</span> Gift this stay to someone
-          </a>
-          <div class="pd-gift-sub">Send Downtown Calm Studio as a gift — they choose their own dates, or apply the value to any Belongo stay.</div>
-        </div>
         <div class="pd-w-lock">🔒 PRICE LOCKED FOR 10 MIN ONCE CHECKOUT BEGINS</div>
         <div class="pd-reassure">
           <span>Stripe-secured<br>payment</span>
