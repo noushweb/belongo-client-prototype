@@ -19,7 +19,7 @@
 .site-header { position: static; }
 
 /* ---- Hero ---- */
-.gs-hero { background: linear-gradient(160deg, #fbfaf7 0%, var(--color-warm-ivory) 100%); padding: var(--space-14) 0 var(--space-10); border-bottom: 1px solid rgba(212,175,55,0.25); position: relative; overflow: hidden; }
+.gs-hero { background: linear-gradient(160deg, #fbfaf7 0%, var(--color-warm-ivory) 100%); padding: var(--space-12) 0 var(--space-10); border-bottom: 1px solid rgba(212,175,55,0.25); position: relative; overflow: hidden; }
 .gs-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 65% at 90% 50%, rgba(212,175,55,0.12), transparent 65%); pointer-events: none; }
 .gs-hero-inner { position: relative; display: flex; align-items: center; gap: var(--space-10); }
 .gs-hero-text { flex: 1; min-width: 0; }
@@ -88,7 +88,7 @@
 
 /* ---- Gift card preview ---- */
 .gs-preview-sticky { position: sticky; top: calc(var(--space-6) + 72px); }
-.gs-gift-card { background: var(--color-midnight-navy); border-radius: 20px; padding: var(--space-7); position: relative; overflow: hidden; box-shadow: 0 28px 64px rgba(13,27,42,0.30), 0 6px 18px rgba(13,27,42,0.18); }
+.gs-gift-card { background: var(--color-midnight-navy); border-radius: 20px; padding: var(--space-8); position: relative; overflow: hidden; box-shadow: 0 28px 64px rgba(13,27,42,0.30), 0 6px 18px rgba(13,27,42,0.18); }
 .gs-gift-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 75% 80% at 100% 0%, rgba(212,175,55,0.20), transparent 60%), radial-gradient(ellipse 45% 55% at 0% 100%, rgba(212,175,55,0.07), transparent 65%); pointer-events: none; }
 .gs-gift-shimmer { position: absolute; top: -50%; right: -25%; width: 75%; height: 150%; background: linear-gradient(135deg, transparent 30%, rgba(212,175,55,0.06) 50%, transparent 70%); transform: rotate(20deg); animation: gsShimmer 4s ease-in-out infinite; pointer-events: none; }
 @keyframes gsShimmer { 0%, 100% { opacity: 0.5; transform: rotate(20deg) translateX(0); } 50% { opacity: 1; transform: rotate(20deg) translateX(10px); } }
@@ -96,7 +96,7 @@
 .gs-card-wordmark { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800; color: var(--color-warm-ivory); letter-spacing: -0.04em; line-height: 1; }
 .gs-card-wordmark em { font-style: normal; color: var(--color-soft-gold); }
 .gs-card-type { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(212,175,55,0.65); margin-top: 5px; }
-.gs-card-body { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-7); min-height: 80px; }
+.gs-card-body { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); min-height: 80px; }
 .gs-card-recipient-area { flex: 1; min-width: 0; }
 .gs-card-to-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(212,175,55,0.65); margin-bottom: 4px; }
 .gs-card-recipient { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-warm-ivory); letter-spacing: -0.015em; margin-bottom: var(--space-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -121,6 +121,13 @@
   .gs-layout { grid-template-columns: minmax(0,1fr); }
   .gs-preview-sticky { position: static; order: -1; }
 }
+/* ---- Specific-stay gift context (shown when arriving from a property page) ---- */
+.gs-stay-context { display: none; align-items: flex-start; gap: var(--space-3); background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.45); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-5); }
+.gs-stay-context.is-on { display: flex; }
+.gs-stay-context .h { color: var(--color-gold-deep); font-size: var(--text-lg); line-height: 1; flex-shrink: 0; }
+.gs-stay-context b { display: block; font-size: var(--text-sm); font-weight: 700; color: var(--color-midnight-navy); margin-bottom: 2px; }
+.gs-stay-context span { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.5; }
+
 @media (max-width: 640px) {
   .gs-hero-motif { display: none; }
   .gs-input-row { grid-template-columns: 1fr; gap: var(--space-3); }
@@ -195,6 +202,15 @@
 
       <!-- ============ FORM ============ -->
       <div class="gs-col-form">
+
+        <!-- Specific-stay context (populated from ?stay= when gifting a property) -->
+        <div class="gs-stay-context" id="gs-stay-context">
+          <span class="h" aria-hidden="true">♥</span>
+          <div>
+            <b id="gs-stay-name">Gifting a specific stay</b>
+            <span>The value covers this stay for your recipient's chosen dates — or they can apply it to any other Belongo property. <a href="belongo-g04-property-detail.html" style="color:var(--color-gold-deep);font-weight:600;">View the stay →</a></span>
+          </div>
+        </div>
 
         <!-- Step 1 · Recipient -->
         <div class="gs-card">
@@ -478,6 +494,16 @@
   var schedField = document.getElementById('gs-schedule-field');
 
   function fmt(n) { return 'AED ' + parseInt(n, 10).toLocaleString('en-US'); }
+
+  // Specific-stay gift: if arrived from a property page (?stay=slug), show its context.
+  var STAY_NAMES = { 'downtown-calm-studio': 'Downtown Calm Studio' };
+  var staySlug = new URLSearchParams(window.location.search).get('stay');
+  if (staySlug && STAY_NAMES[staySlug]) {
+    var ctx = document.getElementById('gs-stay-context');
+    document.getElementById('gs-stay-name').textContent = 'Gifting: ' + STAY_NAMES[staySlug];
+    ctx.classList.add('is-on');
+    document.querySelector('.gs-card-type').textContent = STAY_NAMES[staySlug];
+  }
 
   recName.addEventListener('input', function () {
     prevRec.textContent = this.value.trim() || '—';
