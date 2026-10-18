@@ -35,7 +35,7 @@
 .sr-seg:last-child { border-right: none; }
 .sr-seg:hover { background: var(--color-soft-beige); }
 .sr-seg b { display: block; font-size: var(--text-sm); font-weight: 600; line-height: 1.3; }
-.sr-seg span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-warm-gray); }
+.sr-seg span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-warm-gray); }
 .sr-bar-meta { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
 .sr-count { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); }
 .sr-sort {
@@ -60,12 +60,12 @@
   padding: 6px var(--space-3);
   cursor: pointer;
 }
-.sr-chip .x { color: var(--color-warm-gray); font-size: 10px; }
+.sr-chip .x { color: var(--color-warm-gray); font-size: 11px; }
 .sr-chip-add {
   background: transparent; border: 1px dashed rgba(107,114,128,0.4);
   color: var(--color-warm-gray); font-weight: 500;
 }
-.sr-vmark { color: var(--color-info); font-size: 10px; }
+.sr-vmark { color: var(--color-info); font-size: 11px; }
 
 /* ---- Layout: rail + list + map ---- */
 .sr-layout { display: grid; grid-template-columns: 248px minmax(0,1fr); gap: var(--space-6); align-items: start; padding: var(--space-6) 0 var(--space-12); }
@@ -74,7 +74,7 @@
 .sr-rail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; scrollbar-width: thin; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-5); }
 .sr-group { padding: var(--space-4) 0; border-bottom: 1px solid rgba(107,114,128,0.12); }
 .sr-group:first-child { padding-top: 0; }
-.sr-group-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-warm-gray); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+.sr-group-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-warm-gray); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
 .sr-group-label .gold { color: var(--color-soft-gold); }
 .sr-opt { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-1) 0; }
 .sr-opt-count { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); }
@@ -135,7 +135,7 @@
 .sr-stars { display: flex; align-items: center; gap: var(--space-1); }
 .sr-pricecol .deal-was { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); text-decoration: line-through; margin-top: auto; }
 .sr-total { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; letter-spacing: -0.02em; }
-.sr-total-note { font-size: 10px; color: var(--color-warm-gray); margin-bottom: var(--space-3); }
+.sr-total-note { font-size: 11px; color: var(--color-warm-gray); margin-bottom: var(--space-3); }
 .sr-urgent { font-size: var(--text-xs); font-weight: 600; color: var(--color-error); margin-bottom: var(--space-2); }
 .sr-loadrow { display: flex; justify-content: center; padding: var(--space-6) 0; }
 
@@ -143,7 +143,7 @@
 .sr-card.is-sponsored { border-color: rgba(107,114,128,0.22); }
 .sr-sponsored-tag {
   position: absolute; top: var(--space-3); left: var(--space-3); z-index: 2;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
   background: rgba(13,27,42,0.78); color: var(--color-warm-ivory);
   padding: 3px 9px; border-radius: var(--radius-md);
 }
@@ -165,10 +165,10 @@
 .sr-mapcard img { width: 90px; align-self: stretch; min-height: 96px; object-fit: cover; flex-shrink: 0; background: var(--color-soft-beige); }
 .sr-mapcard-body { padding: var(--space-3) var(--space-3) var(--space-3) 0; min-width: 0; display: flex; flex-direction: column; }
 .sr-mapcard-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sr-mapcard-near { font-size: 10px; color: var(--color-info); font-weight: 600; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-mapcard-near { font-size: 11px; color: var(--color-info); font-weight: 600; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sr-mapcard-near b { color: var(--color-info); }
 .sr-mapcard-price { font-family: var(--font-display); font-weight: 800; font-size: var(--text-sm); margin-top: auto; }
-.sr-mapcard-price span { font-weight: 400; font-size: 10px; color: var(--color-warm-gray); }
+.sr-mapcard-price span { font-weight: 400; font-size: 11px; color: var(--color-warm-gray); }
 .sr-mapfab { position: fixed; bottom: var(--space-6); left: 50%; transform: translateX(-50%); z-index: 150; display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-midnight-navy); color: var(--color-warm-ivory); border: 1px solid rgba(212,175,55,0.5); border-radius: var(--radius-full); padding: var(--space-3) var(--space-6); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; cursor: pointer; box-shadow: var(--shadow-lg); transition: transform var(--transition-micro); }
 .sr-mapfab:hover { transform: translateX(-50%) translateY(-2px); }
 .sr-mapfab svg { width: 16px; height: 16px; }
@@ -222,7 +222,7 @@
   bottom: var(--space-3); left: var(--space-3);
   background: rgba(255,255,255,0.92); backdrop-filter: blur(4px);
   border-radius: var(--radius-md); padding: var(--space-2) var(--space-3);
-  font-size: 10px; color: var(--color-deep-slate);
+  font-size: 11px; color: var(--color-deep-slate);
   display: flex; align-items: center; gap: var(--space-3);
 }
 .sr-legend .dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-midnight-navy); display: inline-block; }
@@ -364,6 +364,7 @@
     <button class="sr-chip" type="button">☪ Mosque &lt; 500 m <span class="sr-vmark">✓ guest-verified</span> <span class="x">✕</span></button>
     <button class="sr-chip" type="button">Free cancellation <span class="x">✕</span></button>
     <button class="sr-chip" type="button">Under AED 1,600 total <span class="x">✕</span></button>
+    <button class="sr-chip" type="button">✦ Ambassador benefits <span class="x">✕</span></button>
     <button class="sr-chip sr-chip-add" type="button">+ More filters</button>
   </div>
 
@@ -453,6 +454,7 @@
           <div class="sr-tags">
             <span class="tag">Qibla marked</span><span class="tag">Prayer mats</span><span class="tag">Free cancellation</span><span class="tag">Kitchen</span>
           </div>
+          <div class="rec-line"><span class="rec-gem">✦</span><span>Ambassador Benefits Available</span><span>Welcome Gift Included</span></div>
           <div class="sr-sentiment"><span class="spark">✦</span> Guests mention: spotless · quiet at night · easy self check-in</div>
         </div>
         <div class="sr-pricecol">
@@ -466,6 +468,34 @@
       </article>
 
       <!-- card 2 -->
+      <article class="sr-card" data-href="belongo-g04-property-detail.html">
+        <div class="sr-media">
+          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop" alt="Bright apartment living room">
+          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
+          <span class="prop-premium-badge sr-flag">★ Premium</span>
+        </div>
+        <div class="sr-body">
+          <h2 class="sr-name">Marina Skyline Two-Bed</h2>
+          <div class="sr-loc">Dubai Marina · metro 5 min · marina walk at the door</div>
+          <div class="sr-near">
+            <svg class="crescent" viewBox="0 0 16 16" fill="none"><path d="M10.5 2a6 6 0 1 0 3.4 10.9A6.8 6.8 0 0 1 10.5 2Z" fill="#D4AF37"/></svg>
+            Masjid Al Raheem · 650 m walk
+            <span class="badge badge-verified">✓ verified by 8 guests</span>
+          </div>
+          <div class="sr-tags">
+            <span class="tag">Qibla marked</span><span class="tag">Pool</span><span class="tag">Gym</span><span class="tag">Sea view</span>
+          </div>
+          <div class="rec-line"><span class="rec-gem">✦</span><span>Complimentary Upgrade</span><span>Priority Check-in</span></div>
+          <div class="sr-sentiment"><span class="spark">✦</span> Guests mention: the view · spacious for families · valet parking</div>
+        </div>
+        <div class="sr-pricecol">
+          <div class="sr-stars"><span class="star">★★★★★</span><span class="star-count">4.9 (212)</span></div>
+          <div class="sr-total" style="margin-top:auto">AED 1,560</div>
+          <div class="sr-total-note">total · 3 nights, fees in</div>
+          <a class="btn btn-secondary btn-sm" href="belongo-g04-property-detail.html">View stay</a>
+        </div>
+      </article>
+
       <article class="sr-card" data-href="belongo-g04-property-detail.html">
         <div class="sr-media">
           <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop" alt="Lantern-lit heritage interior">
@@ -516,32 +546,6 @@
       </article>
 
       <!-- card 3 — premium -->
-      <article class="sr-card" data-href="belongo-g04-property-detail.html">
-        <div class="sr-media">
-          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop" alt="Bright apartment living room">
-          <button class="prop-card-wish" type="button" aria-label="Save to wishlist">♡</button>
-          <span class="prop-premium-badge sr-flag">★ Premium</span>
-        </div>
-        <div class="sr-body">
-          <h2 class="sr-name">Marina Skyline Two-Bed</h2>
-          <div class="sr-loc">Dubai Marina · metro 5 min · marina walk at the door</div>
-          <div class="sr-near">
-            <svg class="crescent" viewBox="0 0 16 16" fill="none"><path d="M10.5 2a6 6 0 1 0 3.4 10.9A6.8 6.8 0 0 1 10.5 2Z" fill="#D4AF37"/></svg>
-            Masjid Al Raheem · 650 m walk
-            <span class="badge badge-verified">✓ verified by 8 guests</span>
-          </div>
-          <div class="sr-tags">
-            <span class="tag">Qibla marked</span><span class="tag">Pool</span><span class="tag">Gym</span><span class="tag">Sea view</span>
-          </div>
-          <div class="sr-sentiment"><span class="spark">✦</span> Guests mention: the view · spacious for families · valet parking</div>
-        </div>
-        <div class="sr-pricecol">
-          <div class="sr-stars"><span class="star">★★★★★</span><span class="star-count">4.9 (212)</span></div>
-          <div class="sr-total" style="margin-top:auto">AED 1,560</div>
-          <div class="sr-total-note">total · 3 nights, fees in</div>
-          <a class="btn btn-secondary btn-sm" href="belongo-g04-property-detail.html">View stay</a>
-        </div>
-      </article>
 
       <!-- card 4 -->
       <article class="sr-card" data-href="belongo-g04-property-detail.html">
@@ -642,6 +646,22 @@
       <div class="sr-statebody">
         <p style="font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.7; max-width: 640px;">
           The <b>Sponsored</b> card above (Palm Jumeirah Beach Residence) is a one-off design reference, not a live ad system. When this ships: sponsored cards are paid host placements, capped to <b>1 per page of results</b>, always labelled "Sponsored" on the image (never disguised as a guest-verified or AI-ranked result), and excluded from sort/filter logic — they don't get an unfair rank boost over organic matches. Toggle + inventory rules (max per search, disclosure copy, reporting) are a backend/PM decision for a later phase.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sr-states" style="padding-top:0">
+  <div class="sr-shell">
+    <div class="sr-stateframe">
+      <div class="sr-statehead">
+        <span>Spec note · Recognition benefits</span>
+        <span class="why">why: participating hosts are surfaced to recognised guests — a ranking rule, not an ad</span>
+      </div>
+      <div class="sr-statebody">
+        <p style="font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.7; max-width: 640px;">
+          The gold <b>&#10022; benefit lines</b> on two cards above appear only for a signed-in, recognised guest (here Mariam, Ambassador) and only on stays whose host chose to welcome that level. These stays rank higher and are never labelled <b>Sponsored</b> &mdash; recognition is earned and free to the host, ads are paid. Guests below the host&rsquo;s accepted level see the normal card. Full rules in the host settings (h12) and admin (a09).
         </p>
       </div>
     </div>

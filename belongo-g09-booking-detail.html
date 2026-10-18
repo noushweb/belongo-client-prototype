@@ -34,13 +34,13 @@
 .acct-profile { display: flex; align-items: center; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid rgba(107,114,128,0.12); margin-bottom: var(--space-3); }
 .acct-profile .avatar { width: 44px; height: 44px; font-size: var(--text-sm); }
 .acct-profile-name { font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm); }
-.acct-profile-tier { font-size: 10px; color: var(--color-warning); font-family: var(--font-mono); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; }
+.acct-profile-tier { font-size: 11px; color: var(--color-warning); font-family: var(--font-mono); letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; }
 .acct-navlist { list-style: none; display: grid; gap: 2px; }
 .acct-navlist a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 500; color: var(--color-deep-slate); transition: background var(--transition-micro), color var(--transition-micro); }
 .acct-navlist a .ic { width: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0; }
 .acct-navlist a:hover { background: var(--color-soft-beige); }
 .acct-navlist a.is-active { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
-.acct-navlist a .count { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--color-warm-gray); }
+.acct-navlist a .count { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--color-warm-gray); }
 .acct-navlist a.is-active .count { color: var(--color-soft-gold); }
 .acct-signout { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(107,114,128,0.12); }
 .acct-signout a { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--color-warm-gray); border-radius: var(--radius-md); }
@@ -54,7 +54,7 @@
 .bd-ref { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); letter-spacing: 0.04em; }
 .bd-h1 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
 .bd-dates { font-size: var(--text-sm); color: var(--color-deep-slate); margin-top: var(--space-1); }
-.bd-countdown { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-soft-gold); margin-top: var(--space-2); }
+.bd-countdown { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-gold-deep); margin-top: var(--space-2); }
 
 /* action bar */
 .bd-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0 var(--space-8); }
@@ -104,7 +104,7 @@
 .bd-row.total { border-top: 1px solid rgba(107,114,128,0.2); margin-top: var(--space-2); padding-top: var(--space-3); }
 .bd-row.total span:first-child { font-family: var(--font-display); font-weight: 700; color: var(--color-midnight-navy); }
 .bd-row.total span:last-child { font-family: var(--font-display); font-size: var(--text-md); font-weight: 800; color: var(--color-midnight-navy); }
-.bd-paidbadge { display: inline-flex; align-items: center; gap: 5px; background: var(--color-success-bg); color: var(--color-success); font-size: 10px; font-weight: 600; padding: 3px var(--space-3); border-radius: var(--radius-full); }
+.bd-paidbadge { display: inline-flex; align-items: center; gap: 5px; background: var(--color-success-bg); color: var(--color-success); font-size: 11px; font-weight: 600; padding: 3px var(--space-3); border-radius: var(--radius-full); }
 .bd-downloads { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid rgba(107,114,128,0.12); display: flex; gap: var(--space-4); }
 .bd-downloads a { font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); }
 .bd-policy-card .k { font-weight: 600; font-size: var(--text-sm); }
@@ -215,7 +215,7 @@
         <span class="avatar">MN</span>
         <div>
           <div class="acct-profile-name">Mariam Nasser</div>
-          <div class="acct-profile-tier">◆ Circle member</div>
+          <div class="acct-profile-tier">◆ Ambassador</div>
         </div>
       </div>
       <ul class="acct-navlist">
@@ -224,7 +224,7 @@
         <li><a href="belongo-g13-review-submission.html"><span class="ic">★</span> Reviews <span class="count">2</span></a></li>
         <li><a href="belongo-g11-account-settings.html"><span class="ic">⚙</span> Account settings</a></li>
         <li><a href="belongo-g12-payment-methods.html"><span class="ic">💳</span> Payment methods</a></li>
-        <li><a href="#"><span class="ic">◆</span> Belongo Circle</a></li>
+        <li><a href="belongo-g23-circle-recognition.html"><span class="ic">◆</span> Belongo Circle</a></li>
         <li><a href="#"><span class="ic">?</span> Help center</a></li>
       </ul>
       <div class="acct-signout"><a href="belongo-g02-landing-command.html"><span class="ic">⏻</span> Sign out</a></div>
@@ -329,7 +329,7 @@
             <div class="bd-row"><span>Cleaning + service</span><span>AED 108.00</span></div>
             <div class="bd-row"><span>Tourism dirham &amp; VAT</span><span>AED 40.00</span></div>
             <div class="bd-row total"><span>Paid · Visa ••4242</span><span>AED 952.00</span></div>
-            <div style="font-size:10px; color:var(--color-warm-gray); margin-top:var(--space-2);">Charged in AED — final. ≈ USD 259.</div>
+            <div style="font-size: 11px; color:var(--color-warm-gray); margin-top:var(--space-2);">Charged in AED — final. ≈ USD 259.</div>
             <div class="bd-downloads"><a href="#">Receipt</a><a href="#">VAT invoice</a></div>
           </div>
 

@@ -24,7 +24,7 @@
 .cf-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 80% -10%, rgba(212,175,55,0.22), transparent 60%); pointer-events: none; }
 .cf-hero-inner { position: relative; padding-top: var(--space-12); padding-bottom: var(--space-10); text-align: center; animation: cfRise 600ms ease both; }
 @keyframes cfRise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-.cf-check { width: 64px; height: 64px; border-radius: var(--radius-full); background: var(--color-success); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 8px 24px rgba(45,106,79,0.3); margin-bottom: var(--space-5); animation: cfPop 500ms 200ms ease both; }
+.cf-check { width: 64px; height: 64px; border-radius: var(--radius-full); background: var(--color-success); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: var(--shadow-md); margin-bottom: var(--space-5); animation: cfPop 500ms 200ms ease both; }
 @keyframes cfPop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .cf-hero h1 { font-family: var(--font-display); font-size: clamp(1.9rem,4vw,var(--text-3xl)); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
 .cf-hero h1 em { font-style: normal; color: var(--color-soft-gold); }
@@ -51,7 +51,7 @@
 .cf-step-dot.next { background: var(--color-soft-gold-pale); border: 1.5px solid var(--color-soft-gold); }
 .cf-step b { font-size: var(--text-sm); font-weight: 600; display: block; }
 .cf-step p { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.5; margin-top: 2px; }
-.cf-step .when { font-family: var(--font-mono); font-size: 10px; color: var(--color-soft-gold); text-transform: uppercase; letter-spacing: 0.06em; margin-top: var(--space-1); display: inline-block; }
+.cf-step .when { font-family: var(--font-mono); font-size: 11px; color: var(--color-gold-deep); text-transform: uppercase; letter-spacing: 0.06em; margin-top: var(--space-1); display: inline-block; }
 
 /* stay summary */
 .cf-stay { display: flex; gap: var(--space-4); }
