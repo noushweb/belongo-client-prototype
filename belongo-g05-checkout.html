@@ -315,7 +315,7 @@
           <div><b>Free cancellation until 10 Sep, 18:00 GST.</b> Cancel before then for a full refund — the refund timeline is shown before you confirm. After that, the first night is non-refundable.</div>
         </div>
         <div class="co-paycta">
-          <a class="btn btn-premium btn-lg" href="belongo-g06-confirmation.html">Pay AED 952 &amp; confirm</a>
+          <a class="btn btn-premium btn-lg" id="co-paybtn" href="belongo-g06-confirmation.html">Pay AED 952 &amp; confirm</a>
           <p class="co-paymicro">By confirming you agree to Belongo’s <a href="#" style="border-bottom:1px solid var(--color-soft-gold)">Terms</a> and <a href="#" style="border-bottom:1px solid var(--color-soft-gold)">Payment &amp; Refund Policy</a>. The next screen confirms your stay.</p>
           <div class="co-secure-row">
             <span>🔒 STRIPE-SECURED</span>
@@ -522,6 +522,13 @@
     opts.forEach(function (o, i) { var r = o.querySelector('input'); if (r) r.checked = i === idx; o.classList.toggle('on', i === idx); });
     var n = document.getElementById('co-paynote'); if (n) n.hidden = false;
   }
+  function syncPay() {
+    var b = document.getElementById('co-paybtn'); if (!b || opts.length < 2) return;
+    var part = opts[1].querySelector('input').checked;
+    b.innerHTML = part ? 'Pay AED 238 now &amp; confirm' : 'Pay AED 952 &amp; confirm';
+  }
+  opts.forEach(function (o) { var r = o.querySelector('input'); if (r) r.addEventListener('change', function () { opts.forEach(function (x) { x.classList.toggle('on', x === o); }); syncPay(); }); });
+  syncPay();
   if (q.get('rebook')) { var b = document.getElementById('co-rebook'); if (b) b.hidden = false; }
 })();
 </script>
