@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belongo — A gift for you (g25)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23D4AF37'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/belongo-shared.css">
+<style>
+/* g24 / g25 · GIFT SENT + GIFT RECEIVED (.gx-*) */
+.gx-shell { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-6); }
+.site-header { position: static; }
+.gx-hero { padding-top: var(--space-12); padding-bottom: var(--space-8); text-align: center; }
+.gx-check { width: 72px; height: 72px; border-radius: 50%; background: var(--color-success); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: var(--space-5); }
+.gx-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; }
+.gx-hero h1 em { font-style: normal; color: var(--color-gold-deep); }
+.gx-sub { margin: var(--space-4) auto 0; max-width: 520px; color: var(--color-warm-gray); line-height: 1.65; }
+.gx-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: var(--space-6); align-items: start; padding-bottom: var(--space-8); }
+.gx-card { background: var(--color-midnight-navy); border-radius: 20px; overflow: hidden; box-shadow: 0 28px 64px rgba(13,27,42,0.28); color: var(--color-warm-ivory); }
+.gx-card-img { position: relative; height: 170px; }
+.gx-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gx-card-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,27,42,0.1), var(--color-midnight-navy)); }
+.gx-card-wm { position: absolute; top: var(--space-4); left: var(--space-5); z-index: 2; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; letter-spacing: -0.04em; }
+.gx-card-wm em { font-style: normal; color: var(--color-soft-gold); }
+.gx-card-body { padding: var(--space-6); }
+.gx-card-name { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+.gx-card-loc { font-family: var(--font-mono); font-size: 11px; color: rgba(212,175,55,0.8); margin-top: 4px; letter-spacing: 0.06em; }
+.gx-card-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-5); }
+.gx-card-for { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(212,175,55,0.75); }
+.gx-card-to { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); margin-top: 4px; }
+.gx-card-msg { font-size: var(--text-xs); color: rgba(247,246,242,0.65); font-style: italic; margin-top: 6px; line-height: 1.5; }
+.gx-card-amt { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; color: var(--color-soft-gold); letter-spacing: -0.04em; white-space: nowrap; text-align: right; }
+.gx-card-amt small { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(212,175,55,0.7); font-weight: 400; margin-top: 4px; }
+.gx-card-foot { display: flex; justify-content: space-between; margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid rgba(212,175,55,0.2); font-family: var(--font-mono); font-size: 11px; color: rgba(212,175,55,0.65); }
+.gx-box { background: #fff; border: 1px solid rgba(107,114,128,0.16); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-xs); }
+.gx-box h2 { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; margin-bottom: var(--space-4); }
+.gx-line { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid rgba(107,114,128,0.12); font-size: var(--text-sm); }
+.gx-line:last-of-type { border-bottom: none; }
+.gx-line span:first-child { color: var(--color-warm-gray); }
+.gx-line b { text-align: right; }
+.gx-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-5); }
+.gx-link { display: inline-block; margin-top: var(--space-4); font-size: var(--text-sm); font-weight: 600; border-bottom: 1px solid var(--color-soft-gold); }
+.gx-state { background: var(--color-soft-beige); padding: var(--space-12) 0 var(--space-12); }
+.gx-stateframe { max-width: 640px; margin: 0 auto; border: 1.5px dashed rgba(107,114,128,0.4); border-radius: var(--radius-xl); background: #fff; }
+.gx-statehead { display: flex; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; padding: var(--space-3) var(--space-5); border-bottom: 1px dashed rgba(107,114,128,0.3); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-gold-deep); }
+.gx-statehead .why { text-transform: none; letter-spacing: 0; color: var(--color-warm-gray); }
+.gx-statebody { padding: var(--space-6); text-align: center; }
+.gx-statebody .x { width: 56px; height: 56px; border-radius: 50%; background: var(--color-error-bg); color: var(--color-error); display: inline-flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: var(--space-4); }
+.gx-statebody h3 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+.gx-statebody p { color: var(--color-warm-gray); font-size: var(--text-sm); line-height: 1.6; margin-top: var(--space-2); }
+.gx-top { background: var(--color-warm-ivory); border-bottom: 1px solid rgba(107,114,128,0.15); }
+.gx-top-in { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-6); height: 68px; display: flex; align-items: center; }
+.gx-top img { height: 30px; }
+.gx-recv { max-width: 560px; margin: 0 auto; padding: var(--space-10) var(--space-6) var(--space-12); }
+.gx-recv .gx-card { margin: var(--space-6) 0; }
+.gx-recv .gx-box { margin-top: var(--space-4); }
+@media (max-width: 860px) { .gx-grid { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 480px) { .gx-card-row { flex-direction: column; align-items: flex-start; } .gx-card-amt { text-align: left; } .gx-actions .btn { width: 100%; justify-content: center; } }
+</style>
+</head>
+<body>
+
+<header class="gx-top"><div class="gx-top-in"><a href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a></div></header>
+<div class="gx-recv">
+  <div style="text-align:center">
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,5vw,2.5rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1">Mariam sent you <em style="font-style:normal;color:var(--color-gold-deep)">a stay</em></h1>
+    <p class="gx-sub" style="margin-top:var(--space-3)">A gift from Mariam Nasser. It is already paid for.</p>
+  </div>
+  <div class="gx-card" role="img" aria-label="Gift card">
+    <div class="gx-card-img"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" alt="Downtown Calm Studio"><div class="gx-card-wm">belon<em>go</em></div></div>
+    <div class="gx-card-body">
+      <div class="gx-card-name">Downtown Calm Studio</div>
+      <div class="gx-card-loc">DOWNTOWN DUBAI · 3 NIGHTS</div>
+      <div class="gx-card-row">
+        <div><div class="gx-card-for">For</div><div class="gx-card-to">Sarah</div><div class="gx-card-msg">&ldquo;A few nights in Downtown Dubai, on me. Go and enjoy every minute.&rdquo;</div></div>
+        <div class="gx-card-amt">AED 952<small>Prepaid stay</small></div>
+      </div>
+      <div class="gx-card-foot"><span>belongo.com/redeem</span><span>BLG-STAY-7QX4</span></div>
+    </div>
+  </div>
+  <div class="gx-actions" style="margin-top:0"><a class="btn btn-premium btn-lg" href="belongo-g04-property-detail.html" style="flex:1;justify-content:center">Choose your dates</a></div>
+  <div class="gx-box">
+    <div class="gx-line"><span>Keep it simple</span><b>Pick any dates the stay is open</b></div>
+    <div class="gx-line"><span>Prefer another place?</span><b><a href="belongo-g03-search-results.html" style="border-bottom:1px solid var(--color-soft-gold)">Use the AED 952 on any stay</a></b></div>
+    <div class="gx-line"><span>Valid until</span><b>12 Sep 2028</b></div>
+  </div>
+  <p class="gx-sub" style="font-size:var(--text-xs);margin-top:var(--space-4);text-align:center">No Belongo account yet? You can book as a guest, or create one in a minute.</p>
+</div>
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
+        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book hospitality across the Gulf and beyond.</p>
+        <div class="trust-row">
+          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
+          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
+          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
+        </div>
+      </div>
+      <div>
+        <div class="site-footer-head">Explore</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Stays in Dubai</a></li>
+          <li><a href="#">Stays in Amman</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Seasonal offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Company</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-g14-about.html">About Belongo</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="belongo-g15-contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Support</div>
+        <ul class="site-footer-links">
+          <li><a href="#">Help center</a></li>
+          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
+          <li><a href="#">Report an issue</a></li>
+          <li><a href="#">Travel advisories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="site-footer-head">Hosting</div>
+        <ul class="site-footer-links">
+          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
+          <li><a href="#">Host dashboard</a></li>
+          <li><a href="#">Pricing AI</a></li>
+          <li><a href="#">Host resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
+      <span class="pay-row">
+        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
+      </span>
+      <span>Prices in AED · English</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHATBOT ============ -->
+<button class="chatbot-fab" type="button" data-toggle="chatbot" aria-expanded="false" aria-label="Open Belongo Concierge">
+  <span class="chatbot-fab-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></span>
+  <span class="chatbot-fab-label">Need a hand?</span>
+  <span class="chatbot-online"></span>
+</button>
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-head">
+    <div class="chatbot-avatar"><img src="assets/brand/belongo-tile-ondark.svg" alt=""></div>
+    <div class="chatbot-id">
+      <div class="chatbot-name">Belongo Concierge</div>
+      <div class="chatbot-status"><span class="st-dot"></span>here to help you book, anytime.</div>
+    </div>
+    <button class="chatbot-min" type="button" data-toggle="chatbot" aria-label="Minimize">—</button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-msg from-bot">Gifting Downtown Calm Studio? I can explain how the recipient books their dates, or how the value transfers if they'd prefer another stay.</div>
+    <div class="chat-quick">
+      <button class="chat-chip" type="button">Can they change the dates?</button>
+      <button class="chat-chip" type="button">What if they want another stay?</button>
+      <button class="chat-chip" type="button">When does the gift expire?</button>
+    </div>
+  </div>
+  <div class="chatbot-foot">
+    <input class="chat-input" type="text" placeholder="Ask anything…">
+    <button class="chat-send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none"><path d="M3 11.5 21 3l-8.5 18-2.4-7.1L3 11.5Z" fill="#0D1B2A"/></svg></button>
+  </div>
+  <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
+</div>
+
+<script src="assets/belongo-shared.js" defer></script>
+</body>
+</html>

@@ -305,7 +305,7 @@
     <p>This frees up the dates for other guests and can’t be undone. Your refund starts immediately and we’ll track every step to your account.</p>
     <div style="display:flex; gap:var(--space-2); margin-top:var(--space-5);">
       <button class="btn btn-secondary btn-md" type="button" data-toggle-overlay="#cn-confirm" style="flex:1; justify-content:center;">Go back</button>
-      <button class="btn btn-danger btn-md" type="button" style="flex:1; justify-content:center;">Yes, cancel &amp; refund</button>
+      <button class="btn btn-danger btn-md" type="button" id="cn-yes" style="flex:1; justify-content:center;">Yes, cancel &amp; refund</button>
     </div>
   </div>
 </div>
@@ -401,6 +401,18 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var yes = document.getElementById('cn-yes'); if (!yes) return;
+  yes.addEventListener('click', function () {
+    var box = document.querySelector('#cn-confirm .cn-statewrap');
+    box.innerHTML = '<div class="cn-bigcheck" style="background:var(--color-success-bg); color:var(--color-success);">\u2713</div>' +
+      '<h3>Booking cancelled</h3>' +
+      '<p>Your refund of AED 952 is on its way. It reaches your Visa ending 4242 by 14 Sep, and we will email you at each step.</p>' +
+      '<div style="display:flex; gap:var(--space-2); margin-top:var(--space-5);"><a class="btn btn-secondary btn-md" href="belongo-g03-search-results.html" style="flex:1; justify-content:center;">Find another stay</a><a class="btn btn-premium btn-md" href="belongo-g08-my-bookings.html" style="flex:1; justify-content:center;">My bookings</a></div>';
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>

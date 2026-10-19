@@ -28,6 +28,9 @@
 .gp-hero h1 em { font-style: normal; color: var(--color-soft-gold); }
 .gp-hero-sub { margin-top: var(--space-4); font-size: var(--text-md); color: var(--color-warm-gray); line-height: 1.6; max-width: 520px; }
 
+.gx-switch { display: flex; gap: 6px; background: var(--color-soft-beige); border-radius: var(--radius-full); padding: 4px; width: fit-content; max-width: 100%; }
+.gx-switch a { font-size: var(--text-sm); font-weight: 600; padding: 8px 16px; border-radius: var(--radius-full); color: var(--color-warm-gray); white-space: nowrap; }
+.gx-switch a.is-on { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
 /* ---- Layout ---- */
 .gp-body { padding: var(--space-10) 0 var(--space-16); }
 .gp-layout { display: grid; grid-template-columns: minmax(0,1fr) 380px; gap: var(--space-8); align-items: start; }
@@ -188,6 +191,8 @@
 
       <!-- ============ FORM ============ -->
       <div class="gp-col-form">
+
+        <div class="gx-switch" role="tablist"><a href="belongo-g20-gift-a-stay.html">An amount</a><a class="is-on" href="#" aria-current="page">A specific stay</a></div>
 
         <!-- The stay (fixed) -->
         <div class="gp-stay">
@@ -439,6 +444,15 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var b = document.querySelector('.gp-submit-btn'); if (!b) return;
+  b.addEventListener('click', function () {
+    var n = (document.getElementById('gp-rec-name').value || '').trim() || 'Sarah Al-Rashidi';
+    location.href = 'belongo-g24-gift-sent.html?type=stay&to=' + encodeURIComponent(n);
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 <script>
 (function () {

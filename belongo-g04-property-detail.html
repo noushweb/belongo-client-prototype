@@ -361,7 +361,7 @@ section[id] { scroll-margin-top: 72px; }
     </nav>
     <div class="pd-jump-cta">
       <span class="pd-jump-price"><b>AED 952</b> <span>total · 3 nights</span></span>
-      <a class="btn btn-premium btn-sm" href="#book">Reserve</a>
+      <a class="btn btn-premium btn-sm" href="belongo-g05-checkout.html">Reserve</a>
     </div>
   </div>
 </div>
@@ -821,6 +821,16 @@ section[id] { scroll-margin-top: 72px; }
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var radios = document.querySelectorAll('input[name="pay"]');
+  function sync() {
+    var part = radios[1] && radios[1].checked;
+    document.querySelectorAll('a[href^="belongo-g05-checkout.html"]').forEach(function (a) { a.setAttribute('href', 'belongo-g05-checkout.html?pay=' + (part ? 'part' : 'full')); });
+  }
+  radios.forEach(function (r) { r.addEventListener('change', sync); }); sync();
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>

@@ -119,6 +119,13 @@
 .rv-add-place:hover { border-color: var(--color-soft-gold); }
 
 /* submit bar */
+.rv-thanks { max-width: 520px; margin: var(--space-12) auto; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-10) var(--space-8); text-align: center; box-shadow: var(--shadow-xs); }
+.rv-thanks[hidden] { display: none; }
+.rv-thanks-check { width: 64px; height: 64px; border-radius: 50%; background: var(--color-success); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: var(--space-5); }
+.rv-thanks h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.03em; }
+.rv-thanks p { color: var(--color-warm-gray); margin-top: var(--space-3); line-height: 1.6; font-size: var(--text-sm); }
+.rv-thanks-credit { display: inline-block; margin-top: var(--space-4); background: var(--color-soft-gold-pale); color: var(--color-gold-deep); font-family: var(--font-mono); font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 999px; }
+.rv-thanks-actions { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-top: var(--space-6); }
 .rv-submitbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-xl); padding: var(--space-4) var(--space-5); flex-wrap: wrap; box-shadow: var(--shadow-xs); }
 .rv-submitbar-note { font-size: var(--text-xs); color: var(--color-warm-gray); }
 .rv-submitbar-note b { color: var(--color-warning); }
@@ -323,8 +330,15 @@
         <span class="rv-submitbar-note">Posted to your verified-stay profile · <b>+ Circle credit for photos &amp; nearby places</b></span>
         <div style="display:flex; gap:var(--space-2);">
           <button class="btn btn-secondary btn-md" type="button">Save draft</button>
-          <button class="btn btn-premium btn-md" type="button">Post review</button>
+          <button class="btn btn-premium btn-md" type="button" id="rv-post">Post review</button>
         </div>
+      </div>
+    <div class="rv-thanks" id="rv-thanks" hidden>
+        <div class="rv-thanks-check">&#10003;</div>
+        <h2>Thank you, Mariam</h2>
+        <p>Your review of Downtown Calm Studio is live. It helps the next guest decide, and it counts toward your Circle recognition.</p>
+        <div class="rv-thanks-credit">&#9670; + Circle credit earned</div>
+        <div class="rv-thanks-actions"><a class="btn btn-secondary btn-md" href="belongo-g08-my-bookings.html">My bookings</a><a class="btn btn-premium btn-md" href="belongo-g23-circle-recognition.html">See my progress</a></div>
       </div>
     </main>
   </div>
@@ -421,6 +435,16 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var b = document.getElementById('rv-post'); if (!b) return;
+  b.addEventListener('click', function () {
+    var main = document.querySelector('main');
+    Array.prototype.forEach.call(main.children, function (c) { if (c.id !== 'rv-thanks') c.hidden = true; });
+    document.getElementById('rv-thanks').hidden = false; window.scrollTo(0, 0);
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>

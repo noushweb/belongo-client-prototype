@@ -864,11 +864,12 @@
 <script>
 (function () {
   var row = document.querySelector('.lc-dest'); if (!row) return;
-  var val = document.querySelector('.lc-field-value'); var note = document.getElementById('lc-dest-note');
+  var val = document.querySelector('.lc-field-value'); var go = document.querySelector('.lc-go'); var note = document.getElementById('lc-dest-note');
   row.addEventListener('click', function (e) {
     var c = e.target.closest('.lc-chip'); if (!c) return;
     row.querySelectorAll('.lc-chip').forEach(function (x) { x.classList.toggle('is-on', x === c); });
     val.innerHTML = c.getAttribute('data-dest') + ' <small>\u00b7 ' + c.getAttribute('data-sub') + '</small>';
+    go.setAttribute('href','belongo-g03-search-results.html?where='+encodeURIComponent(c.getAttribute('data-dest')));
     note.textContent = c.classList.contains('lc-chip-loc') ? 'Showing stays near you. You can switch city anytime.' : 'Showing stays in ' + c.getAttribute('data-dest').split(',')[0] + '. Change it anytime.';
   });
 })();

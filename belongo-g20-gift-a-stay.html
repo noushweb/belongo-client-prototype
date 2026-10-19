@@ -116,6 +116,9 @@
 .gs-tip b { font-size: var(--text-xs); font-weight: 600; display: block; margin-bottom: 2px; }
 .gs-tip span { font-size: var(--text-xs); color: var(--color-warm-gray); line-height: 1.45; }
 
+.gx-switch { display: flex; gap: 6px; background: var(--color-soft-beige); border-radius: var(--radius-full); padding: 4px; width: fit-content; max-width: 100%; }
+.gx-switch a { font-size: var(--text-sm); font-weight: 600; padding: 8px 16px; border-radius: var(--radius-full); color: var(--color-warm-gray); white-space: nowrap; }
+.gx-switch a.is-on { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
 /* ---- Responsive ---- */
 @media (max-width: 960px) {
   .gs-layout { grid-template-columns: minmax(0,1fr); }
@@ -195,6 +198,8 @@
 
       <!-- ============ FORM ============ -->
       <div class="gs-col-form">
+
+        <div class="gx-switch" role="tablist"><a class="is-on" href="#" aria-current="page">An amount</a><a href="belongo-g03-search-results.html">A specific stay</a></div>
 
         <!-- Step 1 · Recipient -->
         <div class="gs-card">
@@ -463,6 +468,16 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var b = document.querySelector('.gs-submit-btn'); if (!b) return;
+  b.addEventListener('click', function () {
+    var n = (document.getElementById('gs-rec-name').value || '').trim() || 'Sarah Al-Rashidi';
+    var a = (document.getElementById('gs-prev-amount') || {}).textContent || 'AED 1,000';
+    location.href = 'belongo-g24-gift-sent.html?type=amount&to=' + encodeURIComponent(n) + '&amt=' + encodeURIComponent(a);
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 <script>
 (function () {

@@ -165,6 +165,8 @@
 @keyframes co-spin { to { transform: rotate(360deg); } }
 .co-dontretry { background: var(--color-warning-bg); border: 1px solid rgba(146,64,14,0.25); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-warning); margin-top: var(--space-4); font-weight: 600; }
 
+.co-chosen { background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-gold-deep); font-weight: 600; margin-bottom: var(--space-4); line-height: 1.55; }
+.co-chosen[hidden] { display: none; }
 /* host-controlled deposit indicator */
 .co-deposit-badge { display: flex; align-items: flex-start; gap: var(--space-2); background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-gold-deep); font-weight: 600; line-height: 1.55; margin-bottom: var(--space-4); }
 .co-deposit-badge svg { flex-shrink: 0; margin-top: 1px; color: var(--color-gold-deep); }
@@ -243,6 +245,7 @@
     <!-- ============ LEFT: FORMS ============ -->
     <main>
       <!-- 1 · Who's checking in (guest-first, F-06) -->
+      <div class="co-chosen" id="co-rebook" hidden>&#8635; Rebooking your past stay: same property and room, dates prefilled for your next visit. Change anything below.</div>
       <section class="co-sec">
         <div class="co-sec-head">
           <span class="co-sec-num">1</span>
@@ -289,6 +292,7 @@
           <span class="co-sec-num">3</span>
           <span class="co-sec-title">How much to pay now</span>
         </div>
+        <p class="co-chosen" id="co-paynote" hidden>You chose this on the property page. You can still change it here.</p>
         <!-- Shown only when listing.partPaymentEnabled = true (host toggle in h07 pricing) -->
         <div class="co-deposit-badge">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
@@ -509,6 +513,18 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var opts = document.querySelectorAll('.co-payopt');
+  if (q.get('pay') && opts.length > 1) {
+    var idx = q.get('pay') === 'part' ? 1 : 0;
+    opts.forEach(function (o, i) { var r = o.querySelector('input'); if (r) r.checked = i === idx; o.classList.toggle('on', i === idx); });
+    var n = document.getElementById('co-paynote'); if (n) n.hidden = false;
+  }
+  if (q.get('rebook')) { var b = document.getElementById('co-rebook'); if (b) b.hidden = false; }
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>

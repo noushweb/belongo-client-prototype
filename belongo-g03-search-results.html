@@ -875,6 +875,15 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var w = new URLSearchParams(location.search).get('where'); if (!w) return;
+  var city = w.split(',')[0];
+  var seg = document.querySelector('.sr-seg b'); if (seg) seg.textContent = w;
+  var cap = document.querySelector('.sr-mapoverlay-title b'); 
+  document.title = document.title.replace('Dubai', city);
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>

@@ -84,6 +84,8 @@
 .au-resend b { color: var(--color-midnight-navy); }
 .au-sent-ic { width: 56px; height: 56px; border-radius: var(--radius-full); background: var(--color-success-bg); color: var(--color-success); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); margin: 0 auto var(--space-4); }
 
+.au-prefill { background: var(--color-soft-gold-pale); border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); font-size: var(--text-xs); color: var(--color-gold-deep); font-weight: 600; margin-bottom: var(--space-4); line-height: 1.5; }
+.au-prefill[hidden] { display: none; }
 /* ---- Preferences step (post-signup, optional) ---- */
 .au-prefs-card { max-width: 500px; margin: 0 auto; background: #fff; border: 1px solid rgba(107,114,128,0.15); border-radius: var(--radius-2xl); box-shadow: var(--shadow-md); padding: var(--space-8); }
 .au-prefs-step-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-gold-deep); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
@@ -213,6 +215,7 @@
 
         <!-- CREATE ACCOUNT -->
         <form class="au-pane" data-state="signup" style="display:none" onsubmit="return false">
+          <p class="au-prefill" id="au-prefill" hidden>We filled in your details from your booking. Just choose a password.</p>
           <div class="au-field">
             <span class="au-label">First name</span>
             <input class="input" type="text" placeholder="Mariam">
@@ -412,6 +415,24 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var forms = document.querySelectorAll('form.au-pane');
+  forms.forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (f.getAttribute('data-state') === 'signin') { location.href = 'belongo-g08-my-bookings.html'; }
+      else { var p = document.querySelector('.au-prefs-card'); if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else { location.href = 'belongo-g08-my-bookings.html'; } }
+    });
+  });
+  if (new URLSearchParams(location.search).get('from') === 'booking') window.addEventListener('load', function () {
+    var tab = document.querySelector('.au-tab[data-show="signup"]'); if (tab) tab.click();
+    var su = document.querySelector('form[data-state="signup"]');
+    if (su) { var ins = su.querySelectorAll('input'); if (ins[0]) ins[0].value = 'Mariam'; if (ins[1]) ins[1].value = 'mariam.n@example.com'; }
+    var n = document.getElementById('au-prefill'); if (n) n.hidden = false;
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>
