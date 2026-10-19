@@ -86,6 +86,10 @@
 .lc-chip .x { color: var(--color-warm-gray); font-size: 11px; }
 .lc-allfilters { margin-left: auto; font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); padding-bottom: 1px; white-space: nowrap; }
 
+.lc-dest { margin-top: var(--space-4); }
+.lc-dest-note { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-2); }
+.lc-chip-loc { font-weight: 600; color: var(--color-midnight-navy); }
+
 /* stats band */
 .lc-stats { background: var(--color-midnight-navy); position: relative; }
 .lc-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -371,6 +375,17 @@
         </div>
         <a class="btn btn-premium btn-lg lc-go" href="belongo-g03-search-results.html">Search</a>
       </div>
+      <div class="lc-chiprow lc-dest" role="group" aria-label="Destination">
+        <span class="lc-chiprow-label">Where to</span>
+        <button class="lc-chip lc-chip-loc" type="button" data-dest="Near you" data-sub="using your location">&#9678; Use my location</button>
+        <button class="lc-chip is-on" type="button" data-dest="Dubai, UAE" data-sub="change">Dubai</button>
+        <button class="lc-chip" type="button" data-dest="Abu Dhabi, UAE" data-sub="change">Abu Dhabi</button>
+        <button class="lc-chip" type="button" data-dest="Doha, Qatar" data-sub="change">Doha</button>
+        <button class="lc-chip" type="button" data-dest="Riyadh, Saudi Arabia" data-sub="change">Riyadh</button>
+        <button class="lc-chip" type="button" data-dest="Muscat, Oman" data-sub="change">Muscat</button>
+        <button class="lc-chip" type="button" data-dest="Manama, Bahrain" data-sub="change">Manama</button>
+      </div>
+      <p class="lc-dest-note" id="lc-dest-note">Starting from Dubai, based on your last search. Pick anywhere else.</p>
       <div class="lc-chiprow">
         <span class="lc-chiprow-label">Quick filters</span>
         <button class="lc-chip is-on" type="button">Near a mosque <span class="x">✕</span></button>
@@ -846,6 +861,18 @@
   <div class="chatbot-disclaimer">AI assistant — answers may be imperfect. Bookings are always confirmed by email.</div>
 </div>
 
+<script>
+(function () {
+  var row = document.querySelector('.lc-dest'); if (!row) return;
+  var val = document.querySelector('.lc-field-value'); var note = document.getElementById('lc-dest-note');
+  row.addEventListener('click', function (e) {
+    var c = e.target.closest('.lc-chip'); if (!c) return;
+    row.querySelectorAll('.lc-chip').forEach(function (x) { x.classList.toggle('is-on', x === c); });
+    val.innerHTML = c.getAttribute('data-dest') + ' <small>\u00b7 ' + c.getAttribute('data-sub') + '</small>';
+    note.textContent = c.classList.contains('lc-chip-loc') ? 'Showing stays near you. You can switch city anytime.' : 'Showing stays in ' + c.getAttribute('data-dest').split(',')[0] + '. Change it anytime.';
+  });
+})();
+</script>
 <script src="assets/belongo-shared.js" defer></script>
 </body>
 </html>
