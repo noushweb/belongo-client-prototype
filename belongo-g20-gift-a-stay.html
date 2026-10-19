@@ -207,11 +207,11 @@
           <div class="gs-input-row">
             <div class="gs-field">
               <label class="gs-label" for="gs-rec-name">Recipient's name</label>
-              <input class="gs-input" type="text" id="gs-rec-name" placeholder="Sarah Al-Rashidi" autocomplete="off">
+              <input class="gs-input" type="text" id="gs-rec-name" placeholder="Sarah Al-Rashidi" autocomplete="off" data-req="Enter who the gift is for">
             </div>
             <div class="gs-field">
               <label class="gs-label" for="gs-rec-email">Recipient's email</label>
-              <input class="gs-input" type="email" id="gs-rec-email" placeholder="sarah@example.com" autocomplete="off">
+              <input class="gs-input" type="email" id="gs-rec-email" placeholder="sarah@example.com" autocomplete="off" data-req="Enter their email" data-type="email">
             </div>
           </div>
           <div class="gs-field">
@@ -472,9 +472,10 @@
 (function () {
   var b = document.querySelector('.gs-submit-btn'); if (!b) return;
   b.addEventListener('click', function () {
-    var n = (document.getElementById('gs-rec-name').value || '').trim() || 'Sarah Al-Rashidi';
+    if (!BT.validate(document.querySelector('.gs-col-form'))) return;
+    var n = document.getElementById('gs-rec-name').value.trim();
     var a = (document.getElementById('gs-prev-amount') || {}).textContent || 'AED 1,000';
-    location.href = 'belongo-g24-gift-sent.html?type=amount&to=' + encodeURIComponent(n) + '&amt=' + encodeURIComponent(a);
+    BT.busy(b, 'Sending\u2026', function () { location.href = 'belongo-g24-gift-sent.html?type=amount&to=' + encodeURIComponent(n) + '&amt=' + encodeURIComponent(a); });
   });
 })();
 </script>

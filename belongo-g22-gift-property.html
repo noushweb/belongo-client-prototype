@@ -216,11 +216,11 @@
           <div class="gp-input-row">
             <div class="gp-field">
               <label class="gp-label" for="gp-rec-name">Recipient's name</label>
-              <input class="gp-input" type="text" id="gp-rec-name" placeholder="Sarah Al-Rashidi" autocomplete="off">
+              <input class="gp-input" type="text" id="gp-rec-name" placeholder="Sarah Al-Rashidi" autocomplete="off" data-req="Enter who the gift is for">
             </div>
             <div class="gp-field">
               <label class="gp-label" for="gp-rec-email">Recipient's email</label>
-              <input class="gp-input" type="email" id="gp-rec-email" placeholder="sarah@example.com" autocomplete="off">
+              <input class="gp-input" type="email" id="gp-rec-email" placeholder="sarah@example.com" autocomplete="off" data-req="Enter their email" data-type="email">
             </div>
           </div>
           <div class="gp-field">
@@ -448,8 +448,9 @@
 (function () {
   var b = document.querySelector('.gp-submit-btn'); if (!b) return;
   b.addEventListener('click', function () {
-    var n = (document.getElementById('gp-rec-name').value || '').trim() || 'Sarah Al-Rashidi';
-    location.href = 'belongo-g24-gift-sent.html?type=stay&to=' + encodeURIComponent(n);
+    if (!BT.validate(document.querySelector('.gp-col-form'))) return;
+    var n = document.getElementById('gp-rec-name').value.trim();
+    BT.busy(b, 'Sending\u2026', function () { location.href = 'belongo-g24-gift-sent.html?type=stay&to=' + encodeURIComponent(n); });
   });
 })();
 </script>

@@ -257,9 +257,9 @@
           <a class="co-guest-link" href="belongo-g07-auth.html">Have an account? Sign in</a>
         </div>
         <div class="co-fieldgrid">
-          <div class="co-field"><span class="co-label">First name</span><input class="input" type="text" value="Mariam"></div>
-          <div class="co-field"><span class="co-label">Last name</span><input class="input" type="text" value="Nasser"></div>
-          <div class="co-field full"><span class="co-label">Email — your confirmation goes here</span><input class="input" type="email" value="mariam.n@example.com"><span class="co-hint">We email the booking even if the payment page times out — you’ll never lose a confirmed stay.</span></div>
+          <div class="co-field"><span class="co-label">First name</span><input class="input" type="text" value="Mariam" data-req="Enter your first name"></div>
+          <div class="co-field"><span class="co-label">Last name</span><input class="input" type="text" value="Nasser" data-req="Enter your last name"></div>
+          <div class="co-field full"><span class="co-label">Email — your confirmation goes here</span><input class="input" type="email" data-req="Enter your email" data-type="email" value="mariam.n@example.com"><span class="co-hint">We email the booking even if the payment page times out — you’ll never lose a confirmed stay.</span></div>
           <div class="co-field full"><span class="co-label">Mobile (for the host &amp; check-in code)</span><input class="input" type="tel" value="+962 7 9000 0000"></div>
         </div>
       </section>
@@ -279,10 +279,10 @@
         </div>
         <div class="co-localnote">🌍 Booking from abroad? Local methods (mada, Tabby, Apple Pay) clear far more reliably than foreign cards — we surface them first to avoid cross-border declines.</div>
         <div class="co-fieldgrid">
-          <div class="co-field full"><span class="co-label">Card number</span><input class="input" type="text" value="4242 4242 4242 4242" inputmode="numeric"></div>
-          <div class="co-field"><span class="co-label">Expiry</span><input class="input" type="text" value="08 / 28"></div>
-          <div class="co-field"><span class="co-label">CVC</span><input class="input" type="text" value="•••"></div>
-          <div class="co-field full"><span class="co-label">Name on card</span><input class="input" type="text" value="Mariam Nasser"></div>
+          <div class="co-field full"><span class="co-label">Card number</span><input class="input" type="text" data-req="Enter your card number" data-type="card" value="4242 4242 4242 4242" inputmode="numeric"></div>
+          <div class="co-field"><span class="co-label">Expiry</span><input class="input" type="text" data-req="Enter the expiry date" value="08 / 28"></div>
+          <div class="co-field"><span class="co-label">CVC</span><input class="input" type="text" data-req="Enter the CVC" value="•••"></div>
+          <div class="co-field full"><span class="co-label">Name on card</span><input class="input" type="text" data-req="Enter the name on the card" value="Mariam Nasser"></div>
         </div>
       </section>
 
@@ -530,6 +530,26 @@
   opts.forEach(function (o) { var r = o.querySelector('input'); if (r) r.addEventListener('change', function () { opts.forEach(function (x) { x.classList.toggle('on', x === o); }); syncPay(); }); });
   syncPay();
   if (q.get('rebook')) { var b = document.getElementById('co-rebook'); if (b) b.hidden = false; }
+})();
+</script>
+<script>
+(function () {
+  var b = document.getElementById('co-paybtn'); if (!b) return;
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    var form = document.querySelector('.co-main, main, .co-layout') || document.body;
+    var old = document.getElementById('co-declined'); if (old) old.remove();
+    if (!BT.validate(form)) return;
+    var card = [].find.call(document.querySelectorAll('input[data-type="card"]'), function (x) { return x; });
+    BT.busy(b, 'Paying\u2026', function () {
+      if (card && card.value.replace(/\D/g, '').slice(-4) === '0002') {
+        var d = document.createElement('div'); d.id = 'co-declined'; d.className = 'bt-banner'; d.setAttribute('role', 'alert');
+        d.innerHTML = 'Your card was declined. You were not charged. Try another card.';
+        b.parentNode.insertBefore(d, b); card.focus(); return;
+      }
+      location.href = 'belongo-g06-confirmation.html';
+    });
+  });
 })();
 </script>
 <script src="assets/belongo-shared.js" defer></script>

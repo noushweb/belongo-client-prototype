@@ -195,11 +195,11 @@
         <form class="au-pane" data-state="signin" onsubmit="return false">
           <div class="au-field">
             <span class="au-label">Email</span>
-            <input class="input" type="email" placeholder="you@example.com" value="mariam.n@example.com">
+            <input class="input" type="email" placeholder="you@example.com" value="mariam.n@example.com" data-req="Enter your email" data-type="email">
           </div>
           <div class="au-field">
             <span class="au-label">Password <span class="au-forgot">Forgot?</span></span>
-            <span class="au-pw"><input class="input" type="password" value="passw0rd"><button class="au-eye" type="button" aria-label="Show password">👁</button></span>
+            <span class="au-pw"><input class="input" type="password" value="passw0rd" data-req="Enter your password"><button class="au-eye" type="button" aria-label="Show password">👁</button></span>
           </div>
           <button class="btn btn-premium btn-lg au-submit" type="submit">Sign in</button>
           <div class="au-divider">or continue with</div>
@@ -222,11 +222,11 @@
           </div>
           <div class="au-field">
             <span class="au-label">Email</span>
-            <input class="input" type="email" placeholder="you@example.com">
+            <input class="input" type="email" placeholder="you@example.com" data-req="Enter your email" data-type="email">
           </div>
           <div class="au-field">
             <span class="au-label">Create a password</span>
-            <span class="au-pw"><input class="input" type="password" placeholder="At least 8 characters"><button class="au-eye" type="button" aria-label="Show password">👁</button></span>
+            <span class="au-pw"><input class="input" type="password" placeholder="At least 8 characters" data-req="Choose a password" data-type="pw8"><button class="au-eye" type="button" aria-label="Show password">👁</button></span>
             <span class="au-strength"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
             <span class="au-strength-txt">Strong — nice work</span>
           </div>
@@ -421,8 +421,10 @@
   forms.forEach(function (f) {
     f.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (f.getAttribute('data-state') === 'signin') { location.href = 'belongo-g08-my-bookings.html'; }
-      else { var p = document.querySelector('.au-prefs-card'); if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else { location.href = 'belongo-g08-my-bookings.html'; } }
+      if (!BT.validate(f)) return;
+      var btn = f.querySelector('button[type=submit]');
+      if (f.getAttribute('data-state') === 'signin') { var pw = f.querySelector('input[type=password]'); BT.busy(btn, 'Signing in\u2026', function () { if (pw.value === 'wrong') { BT.setError(pw, 'That email and password do not match. Try again, or reset your password.'); } else { location.href = 'belongo-g08-my-bookings.html'; } }); return; }
+      else { BT.busy(btn, 'Creating account\u2026', function () { var p = document.querySelector('.au-prefs-card'); if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else { location.href = 'belongo-g08-my-bookings.html'; } }); }
     });
   });
   if (new URLSearchParams(location.search).get('from') === 'booking') window.addEventListener('load', function () {
