@@ -86,6 +86,10 @@
 .lc-chip .x { color: var(--color-warm-gray); font-size: 11px; }
 .lc-allfilters { margin-left: auto; font-size: var(--text-xs); font-weight: 600; color: var(--color-midnight-navy); border-bottom: 1px solid var(--color-soft-gold); padding-bottom: 1px; white-space: nowrap; }
 
+.lc-field { position: relative; }
+.lc-ov { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: none; padding: 0; margin: 0; font-size: 16px; }
+.lc-trip-err { color: var(--color-error); font-size: var(--text-xs); font-weight: 600; margin-top: var(--space-3); }
+.lc-trip-err[hidden] { display: none; }
 .lc-dest { margin-top: var(--space-4); }
 .lc-dest-note { font-size: var(--text-xs); color: var(--color-warm-gray); margin-top: var(--space-2); }
 .lc-chip-loc { font-weight: 600; color: var(--color-midnight-navy); }
@@ -363,18 +367,22 @@
         </div>
         <div class="lc-field">
           <span class="lc-field-label">Check-in</span>
-          <span class="lc-field-value">Fri 12 Sep</span>
+          <span class="lc-field-value" id="lc-in-v">Fri 12 Sep</span>
+          <input class="lc-ov" id="lc-in" type="date" value="2026-09-12" aria-label="Check-in date">
         </div>
         <div class="lc-field">
           <span class="lc-field-label">Check-out</span>
-          <span class="lc-field-value">Mon 15 Sep</span>
+          <span class="lc-field-value" id="lc-out-v">Mon 15 Sep</span>
+          <input class="lc-ov" id="lc-out" type="date" value="2026-09-15" aria-label="Check-out date">
         </div>
         <div class="lc-field">
           <span class="lc-field-label">Guests</span>
-          <span class="lc-field-value">2 adults <small>· 1 room</small></span>
+          <span class="lc-field-value" id="lc-g-v">2 adults <small>· 1 room</small></span>
+          <select class="lc-ov" id="lc-g" aria-label="Guests and rooms"><option value="1 adult · 1 room">1 adult · 1 room</option><option value="2 adults · 1 room" selected>2 adults · 1 room</option><option value="2 adults, 1 child · 1 room">2 adults, 1 child · 1 room</option><option value="3 adults · 2 rooms">3 adults · 2 rooms</option><option value="4 adults · 2 rooms">4 adults · 2 rooms</option></select>
         </div>
         <a class="btn btn-premium btn-lg lc-go" href="belongo-g03-search-results.html">Search</a>
       </div>
+      <p class="lc-trip-err" id="lc-trip-err" role="alert" hidden>Check-out must be after check-in.</p>
       <div class="lc-chiprow lc-dest" role="group" aria-label="Destination">
         <span class="lc-chiprow-label">Where to</span>
         <button class="lc-chip lc-chip-loc" type="button" data-dest="Near you" data-sub="using your location">&#9678; Use my location</button>
@@ -863,13 +871,32 @@
 
 <script>
 (function () {
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var trip = { city: 'Dubai, UAE', inD: '2026-09-12', outD: '2026-09-15', guests: '2 adults \u00b7 1 room' };
+  function pd(s) { var a = s.split('-'); return new Date(Date.UTC(+a[0], +a[1] - 1, +a[2])); }
+  function iso(d) { return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2); }
+  function lab(s) { var d = pd(s); return WD[d.getUTCDay()] + ' ' + d.getUTCDate() + ' ' + MON[d.getUTCMonth()]; }
+  var inI = document.getElementById('lc-in'), outI = document.getElementById('lc-out'), gS = document.getElementById('lc-g'), err = document.getElementById('lc-trip-err');
+  function save() { try { sessionStorage.setItem('belongo.trip', JSON.stringify(trip)); } catch (e) {} }
+  function valid() { var ok = pd(trip.outD) > pd(trip.inD); err.hidden = ok; return ok; }
+  function sync() {
+    document.getElementById('lc-in-v').textContent = lab(trip.inD); document.getElementById('lc-out-v').textContent = lab(trip.outD);
+    var g = trip.guests.split(' \u00b7 '); document.getElementById('lc-g-v').innerHTML = g[0] + ' <small>\u00b7 ' + g[1] + '</small>';
+  }
+  if (inI) {
+    [inI, outI].forEach(function (i) { i.addEventListener('click', function () { if (i.showPicker) { try { i.showPicker(); } catch (e) {} } }); });
+    inI.addEventListener('change', function () { trip.inD = inI.value; if (pd(trip.outD) <= pd(trip.inD)) { var o = new Date(pd(trip.inD).getTime() + 86400000); trip.outD = iso(o); outI.value = trip.outD; } sync(); valid(); save(); });
+    outI.addEventListener('change', function () { trip.outD = outI.value; sync(); valid(); save(); });
+    gS.addEventListener('change', function () { trip.guests = gS.value; sync(); save(); });
+    document.querySelector('.lc-go').addEventListener('click', function (e) { if (!valid()) { e.preventDefault(); outI.focus(); return; } save(); });
+  }
   var row = document.querySelector('.lc-dest'); if (!row) return;
   var val = document.querySelector('.lc-field-value'); var go = document.querySelector('.lc-go'); var note = document.getElementById('lc-dest-note');
   row.addEventListener('click', function (e) {
     var c = e.target.closest('.lc-chip'); if (!c) return;
     row.querySelectorAll('.lc-chip').forEach(function (x) { x.classList.toggle('is-on', x === c); });
     val.innerHTML = c.getAttribute('data-dest') + ' <small>\u00b7 ' + c.getAttribute('data-sub') + '</small>';
-    go.setAttribute('href','belongo-g03-search-results.html?where='+encodeURIComponent(c.getAttribute('data-dest')));
+    go.setAttribute('href','belongo-g03-search-results.html?where='+encodeURIComponent(c.getAttribute('data-dest'))); trip.city = c.getAttribute('data-dest'); save();
     note.textContent = c.classList.contains('lc-chip-loc') ? 'Showing stays near you. You can switch city anytime.' : 'Showing stays in ' + c.getAttribute('data-dest').split(',')[0] + '. Change it anytime.';
   });
 })();

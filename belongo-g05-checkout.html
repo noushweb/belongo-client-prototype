@@ -525,7 +525,8 @@
   function syncPay() {
     var b = document.getElementById('co-paybtn'); if (!b || opts.length < 2) return;
     var part = opts[1].querySelector('input').checked;
-    b.innerHTML = part ? 'Pay AED 238 now &amp; confirm' : 'Pay AED 952 &amp; confirm';
+    var tt = (window.BT && BT.totals) || { total: 952, dep: 238 };
+    b.innerHTML = part ? 'Pay AED ' + tt.dep.toLocaleString('en-US') + ' now &amp; confirm' : 'Pay AED ' + tt.total.toLocaleString('en-US') + ' &amp; confirm';
   }
   opts.forEach(function (o) { var r = o.querySelector('input'); if (r) r.addEventListener('change', function () { opts.forEach(function (x) { x.classList.toggle('on', x === o); }); syncPay(); }); });
   syncPay();

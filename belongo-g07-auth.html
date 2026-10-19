@@ -423,8 +423,8 @@
       e.preventDefault();
       if (!BT.validate(f)) return;
       var btn = f.querySelector('button[type=submit]');
-      if (f.getAttribute('data-state') === 'signin') { var pw = f.querySelector('input[type=password]'); BT.busy(btn, 'Signing in\u2026', function () { if (pw.value === 'wrong') { BT.setError(pw, 'That email and password do not match. Try again, or reset your password.'); } else { location.href = 'belongo-g08-my-bookings.html'; } }); return; }
-      else { BT.busy(btn, 'Creating account\u2026', function () { var p = document.querySelector('.au-prefs-card'); if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else { location.href = 'belongo-g08-my-bookings.html'; } }); }
+      if (f.getAttribute('data-state') === 'signin') { var pw = f.querySelector('input[type=password]'); BT.busy(btn, 'Signing in\u2026', function () { if (pw.value === 'wrong') { BT.setError(pw, 'That email and password do not match. Try again, or reset your password.'); } else { BT.signIn(); var nx = new URLSearchParams(location.search).get('next') || ''; if (!/^belongo-g\d\d-[a-z0-9-]+\.html$/i.test(nx)) nx = 'belongo-g08-my-bookings.html'; location.href = nx; } }); return; }
+      else { BT.busy(btn, 'Creating account\u2026', function () { BT.signIn(); var p = document.querySelector('.au-prefs-card'); if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else { location.href = 'belongo-g08-my-bookings.html'; } }); }
     });
   });
   if (new URLSearchParams(location.search).get('from') === 'booking') window.addEventListener('load', function () {
