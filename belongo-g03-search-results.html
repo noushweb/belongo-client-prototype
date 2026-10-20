@@ -29,23 +29,69 @@
   border-bottom: 1px solid rgba(107,114,128,0.15);
 }
 .sr-searchbar-inner { display: flex; align-items: stretch; gap: var(--space-4); padding-top: var(--space-3); padding-bottom: var(--space-3); flex-wrap: wrap; }
-.sr-searchbar-inner > a.btn { height: auto; min-height: 0; }
-.sr-summary { display: flex; align-items: stretch; border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-xl); overflow: hidden; background: #fff; }
-.sr-seg { padding: var(--space-2) var(--space-5); border-right: 1px solid rgba(107,114,128,0.15); cursor: pointer; transition: background var(--transition-micro); }
-.sr-seg:last-child { border-right: none; }
-.sr-seg:hover { background: var(--color-soft-beige); }
-.sr-seg b { display: block; font-size: var(--text-sm); font-weight: 600; line-height: 1.3; }
-.sr-seg span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-warm-gray); }
-.sr-bar-meta { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
-.sr-count { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-warm-gray); }
-.sr-sort {
-  font-family: var(--font-mono); font-size: var(--text-xs);
-  background: #fff; color: var(--color-midnight-navy);
-  border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full);
-  padding: 6px var(--space-4); cursor: pointer;
-  transition: border-color var(--transition-micro);
+/* ---- Search summary bar (v2) ---- */
+.sb-row { display: flex; align-items: center; gap: var(--space-5); padding-top: var(--space-3); padding-bottom: var(--space-3); flex-wrap: wrap; }
+.sb-wrap { position: relative; flex: 0 1 auto; min-width: 0; }
+.sb { display: flex; align-items: center; background: #fff; border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); box-shadow: var(--shadow-xs); padding: 4px 4px 4px var(--space-2); transition: box-shadow var(--transition-micro), border-color var(--transition-micro); }
+.sb:hover { box-shadow: var(--shadow-sm); }
+.sb.is-open { border-color: var(--color-soft-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.18); }
+.sb-seg { display: inline-flex; align-items: center; gap: 10px; background: none; border: none; font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); padding: 10px var(--space-4); border-radius: var(--radius-full); cursor: pointer; white-space: nowrap; min-width: 0; }
+.sb-seg:hover { background: var(--color-soft-beige); }
+.sb-seg:focus-visible { outline: 2px solid var(--color-soft-gold); outline-offset: -2px; }
+.sb-seg svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--color-gold-deep); }
+.sb-seg small { font-size: var(--text-xs); font-weight: 500; color: var(--color-warm-gray); }
+.sb-seg .t { overflow: hidden; text-overflow: ellipsis; display: inline-flex; align-items: baseline; gap: 6px; }
+.sb-seg .sm { display: none; }
+.sb-div { width: 1px; height: 24px; background: rgba(107,114,128,0.22); flex-shrink: 0; }
+.sb-edit { display: inline-flex; align-items: center; gap: 8px; margin-left: var(--space-2); background: var(--color-midnight-navy); color: var(--color-warm-ivory); border: none; border-radius: var(--radius-full); height: 40px; padding: 0 var(--space-4) 0 var(--space-3); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; cursor: pointer; transition: background var(--transition-micro); flex-shrink: 0; }
+.sb-edit:hover { background: #14263d; }
+.sb-edit:focus-visible { outline: 2px solid var(--color-soft-gold); outline-offset: 2px; }
+.sb-edit svg { width: 16px; height: 16px; color: var(--color-soft-gold); }
+.sb-panel { position: absolute; top: calc(100% + 10px); left: 0; z-index: 70; width: min(720px, calc(100vw - 32px)); background: #fff; border: 1px solid rgba(107,114,128,0.18); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); padding: var(--space-5); }
+.sb-panel[hidden] { display: none; }
+.sb-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: var(--space-4); }
+.sb-f label { display: block; font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-2); }
+.sb-i { width: 100%; box-sizing: border-box; border: 1.5px solid rgba(107,114,128,0.3); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-3); font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-midnight-navy); background: #fff; }
+.sb-i:focus { outline: none; border-color: var(--color-soft-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+.sb-i.bt-bad { border-color: var(--color-error); }
+.sb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-3); grid-column: 1 / -1; }
+.sb-chip { background: var(--color-warm-ivory); border: 1px solid rgba(107,114,128,0.25); border-radius: var(--radius-full); padding: 5px 12px; font-family: var(--font-body); font-size: var(--text-xs); font-weight: 500; cursor: pointer; color: var(--color-deep-slate); }
+.sb-chip:hover, .sb-chip.is-on { border-color: var(--color-soft-gold); background: var(--color-soft-gold-pale); }
+.sb-err { color: var(--color-error); font-size: var(--text-xs); font-weight: 600; margin-top: var(--space-3); }
+.sb-err[hidden] { display: none; }
+.sb-foot { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-5); }
+.sb-meta { margin-left: auto; display: flex; align-items: center; gap: var(--space-5); min-width: 0; }
+.sb-count { font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.35; text-align: right; white-space: nowrap; }
+.sb-count b { font-family: var(--font-display); font-size: var(--text-md); font-weight: 800; letter-spacing: -0.02em; color: var(--color-midnight-navy); }
+.sb-sortwrap { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.sb-sortwrap label { font-size: var(--text-xs); font-weight: 600; color: var(--color-warm-gray); }
+.sb-sort { appearance: none; -webkit-appearance: none; font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; color: var(--color-midnight-navy); background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5l3 3 3-3' fill='none' stroke='%230D1B2A' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center / 12px; border: 1px solid rgba(107,114,128,0.3); border-radius: var(--radius-full); padding: 9px 34px 9px 16px; cursor: pointer; }
+.sb-sort:hover { border-color: var(--color-soft-gold); }
+.sb-sort:focus-visible { outline: 2px solid var(--color-soft-gold); outline-offset: 2px; }
+@media (max-width: 1100px) { .sb-seg small { display: none; } .sb-meta { gap: var(--space-4); } .sb-edit { padding: 0 var(--space-3); } .sb-edit span { display: none; } .sb-seg { padding: 10px var(--space-3); } }
+@media (max-width: 700px) {
+  .sb-seg .lg { display: none; }
+  .sb-seg .sm, .sb-seg .t > span:not(.lg) { display: inline; }
+  .sb-div { display: none; }
+  .sb-row { gap: var(--space-3); }
+  .sb-wrap { width: 100%; }
+  .sb { width: 100%; }
+  .sb-seg { padding: 10px var(--space-2); font-size: var(--text-xs); gap: 6px; }
+  .sb-seg svg { display: none; }
+  .sb-seg.sb-who { flex-shrink: 1; }
+  .sb-seg .t { max-width: 100%; }
+  .sb-edit { padding: 0 var(--space-3); margin-left: auto; }
+  .sb-edit span { display: none; }
+  .sb-panel { position: fixed; left: 16px; right: 16px; top: 120px; width: auto; max-height: calc(100vh - 140px); overflow-y: auto; }
+  .sb-grid { grid-template-columns: minmax(0,1fr); }
+  .sb-meta { margin-left: 0; width: 100%; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+  .sb-count { text-align: left; flex: 1 1 100%; }
+  .sb-sortwrap { flex: 1 1 0; min-width: 0; }
+  .sb-sortwrap label { display: none; }
+  .sb-sort { width: 100%; padding: 8px 32px 8px 14px; font-size: var(--text-xs); }
+  .sb-meta .sr-mobilebar { flex: 0 0 auto; margin-left: 0; }
+  .sb-meta .sr-mobilebar .btn { padding-left: var(--space-3); padding-right: var(--space-3); }
 }
-.sr-sort:hover { border-color: var(--color-soft-gold); }
 .sr-mobilebar { display: none; gap: var(--space-2); }
 
 /* ---- Active filter chips ---- */
@@ -169,6 +215,8 @@
 .sr-mapcard-near b { color: var(--color-info); }
 .sr-mapcard-price { font-family: var(--font-display); font-weight: 800; font-size: var(--text-sm); margin-top: auto; }
 .sr-mapcard-price span { font-weight: 400; font-size: 11px; color: var(--color-warm-gray); }
+.sr-mapfab { transition: opacity var(--transition-micro), transform var(--transition-card); }
+.sr-mapfab.is-hidden { opacity: 0; pointer-events: none; }
 .sr-mapfab { position: fixed; bottom: var(--space-6); left: 50%; transform: translateX(-50%); z-index: 150; display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-midnight-navy); color: var(--color-warm-ivory); border: 1px solid rgba(212,175,55,0.5); border-radius: var(--radius-full); padding: var(--space-3) var(--space-6); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; cursor: pointer; box-shadow: var(--shadow-lg); transition: transform var(--transition-micro); }
 .sr-mapfab:hover { transform: translateX(-50%) translateY(-2px); }
 .sr-mapfab svg { width: 16px; height: 16px; }
@@ -277,7 +325,7 @@
 
 /* ---- Responsive ---- */
 @media (max-width: 1024px) {
-  .sr-layout { grid-template-columns: 1fr; }
+  .sr-layout { grid-template-columns: minmax(0,1fr); }
   .sr-rail { display: none; }
   .sr-mobilebar { display: flex; }
   .sr-mapfab { display: none; }
@@ -290,34 +338,68 @@
   .sr-pricecol .deal-was { margin-top: 0; }
   .sr-pricecol .btn { flex: 1 1 100%; margin-top: var(--space-2); }
   .sr-total-note { margin-bottom: 0; }
-  .sr-summary { width: 100%; }
-  .sr-seg { flex: 1; padding: var(--space-2) var(--space-3); }
-  .sr-bar-meta { margin-left: 0; width: 100%; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
-  .sr-count { flex: 1 1 100%; white-space: normal; line-height: 1.5; }
-  .sr-sort { flex: 0 0 auto; white-space: nowrap; }
   .sr-mobilebar { flex: 0 0 auto; margin-left: auto; }
   .sr-statebody { padding: var(--space-5); }
 }
+
+/* ============ v2: results header + insight ============ */
+.rs-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-5); }
+.rs-head .sr-h1 { font-size: var(--text-2xl); letter-spacing: -0.03em; }
+.rs-sub { font-size: var(--text-sm); color: var(--color-warm-gray); margin-top: 6px; line-height: 1.5; }
+.rs-view { display: inline-flex; background: var(--color-soft-beige); border-radius: var(--radius-full); padding: 4px; flex-shrink: 0; }
+.rs-view button { border: none; background: none; font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; padding: 8px 20px; border-radius: var(--radius-full); color: var(--color-warm-gray); cursor: pointer; }
+.rs-view button:hover { color: var(--color-midnight-navy); }
+.rs-view button.is-on { background: var(--color-midnight-navy); color: var(--color-warm-ivory); }
+.rs-view button:focus-visible { outline: 2px solid var(--color-soft-gold); outline-offset: 2px; }
+.rs-insight { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: #fff; border: 1px solid rgba(212,175,55,0.4); border-radius: var(--radius-lg); margin-bottom: var(--space-5); }
+.rs-insight .spark { color: var(--color-soft-gold); font-size: 16px; line-height: 1.5; }
+.rs-insight p { flex: 1; margin: 0; font-size: var(--text-sm); color: var(--color-deep-slate); line-height: 1.55; }
+.rs-x { background: none; border: none; font-size: 22px; line-height: 1; color: var(--color-warm-gray); cursor: pointer; padding: 0 4px; }
+.rs-x:hover { color: var(--color-midnight-navy); }
+.rs-insight.is-gone { display: none; }
+/* ============ v2: filter column ============ */
+.sr-rail { position: static; max-height: none; overflow: visible; background: transparent; border: none; box-shadow: none; padding: 0; }
+.sr-group { background: #fff; border: 1px solid rgba(107,114,128,0.14); border-radius: var(--radius-lg); padding: 0 var(--space-4) var(--space-2); margin: 0 0 var(--space-3); }
+.sr-group-label { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); cursor: pointer; padding: var(--space-4) 0 var(--space-3); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--color-midnight-navy); }
+.sr-group-label::after { content: ""; width: 7px; height: 7px; border-right: 2px solid var(--color-warm-gray); border-bottom: 2px solid var(--color-warm-gray); transform: rotate(45deg); margin-right: 3px; transition: transform var(--transition-micro); flex-shrink: 0; }
+.sr-group.is-closed .sr-group-label::after { transform: rotate(-45deg); }
+.sr-group.is-closed > :not(.sr-group-label) { display: none; }
+.sr-group.is-closed { padding-bottom: 0; }
+.sr-railfoot { padding-top: var(--space-2); }
+/* ============ v2: cards ============ */
+.sr-card { border-radius: var(--radius-xl); border-color: rgba(107,114,128,0.14); box-shadow: var(--shadow-xs); }
+.sr-card:hover { transform: none; box-shadow: var(--shadow-md); border-color: rgba(212,175,55,0.5); }
+.sr-media { min-height: 230px; }
+.sr-body { padding: var(--space-5); }
+.sr-name { font-size: var(--text-lg); }
+.sr-tags { margin-top: var(--space-3); gap: 0; }
+.sr-tags .tag { background: none; border: none; padding: 0; border-radius: 0; font-size: var(--text-sm); color: var(--color-warm-gray); font-weight: 400; }
+.sr-tags .tag + .tag::before { content: "\00b7"; margin: 0 8px; color: rgba(107,114,128,0.6); }
+.sr-card .rec-line { background: none; border: none; padding: 0; margin-top: var(--space-3); font-size: var(--text-sm); }
+.sr-sentiment { margin-top: auto; padding-top: var(--space-3); border-top: 1px solid rgba(107,114,128,0.12); }
+.sr-body .sr-near { margin-top: var(--space-3); }
+.sr-pricecol .sr-total { font-size: var(--text-2xl); letter-spacing: -0.03em; }
+.sr-pricecol .btn { background: var(--color-midnight-navy); color: var(--color-warm-ivory); border-color: var(--color-midnight-navy); width: 100%; justify-content: center; }
+.sr-pricecol .btn:hover { background: #14263d; border-color: var(--color-soft-gold); }
+@media (max-width: 560px) { .rs-head { align-items: flex-start; } .rs-head .sr-h1 { font-size: var(--text-xl); } .rs-view button { padding: 7px 16px; } }
 </style>
 </head>
 <body>
 
 <!-- ============ HEADER (FX-02, static on results pages) ============ -->
-<header class="site-header">
+<header class="site-header hd2">
   <div class="site-container site-header-inner">
     <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
-    <nav class="site-nav">
-      <a class="site-nav-link is-active" href="belongo-g03-search-results.html">Stays</a>
+    <nav class="site-nav" aria-label="Main">
+      <a class="site-nav-link is-active" href="belongo-g03-search-results.html" aria-current="page">Stays</a>
       <a class="site-nav-link" href="#">Collections</a>
+      <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
-      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
-    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
-    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
-    <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+      <button class="site-nav-ai" type="button" data-toggle="chatbot">&#10022; Concierge</button>
     </nav>
     <div class="site-actions">
-      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
-      <span class="site-actions-divider"></span>
+      <a class="hd2-saved" href="belongo-g21-saved.html" aria-label="Saved stays, 7"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9-9.2C1.8 7.6 3.9 4.5 7 4.5c2 0 3.4 1 5 3 1.6-2 3-3 5-3 3.1 0 5.2 3.1 4 6.3-2 4.8-9 9.2-9 9.2z"/></svg><span class="hd2-n" aria-hidden="true">7</span></a>
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">&#9662;</span></button>
       <a class="site-host-link" href="belongo-h01-host-landing.html">List your property</a>
       <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
       <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -340,19 +422,34 @@
 
 <!-- ============ STICKY SEARCH CONTEXT ============ -->
 <div class="sr-searchbar">
-  <div class="sr-shell sr-searchbar-inner">
-    <div class="sr-summary">
-      <div class="sr-seg"><span>Where</span><b>Dubai, UAE</b></div>
-      <div class="sr-seg"><span>Dates</span><b>12 – 15 Sep</b></div>
-      <div class="sr-seg"><span>Who</span><b>2 adults · 1 room</b></div>
+  <div class="sr-shell sb-row">
+    <div class="sb-wrap">
+      <div class="sb" id="sb" role="group" aria-label="Your search">
+        <button class="sb-seg" type="button" data-field="where" aria-label="Change destination"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="t"><span class="lg" id="sb-where-t">Dubai, UAE</span><span class="sm" id="sb-where-s">Dubai</span></span></button>
+        <span class="sb-div" aria-hidden="true"></span>
+        <button class="sb-seg" type="button" data-field="in" aria-label="Change dates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span class="t"><span id="sb-dates-t">12&ndash;15 Sep</span><small class="lg" id="sb-nights-t">3 nights</small></span></button>
+        <span class="sb-div" aria-hidden="true"></span>
+        <button class="sb-seg sb-who" type="button" data-field="who" aria-label="Change guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 20c0-3.4 2.7-5.5 6-5.5s6 2.1 6 5.5"/><path d="M16 5.5a3.2 3.2 0 0 1 0 6M18 14.8c1.9.7 3 2.4 3 5.2"/></svg><span class="t"><span class="lg" id="sb-who-t">2 adults &middot; 1 room</span><span class="sm" id="sb-who-s">2 adults</span></span></button>
+        <button class="sb-edit" id="sb-edit" type="button" aria-expanded="false" aria-controls="sb-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11a2.1 2.1 0 0 0-3-3L5 16l-1 4z"/></svg><span>Edit</span></button>
+      </div>
+      <div class="sb-panel" id="sb-panel" role="dialog" aria-label="Edit your search" hidden>
+        <div class="sb-grid">
+          <div class="sb-f"><label for="sb-where">Where</label><input class="sb-i" id="sb-where" type="text" autocomplete="off" placeholder="City or area"></div>
+          <div class="sb-f"><label for="sb-in">Check-in</label><input class="sb-i" id="sb-in" type="date"></div>
+          <div class="sb-f"><label for="sb-out">Check-out</label><input class="sb-i" id="sb-out" type="date"></div>
+          <div class="sb-f"><label for="sb-who">Guests</label><select class="sb-i" id="sb-who"><option>1 adult &middot; 1 room</option><option>2 adults &middot; 1 room</option><option>2 adults, 1 child &middot; 1 room</option><option>3 adults &middot; 2 rooms</option><option>4 adults &middot; 2 rooms</option></select></div>
+          <div class="sb-chips" id="sb-chips"><button type="button" class="sb-chip" data-c="Dubai, UAE">Dubai</button><button type="button" class="sb-chip" data-c="Abu Dhabi, UAE">Abu Dhabi</button><button type="button" class="sb-chip" data-c="Doha, Qatar">Doha</button><button type="button" class="sb-chip" data-c="Riyadh, Saudi Arabia">Riyadh</button><button type="button" class="sb-chip" data-c="Muscat, Oman">Muscat</button><button type="button" class="sb-chip" data-c="Manama, Bahrain">Manama</button></div>
+        </div>
+        <p class="sb-err" id="sb-err" role="alert" hidden></p>
+        <div class="sb-foot"><button class="btn btn-secondary btn-md" id="sb-cancel" type="button">Cancel</button><button class="btn btn-premium btn-md" id="sb-apply" type="button">Update search</button></div>
+      </div>
     </div>
-    <a class="btn btn-secondary btn-sm" href="belongo-g02-landing-command.html">Edit search</a>
-    <div class="sr-bar-meta">
-      <span class="sr-count">247 stays for your dates · updated 2 min ago</span>
-      <button class="sr-sort" type="button">Sort: Best value ▾</button>
+    <div class="sb-meta">
+      <p class="sb-count" title="Totals include taxes and fees. Updated 2 min ago."><b>247 stays</b> for your dates</p>
+      <div class="sb-sortwrap"><label for="sb-sort">Sort</label><select class="sb-sort" id="sb-sort"><option value="best">Best value</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="rated">Top rated</option></select></div>
       <div class="sr-mobilebar">
         <button class="btn btn-secondary btn-sm sr-mb-filters" type="button">Filters (3)</button>
-        <button class="btn btn-secondary btn-sm" type="button" data-toggle-overlay="#sr-mapoverlay">⊞ Map</button>
+        <button class="btn btn-secondary btn-sm" type="button" data-toggle-overlay="#sr-mapoverlay">&#8862; Map</button>
       </div>
     </div>
   </div>
@@ -427,13 +524,17 @@
 
     <!-- Result list -->
     <main>
-      <div class="sr-list-head">
-        <h1 class="sr-h1">86 stays match your filters</h1>
-        <span class="sr-count">Totals for 12–15 Sep · 2 adults · fees included</span>
+      <div class="rs-head">
+        <div>
+          <h1 class="sr-h1" id="rs-h1">86 stays in Dubai</h1>
+          <p class="rs-sub" id="rs-sub">Filtered from 247 &middot; totals for 12&ndash;15 Sep, 2 adults, taxes and fees included</p>
+        </div>
+        <div class="rs-view" role="group" aria-label="Results view"><button type="button" class="is-on" aria-pressed="true">List</button><button type="button" data-toggle-overlay="#sr-mapoverlay" aria-pressed="false">Map</button></div>
       </div>
-      <div class="sr-ai-strip">
-        <span class="spark">✦</span>
-        <span><b>Concierge insight:</b> for these filters, Al Seef averages <b>18% lower</b> than Marina with the same ratings — and every stay below is within 5 walking minutes of a guest-verified mosque.</span>
+      <div class="rs-insight" id="rs-insight">
+        <span class="spark" aria-hidden="true">&#10022;</span>
+        <p><b>Concierge insight:</b> for these filters, Al Seef averages <b>18% lower</b> than Marina with the same ratings, and every stay below is within 5 walking minutes of a guest-verified mosque.</p>
+        <button type="button" class="rs-x" id="rs-insight-x" aria-label="Dismiss insight">&times;</button>
       </div>
 
       <!-- card 1 — deal + urgency -->
@@ -785,62 +886,27 @@
 </button>
 
 <!-- ============ FOOTER (FX-02, verbatim) ============ -->
-<footer class="site-footer">
+<footer class="ft">
   <div class="site-container">
-    <div class="site-footer-top">
-      <div class="site-footer-brand">
+    <div class="ft-main">
+      <div class="ft-brand">
         <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
-        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book
-        hospitality across the Gulf and beyond.</p>
-        <div class="trust-row">
-          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
-          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
-          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
-        </div>
+        <p class="ft-tag">Go where you belong.</p>
+        <p class="ft-copy">Search, compare and book stays across the Gulf and beyond, with the whole price shown up front.</p>
+        <ul class="ft-trust"><li>Total price, always</li><li>Secure payments &middot; Stripe</li><li>24/7 human support</li></ul>
       </div>
-      <div>
-        <div class="site-footer-head">Explore</div>
-        <ul class="site-footer-links">
-          <li><a href="#">Stays in Dubai</a></li>
-          <li><a href="#">Stays in Amman</a></li>
-          <li><a href="#">Collections</a></li>
-          <li><a href="#">Seasonal offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Company</div>
-        <ul class="site-footer-links">
-          <li><a href="#">About Belongo</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Support</div>
-        <ul class="site-footer-links">
-          <li><a href="#">Help center</a></li>
-          <li><a href="#">Cancellation &amp; refunds</a></li>
-          <li><a href="#">Report an issue</a></li>
-          <li><a href="#">Travel advisories</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Hosting</div>
-        <ul class="site-footer-links">
-          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
-          <li><a href="#">Host dashboard</a></li>
-          <li><a href="#">Pricing AI</a></li>
-          <li><a href="#">Host resources</a></li>
-        </ul>
-      </div>
+      <nav class="ft-cols" aria-label="Footer">
+        <div><h2>Explore</h2><ul><li><a href="#">Stays in Dubai</a></li><li><a href="#">Stays in Amman</a></li><li><a href="#">Collections</a></li><li><a href="#">Seasonal offers</a></li></ul></div>
+        <div><h2>Company</h2><ul><li><a href="belongo-g14-about.html">About Belongo</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="belongo-g15-contact.html">Contact</a></li></ul></div>
+        <div><h2>Support</h2><ul><li><a href="#">Help center</a></li><li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li><li><a href="#">Report an issue</a></li><li><a href="#">Travel advisories</a></li></ul></div>
+        <div><h2>Hosting</h2><ul><li><a href="belongo-h01-host-landing.html">List your property</a></li><li><a href="#">Host dashboard</a></li><li><a href="#">Pricing AI</a></li><li><a href="#">Host resources</a></li></ul></div>
+      </nav>
     </div>
-    <div class="site-footer-bottom">
-      <span>© 2026 Belongo Hospitality · <a href="#" style="text-decoration:underline">Privacy</a> · <a href="#" style="text-decoration:underline">Terms</a> · <a href="#" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
-      <span class="pay-row">
-        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
-      </span>
-      <span>Prices in AED · English</span>
+    <div class="ft-bottom">
+      <span>&copy; 2026 Belongo Hospitality</span>
+      <span class="ft-legal"><a href="belongo-g16-privacy.html">Privacy</a><a href="belongo-g17-terms.html">Terms</a><a href="belongo-g18-payment-policy.html">Payment &amp; Refund Policy</a></span>
+      <span class="ft-pay" aria-label="Accepted payments"><i>VISA</i><i>MASTERCARD</i><i>AMEX</i><i>MADA</i><i>APPLE PAY</i></span>
+      <span>AED &middot; English</span>
     </div>
   </div>
 </footer>
@@ -877,11 +943,55 @@
 
 <script>
 (function () {
-  var w = new URLSearchParams(location.search).get('where'); if (!w) return;
-  var city = w.split(',')[0];
-  var seg = document.querySelector('.sr-seg b'); if (seg) seg.textContent = w;
-  var cap = document.querySelector('.sr-mapoverlay-title b'); 
-  document.title = document.title.replace('Dubai', city);
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DEF = { city: 'Dubai, UAE', inD: '2026-09-12', outD: '2026-09-15', guests: '2 adults \u00b7 1 room' };
+  function stored() { try { var t = JSON.parse(sessionStorage.getItem('belongo.trip')); if (t && t.inD) return t; } catch (e) {} return DEF; }
+  function pd(s) { var a = s.split('-'); return new Date(Date.UTC(+a[0], +a[1] - 1, +a[2])); }
+  function iso(d) { return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2); }
+  function range(a, b) { return a.getUTCMonth() === b.getUTCMonth() ? a.getUTCDate() + '\u2013' + b.getUTCDate() + ' ' + MON[a.getUTCMonth()] : a.getUTCDate() + ' ' + MON[a.getUTCMonth()] + ' \u2013 ' + b.getUTCDate() + ' ' + MON[b.getUTCMonth()]; }
+  var $ = function (id) { return document.getElementById(id); };
+  var T = stored(), city = new URLSearchParams(location.search).get('where') || T.city;
+  function paint() {
+    var a = pd(T.inD), b = pd(T.outD), n = Math.max(1, Math.round((b - a) / 86400000));
+    $('sb-where-t').textContent = city; $('sb-where-s').textContent = city.split(',')[0]; $('sb-who-s').textContent = T.guests.split(' \u00b7 ')[0]; $('sb-dates-t').textContent = range(a, b); $('sb-nights-t').textContent = n + (n === 1 ? ' night' : ' nights'); $('sb-who-t').textContent = T.guests;
+    document.title = document.title.replace(/in [^\u00b7(]+/, 'in ' + city.split(',')[0] + ' ');
+    var cs = city.split(',')[0]; $('rs-h1').textContent = '86 stays in ' + cs; $('rs-sub').innerHTML = 'Filtered from 247 &middot; totals for ' + range(a, b) + ', ' + T.guests.split(' \u00b7 ')[0] + ', taxes and fees included';
+  }
+  paint();
+  var panel = $('sb-panel'), edit = $('sb-edit'), bar = $('sb'), err = $('sb-err');
+  function fill() { $('sb-where').value = city; $('sb-in').value = T.inD; $('sb-out').value = T.outD; $('sb-who').value = T.guests; chips(); err.hidden = true; }
+  function chips() { document.querySelectorAll('.sb-chip').forEach(function (c) { c.classList.toggle('is-on', c.getAttribute('data-c') === $('sb-where').value); }); }
+  function open(field) { fill(); panel.hidden = false; edit.setAttribute('aria-expanded', 'true'); bar.classList.add('is-open'); var f = { where: 'sb-where', in: 'sb-in', who: 'sb-who' }[field] || 'sb-where'; setTimeout(function () { $(f).focus(); }, 30); }
+  function close() { if (panel.hidden) return; panel.hidden = true; edit.setAttribute('aria-expanded', 'false'); bar.classList.remove('is-open'); }
+  edit.addEventListener('click', function (e) { e.stopPropagation(); panel.hidden ? open('where') : close(); });
+  document.querySelectorAll('.sb-seg').forEach(function (s) { s.addEventListener('click', function (e) { e.stopPropagation(); open(s.getAttribute('data-field')); }); });
+  $('sb-cancel').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { close(); edit.focus(); } });
+  document.addEventListener('click', function (e) { if (!panel.hidden && !e.target.closest('.sb-wrap')) close(); });
+  document.querySelectorAll('.sb-chip').forEach(function (c) { c.addEventListener('click', function () { $('sb-where').value = c.getAttribute('data-c'); chips(); }); });
+  $('sb-where').addEventListener('input', chips);
+  $('sb-in').addEventListener('change', function () { if (pd($('sb-out').value) <= pd($('sb-in').value)) $('sb-out').value = iso(new Date(pd($('sb-in').value).getTime() + 86400000)); });
+  $('sb-apply').addEventListener('click', function () {
+    var w = $('sb-where').value.trim(); [$('sb-where'), $('sb-out')].forEach(function (x) { x.classList.remove('bt-bad'); });
+    if (!w) { $('sb-where').classList.add('bt-bad'); err.textContent = 'Tell us where you want to stay.'; err.hidden = false; $('sb-where').focus(); return; }
+    if (!$('sb-in').value || !$('sb-out').value || pd($('sb-out').value) <= pd($('sb-in').value)) { $('sb-out').classList.add('bt-bad'); err.textContent = 'Check-out must be after check-in.'; err.hidden = false; $('sb-out').focus(); return; }
+    var btn = this; btn.textContent = 'Updating\u2026'; btn.setAttribute('aria-disabled', 'true');
+    try { sessionStorage.setItem('belongo.trip', JSON.stringify({ city: w, inD: $('sb-in').value, outD: $('sb-out').value, guests: $('sb-who').value })); } catch (e) {}
+    setTimeout(function () { location.href = location.pathname + '?where=' + encodeURIComponent(w); }, 350);
+  });
+  /* sort (the sponsored card keeps its slot) */
+  var sortSel = $('sb-sort'), cards = [].slice.call(document.querySelectorAll('.sr-card')), order = cards.slice();
+  function num(c, sel) { var e = c.querySelector(sel); return e ? parseFloat(e.textContent.replace(/[^0-9.]/g, '')) || 0 : 0; }
+  sortSel.addEventListener('change', function () {
+    var plain = cards.filter(function (c) { return !c.classList.contains('is-sponsored'); }), inDom = [].slice.call(document.querySelectorAll('.sr-card')).filter(function (c) { return !c.classList.contains('is-sponsored'); }), marks = inDom.map(function (c) { var m = document.createComment('slot'); c.parentNode.replaceChild(m, c); return m; });
+    var v = sortSel.value, sorted = v === 'best' ? order.filter(function (c) { return plain.indexOf(c) > -1; }) : plain.slice().sort(function (a, b) { return v === 'low' ? num(a, '.sr-total') - num(b, '.sr-total') : v === 'high' ? num(b, '.sr-total') - num(a, '.sr-total') : num(b, '.star-count') - num(a, '.star-count'); });
+    marks.forEach(function (m, i) { m.parentNode.replaceChild(sorted[i], m); });
+  });
+  /* collapsible filter groups, dismissible insight */
+  document.querySelectorAll('.sr-group-label').forEach(function (l) { l.setAttribute('role', 'button'); l.setAttribute('tabindex', '0'); l.setAttribute('aria-expanded', 'true'); function tg() { var g = l.parentNode; var c = g.classList.toggle('is-closed'); l.setAttribute('aria-expanded', c ? 'false' : 'true'); } l.addEventListener('click', tg); l.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg(); } }); });
+  var ix = document.getElementById('rs-insight-x'); if (ix) ix.addEventListener('click', function () { document.getElementById('rs-insight').classList.add('is-gone'); });
+  var fab = document.querySelector('.sr-mapfab'), foot = document.querySelector('.ft');
+  if (fab && foot && 'IntersectionObserver' in window) { new IntersectionObserver(function (es) { fab.classList.toggle('is-hidden', es[0].isIntersecting); }, { threshold: 0.05 }).observe(foot); }
 })();
 </script>
 <script src="assets/belongo-shared.js" defer></script>

@@ -142,22 +142,20 @@
 <body>
 
 <!-- ============ HEADER ============ -->
-<header class="site-header">
+<header class="site-header hd2">
   <div class="site-container site-header-inner">
     <a class="site-logo" href="belongo-g02-landing-command.html"><img src="assets/brand/belongo-logo-onlight.svg" alt="Belongo"></a>
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Main">
       <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
       <a class="site-nav-link" href="#">Collections</a>
-      <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
+      <a class="site-nav-link is-active" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
       <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
-      <a class="site-nav-link" href="belongo-g14-about.html">About</a>
-      <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
+      <button class="site-nav-ai" type="button" data-toggle="chatbot">&#10022; Concierge</button>
     </nav>
     <div class="site-actions">
-      <button class="currency-btn" type="button">AED <span style="font-size:9px">▾</span></button>
-      <span class="site-actions-divider"></span>
-      <a class="site-host-link" href="belongo-g21-saved.html" aria-label="Saved stays" style="font-size:var(--text-md); line-height:1;">♥</a>
-      <a class="site-host-link" href="belongo-g08-my-bookings.html">My bookings</a>
+      <a class="hd2-saved" href="belongo-g21-saved.html" aria-label="Saved stays, 7"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9-9.2C1.8 7.6 3.9 4.5 7 4.5c2 0 3.4 1 5 3 1.6-2 3-3 5-3 3.1 0 5.2 3.1 4 6.3-2 4.8-9 9.2-9 9.2z"/></svg><span class="hd2-n" aria-hidden="true">7</span></a>
+      <button class="currency-btn" type="button">AED <span style="font-size:9px">&#9662;</span></button>
+      <a class="site-host-link" href="belongo-h01-host-landing.html">List your property</a>
       <a class="btn btn-primary btn-sm" href="belongo-g07-auth.html">Sign in</a>
       <button class="site-burger" type="button" data-toggle="mobile-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -165,12 +163,14 @@
   <div class="site-mobile-menu" id="site-mobile-menu">
     <a class="site-nav-link" href="belongo-g03-search-results.html">Stays</a>
     <a class="site-nav-link" href="#">Collections</a>
-    <a class="site-nav-link" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
-    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved stays</a>
-    <a class="site-nav-link" href="belongo-g08-my-bookings.html">My bookings</a>
+    <a class="site-nav-link" href="belongo-h01-host-landing.html">Hosts</a>
+    <a class="site-nav-link" href="belongo-g14-about.html">About</a>
+    <a class="site-nav-link" href="belongo-g21-saved.html">♥ Saved</a>
+    <a class="site-nav-link is-active" href="belongo-g20-gift-a-stay.html">Gift a Stay</a>
     <button class="site-nav-ai" type="button" data-toggle="chatbot">✦ Concierge</button>
     <div class="site-mobile-actions">
       <a class="btn btn-primary btn-md" href="belongo-g07-auth.html">Sign in</a>
+      <a class="btn btn-secondary btn-md" href="belongo-h01-host-landing.html">List your property</a>
     </div>
   </div>
 </header>
@@ -355,61 +355,27 @@
 </div>
 
 <!-- ============ FOOTER ============ -->
-<footer class="site-footer">
+<footer class="ft">
   <div class="site-container">
-    <div class="site-footer-top">
-      <div class="site-footer-brand">
+    <div class="ft-main">
+      <div class="ft-brand">
         <img src="assets/brand/belongo-logo-ondark.svg" alt="Belongo">
-        <p class="site-footer-tagline">Stays that keep their promise — search, compare and book hospitality across the Gulf and beyond.</p>
-        <div class="trust-row">
-          <span class="trust-pill"><span class="tp-dot"></span>Secure payments · Stripe</span>
-          <span class="trust-pill"><span class="tp-dot"></span>Total price, always</span>
-          <span class="trust-pill"><span class="tp-dot"></span>24/7 human support</span>
-        </div>
+        <p class="ft-tag">Go where you belong.</p>
+        <p class="ft-copy">Search, compare and book stays across the Gulf and beyond, with the whole price shown up front.</p>
+        <ul class="ft-trust"><li>Total price, always</li><li>Secure payments &middot; Stripe</li><li>24/7 human support</li></ul>
       </div>
-      <div>
-        <div class="site-footer-head">Explore</div>
-        <ul class="site-footer-links">
-          <li><a href="#">Stays in Dubai</a></li>
-          <li><a href="#">Stays in Amman</a></li>
-          <li><a href="#">Collections</a></li>
-          <li><a href="#">Seasonal offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Company</div>
-        <ul class="site-footer-links">
-          <li><a href="belongo-g14-about.html">About Belongo</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="belongo-g15-contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Support</div>
-        <ul class="site-footer-links">
-          <li><a href="#">Help center</a></li>
-          <li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li>
-          <li><a href="#">Report an issue</a></li>
-          <li><a href="#">Travel advisories</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="site-footer-head">Hosting</div>
-        <ul class="site-footer-links">
-          <li><a href="belongo-h01-host-landing.html">List your property</a></li>
-          <li><a href="#">Host dashboard</a></li>
-          <li><a href="#">Pricing AI</a></li>
-          <li><a href="#">Host resources</a></li>
-        </ul>
-      </div>
+      <nav class="ft-cols" aria-label="Footer">
+        <div><h2>Explore</h2><ul><li><a href="#">Stays in Dubai</a></li><li><a href="#">Stays in Amman</a></li><li><a href="#">Collections</a></li><li><a href="#">Seasonal offers</a></li></ul></div>
+        <div><h2>Company</h2><ul><li><a href="belongo-g14-about.html">About Belongo</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="belongo-g15-contact.html">Contact</a></li></ul></div>
+        <div><h2>Support</h2><ul><li><a href="#">Help center</a></li><li><a href="belongo-g10-cancellation.html">Cancellation &amp; refunds</a></li><li><a href="#">Report an issue</a></li><li><a href="#">Travel advisories</a></li></ul></div>
+        <div><h2>Hosting</h2><ul><li><a href="belongo-h01-host-landing.html">List your property</a></li><li><a href="#">Host dashboard</a></li><li><a href="#">Pricing AI</a></li><li><a href="#">Host resources</a></li></ul></div>
+      </nav>
     </div>
-    <div class="site-footer-bottom">
-      <span>© 2026 Belongo Hospitality · <a href="belongo-g16-privacy.html" style="text-decoration:underline">Privacy</a> · <a href="belongo-g17-terms.html" style="text-decoration:underline">Terms</a> · <a href="belongo-g18-payment-policy.html" style="text-decoration:underline">Payment &amp; Refund Policy</a></span>
-      <span class="pay-row">
-        <span class="pay-chip">VISA</span><span class="pay-chip">MASTERCARD</span><span class="pay-chip">AMEX</span><span class="pay-chip">MADA</span><span class="pay-chip">APPLE PAY</span>
-      </span>
-      <span>Prices in AED · English</span>
+    <div class="ft-bottom">
+      <span>&copy; 2026 Belongo Hospitality</span>
+      <span class="ft-legal"><a href="belongo-g16-privacy.html">Privacy</a><a href="belongo-g17-terms.html">Terms</a><a href="belongo-g18-payment-policy.html">Payment &amp; Refund Policy</a></span>
+      <span class="ft-pay" aria-label="Accepted payments"><i>VISA</i><i>MASTERCARD</i><i>AMEX</i><i>MADA</i><i>APPLE PAY</i></span>
+      <span>AED &middot; English</span>
     </div>
   </div>
 </footer>
