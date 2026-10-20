@@ -306,6 +306,32 @@
 .lc-tagline { color: var(--color-soft-gold); }
 .lc-hero-sub { color: rgba(247,246,242,0.72); }
 .lc-live { color: rgba(247,246,242,0.72); }
+
+/* ===== v3: new search bar only (rest of g02 unchanged) ===== */
+.lc-hero.lcbar .lc-command { border-radius: 28px; box-shadow: 0 24px 60px -20px rgba(13,27,42,0.28), 0 2px 6px rgba(13,27,42,0.06); padding: var(--space-3) var(--space-3) var(--space-5); border: 1px solid rgba(107,114,128,0.12); }
+.lc-hero.lcbar .lc-fields { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.1fr auto; gap: 0; align-items: stretch; }
+.lc-hero.lcbar .lc-field { border: 0; border-radius: 20px; background: transparent; padding: var(--space-3) var(--space-5); margin: 0; }
+.lc-hero.lcbar .lc-field + .lc-field::before { content: ""; position: absolute; left: 0; top: 24%; bottom: 24%; width: 1px; background: rgba(107,114,128,0.22); }
+.lc-hero.lcbar .lc-field:hover { background: var(--color-warm-ivory); }
+.lc-hero.lcbar .lc-field:hover::before, .lc-hero.lcbar .lc-field:hover + .lc-field::before { opacity: 0; }
+.lc-hero.lcbar .lc-field:focus-within { background: var(--color-warm-ivory); outline: 2px solid var(--color-soft-gold); outline-offset: -2px; }
+.lc-hero.lcbar .lc-field-label { font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--color-midnight-navy); }
+.lc-hero.lcbar .lc-field-value { font-size: var(--text-md); font-weight: 500; color: var(--color-deep-slate); }
+.lc-hero.lcbar .lc-go.btn { border-radius: 20px; min-height: 64px; padding: 0 var(--space-10); font-size: var(--text-md); align-self: stretch; height: auto; }
+.lc-hero.lcbar .lc-chiprow, .lc-hero.lcbar .lc-dest-note, .lc-hero.lcbar .lc-trip-err { margin-left: var(--space-5); margin-right: var(--space-5); }
+.lc-hero.lcbar .lc-dest { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid rgba(107,114,128,0.14); }
+.lc-hero.lcbar .lc-chiprow-label { font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--color-midnight-navy); min-width: 84px; }
+.lc-hero.lcbar .lc-chip { background: var(--color-warm-ivory); border-color: transparent; }
+.lc-hero.lcbar .lc-chip:hover, .lc-hero.lcbar .lc-chip.is-on { background: var(--color-soft-gold-pale); border-color: var(--color-soft-gold); }
+@media (max-width: 1024px) {
+  .lc-hero.lcbar .lc-fields { grid-template-columns: 1fr 1fr; }
+  .lc-hero.lcbar .lc-field + .lc-field::before { display: none; }
+  .lc-hero.lcbar .lc-go.btn { grid-column: 1 / -1; min-height: 56px; margin-top: var(--space-2); }
+}
+@media (max-width: 700px) {
+  .lc-hero.lcbar .lc-fields { grid-template-columns: 1fr; }
+  .lc-hero.lcbar .lc-chiprow, .lc-hero.lcbar .lc-dest-note, .lc-hero.lcbar .lc-trip-err { margin-left: var(--space-3); margin-right: var(--space-3); }
+}
 </style>
 </head>
 <body>
@@ -345,7 +371,7 @@
 </header>
 
 <!-- ============ HERO · COMMAND PANEL ============ -->
-<section class="lc-hero">
+<section class="lc-hero lcbar">
   <div class="lc-container lc-hero-inner">
     <div class="lc-hero-top">
       <div>
